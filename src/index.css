@@ -1,0 +1,151 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 142 40% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 142 40% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 142 40% 12%;
+
+    --primary: 142 70% 35%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 142 40% 96.1%;
+    --secondary-foreground: 142 47.4% 11.2%;
+
+    --muted: 142 40% 96.1%;
+    --muted-foreground: 142 16.3% 46.9%;
+
+    --accent: 142 70% 35%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 142 40% 98%;
+
+    --border: 142 31.8% 91.4%;
+    --input: 142 31.8% 91.4%;
+    --ring: 142 70% 35%;
+
+    --radius: 1rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 142 5.3% 26.1%;
+    --sidebar-primary: 142 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 142 4.8% 95.9%;
+    --sidebar-accent-foreground: 142 5.9% 10%;
+    --sidebar-border: 142 13% 91%;
+    --sidebar-ring: 142 91.2% 59.8%;
+  }
+
+  * {
+    @apply border-border;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-sm;
+  }
+  
+  .hover-card {
+    @apply transition-all duration-300 hover:shadow-md hover:-translate-y-1;
+  }
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold mb-10 text-balance;
+  }
+  
+  .section-subtitle {
+    @apply text-xl md:text-2xl font-medium text-muted-foreground mb-6 max-w-2xl text-balance;
+  }
+  
+  .page-header {
+    @apply pt-32 pb-16 bg-gradient-to-b from-green-50 to-white;
+  }
+  
+  .button-primary {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-full shadow-sm hover:shadow-md transition-all duration-300 font-medium;
+  }
+  
+  .button-secondary {
+    @apply bg-secondary text-secondary-foreground px-6 py-3 rounded-full shadow-sm hover:shadow-md transition-all duration-300 font-medium;
+  }
+
+  .image-fade-in {
+    @apply opacity-0 transition-opacity duration-700 ease-in;
+  }
+  
+  .image-fade-in.loaded {
+    @apply opacity-100;
+  }
+}
+
+/* Header animation */
+.navbar-fixed {
+  @apply fixed w-full backdrop-blur-lg bg-white/80 shadow-sm z-50 transition-all duration-300;
+}
+
+.navbar-scrolled {
+  @apply shadow-md bg-white/90;
+}
+
+/* Smooth transitions for page content */
+.page-transition {
+  @apply transition-opacity duration-500;
+}
+
+.page-entering {
+  @apply opacity-0;
+}
+
+.page-entered {
+  @apply opacity-100;
+}
+
+/* Hero section styling */
+.hero-text span {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-green-700;
+}
+
+/* Custom card hover effects */
+.service-card {
+  @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-2;
+}
+
+/* Gallery image hover effect */
+.gallery-image {
+  @apply transition-all duration-300;
+}
+
+.gallery-image:hover {
+  @apply scale-105 shadow-lg;
+}
