@@ -1,0 +1,642 @@
+{
+  "common": {
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "since": "Since",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "contact": "Contact",
+    "home": "Home",
+    "about": "About Us",
+    "services": "Services",
+    "members": "Members",
+    "news": "News",
+    "gallery": "Gallery",
+    "board": "Board",
+    "financial": "Financial",
+    "community": "Community"
+  },
+  "navigation": {
+    "home": "Home",
+    "aboutUs": "About",
+    "services": "Services",
+    "members": "Members",
+    "news": "News",
+    "gallery": "Gallery",
+    "board": "Board",
+    "financial": "Financial",
+    "contact": "Contact",
+    "community": "Community",
+    "tagline": "Empowering Communities, Strengthening Livelihoods"
+  },
+  "hero": {
+    "title": "Maitree Multipurpose Cooperative",
+    "subtitle": "Strengthening Communities Through Cooperation",
+    "members": "Members",
+    "since": "Since",
+    "savings": {
+      "title": "Savings & Loans",
+      "description": "Secure your financial future with our flexible savings plans and accessible loan options.",
+      "learnMore": "Learn More"
+    },
+    "agriculture": {
+      "title": "Agricultural Support",
+      "description": "Comprehensive solutions for agricultural production, processing, and marketing.",
+      "learnMore": "Learn More"
+    },
+    "mobile": {
+      "title": "Mobile Banking",
+      "description": "Access your accounts, transfer funds, and manage finances conveniently from your mobile device.",
+      "learnMore": "Learn More"
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "intro": "Learn about our history, mission, and the people behind Maitree Multipurpose Cooperative.",
+    "mission": {
+      "title": "Our Mission",
+      "subtitle": "Community Empowerment Through Cooperation",
+      "description": "Maitree Multipurpose Cooperative is dedicated to uplifting the local community by leveraging cooperative values in every aspect of its operation. We believe in the power of cooperation to transform lives and build sustainable communities."
+    },
+    "goals": {
+      "agricultural": {
+        "title": "Agricultural Excellence",
+        "description": "Engage in agricultural production, collection, processing, and marketing based on cooperative values."
+      },
+      "livestock": {
+        "title": "Livestock & Enterprise",
+        "description": "Commercialize animal husbandry and promote self-employment opportunities among members."
+      },
+      "empowerment": {
+        "title": "Community Empowerment",
+        "description": "Build social capital by increasing cooperation among members, improving living standards through savings and loans at concessional rates."
+      },
+      "advancement": {
+        "title": "Cooperative Advancement",
+        "description": "Expand the cooperative movement throughout the district and beyond, touching more lives and communities."
+      }
+    },
+    "journey": {
+      "title": "Our Journey",
+      "subtitle": "A Brief History & Milestones",
+      "registration": {
+        "title": "Registration & Foundation",
+        "description": "Registered under Cooperative Act 2048 and Regulation 2049 with 33 members and an initial capital of 13,200."
+      },
+      "early": {
+        "title": "Early Operations",
+        "description": "Started with savings & loan programs, microfinance awareness, dairy business, and a fair price shop. Later added electric vehicle service."
+      },
+      "expansion": {
+        "title": "First Expansion",
+        "description": "Expanded operations to 17 Village Development Committees (VDCs), reaching more rural communities."
+      },
+      "growth": {
+        "title": "District-wide Growth",
+        "description": "Operations expanded to 75 gavis in Gulmi and 4 gavis in Arghakhanchi, cementing our regional presence."
+      },
+      "reach": {
+        "title": "Multi-District Reach",
+        "description": "Extended to six districts (Gulmi, Palpa, Arghakhanchi, Kapilbastu, Rupandehi, and Nawalparasi) with headquarters in Tamghas and multiple service centers."
+      },
+      "today": "Today, we proudly serve 13,836 share members!"
+    },
+    "values": {
+      "title": "Our Values",
+      "subtitle": "What Guides Us",
+      "community": {
+        "title": "Community First",
+        "description": "We prioritize the welfare of our members and the broader community in all our decisions and actions."
+      },
+      "inclusion": {
+        "title": "Financial Inclusion",
+        "description": "We strive to make financial services accessible to all, especially those underserved by traditional banking."
+      },
+      "sustainability": {
+        "title": "Sustainable Growth",
+        "description": "We believe in growing our cooperative in ways that are environmentally sustainable and socially responsible."
+      },
+      "service": {
+        "title": "Compassionate Service",
+        "description": "We approach our work with empathy and a genuine desire to improve lives through our services."
+      }
+    },
+    "cta": {
+      "title": "Join Our Cooperative Community",
+      "description": "Become a member and be part of a movement that's transforming lives and building stronger communities.",
+      "button": "Become a Member"
+    },
+    "subtitle": "Strengthening Communities Through Cooperation",
+    "foundingVision": "Our Founding Vision",
+    "founderQuote": "To improve members' living standards and foster social capital through cooperation.",
+    "founderName": "— Bom Bahadur Khadka, Founder",
+    "description": "Established under cooperative principles, Maitree Multipurpose Cooperative focuses on agricultural development, livestock business transformation, and financial inclusion through accessible savings and loans.",
+    "vision": "Our cooperative is guided by the vision of improving our members' living standards and fostering social capital within our community.",
+    "learnStory": "Learn Our Story"
+  },
+  "services": {
+    "title": "Our Services",
+    "intro": "Explore the comprehensive services we offer to our members and community.",
+    "what": {
+      "title": "What We Offer",
+      "subtitle": "Services Designed For You",
+      "description": "Our service offerings are designed to cater to the financial and practical needs of our members, all while staying true to our cooperative principles."
+    },
+    "main": {
+      "savings": {
+        "title": "Savings (बचत)",
+        "description": "We offer various savings plans tailored to different needs, helping members build financial security and achieve their goals."
+      },
+      "loans": {
+        "title": "Loans (ऋण)",
+        "description": "Access affordable credit for personal, business, or agricultural needs with flexible repayment options and competitive rates."
+      },
+      "remittance": {
+        "title": "Remittance (रेमिट्यान्स)",
+        "description": "Send and receive money safely and quickly, with both domestic and international transfer options available."
+      },
+      "store": {
+        "title": "Cooperative Store (सहकारी पसल)",
+        "description": "Shop for quality agricultural inputs, household necessities, and more at fair prices at our cooperative store."
+      },
+      "mobile": {
+        "title": "Mobile Banking (मोबाइल बैंकिङ)",
+        "description": "Manage your accounts, transfer funds, and access our services conveniently from your mobile device."
+      },
+      "agricultural": {
+        "title": "Agricultural Support",
+        "description": "Get guidance on farming practices, access to quality seeds and fertilizers, and marketing support for your produce."
+      }
+    },
+    "savingsPlans": {
+      "title": "Savings Plans",
+      "description": "Saving with Maitree helps you build financial security while enabling us to provide loans to other members. We offer several types of savings accounts to meet different needs:",
+      "regular": {
+        "title": "Regular Savings",
+        "features": [
+          "Minimum deposit: Rs. 100 per month",
+          "Flexible deposits and withdrawals",
+          "Competitive interest rates",
+          "Quarterly interest calculation"
+        ]
+      },
+      "fixed": {
+        "title": "Fixed Deposit",
+        "features": [
+          "Higher interest rates",
+          "Terms from 3 months to 5 years",
+          "Minimum deposit: Rs. 10,000",
+          "Loan facility against deposit"
+        ]
+      },
+      "children": {
+        "title": "Children's Savings",
+        "features": [
+          "Special account for minors",
+          "Educational benefits",
+          "Long-term saving option",
+          "Bonus on maturity"
+        ]
+      },
+      "retirement": {
+        "title": "Retirement Savings",
+        "features": [
+          "Long-term security planning",
+          "Higher interest rates",
+          "Regular monthly contribution",
+          "Additional benefits at maturity"
+        ]
+      },
+      "cta": "Open a Savings Account"
+    },
+    "additional": {
+      "title": "Additional Services",
+      "subtitle": "Other ways we support our members and community",
+      "literacy": {
+        "title": "Financial Literacy",
+        "description": "Training programs to improve financial knowledge and skills"
+      },
+      "community": {
+        "title": "Community Events",
+        "description": "Regular gatherings, celebrations, and awareness programs"
+      },
+      "insurance": {
+        "title": "Insurance Services",
+        "description": "Various insurance options for health, crops, and livestock"
+      },
+      "documents": {
+        "title": "Document Services",
+        "description": "Assistance with forms, applications, and official documents"
+      }
+    },
+    "cta": {
+      "title": "Have Questions About Our Services?",
+      "description": "Our team is ready to help you find the right services for your needs. Contact us today!",
+      "contact": "Contact Us",
+      "member": "Become a Member"
+    },
+    "subtitle": "Comprehensive Financial & Agricultural Services",
+    "description": "We offer a range of services designed to support our members' financial needs and agricultural endeavors.",
+    "viewAllServices": "View All Services"
+  },
+  "members": {
+    "title": "Members",
+    "intro": "Discover the benefits of joining our cooperative community and learn how to become a member.",
+    "benefits": {
+      "title": "Benefits",
+      "subtitle": "Why Join Our Cooperative?",
+      "description": "As a member of Maitree Cooperative, you'll enjoy exclusive benefits designed to support your financial growth and community development.",
+      "items": {
+        "loans": {
+          "title": "Low-Interest Loans",
+          "description": "Access to affordable loans for agriculture, business, education, and personal needs"
+        },
+        "savings": {
+          "title": "Competitive Savings",
+          "description": "Competitive interest rates on various savings accounts and fixed deposits"
+        },
+        "agricultural": {
+          "title": "Agricultural Support",
+          "description": "Technical training and support for agricultural activities and livestock"
+        },
+        "dividends": {
+          "title": "Patronage Dividends",
+          "description": "Share in the cooperative's annual profits through patronage dividends"
+        },
+        "participation": {
+          "title": "Democratic Participation",
+          "description": "Voting rights at general assemblies and eligibility for board positions"
+        },
+        "store": {
+          "title": "Cooperative Store",
+          "description": "Access to fair-priced goods at our cooperative store"
+        }
+      }
+    },
+    "howToJoin": {
+      "title": "How to Join",
+      "subtitle": "Follow these simple steps to become a member",
+      "steps": [
+        "Complete membership application form at our office",
+        "Pay the membership fee of Rs. 100",
+        "Purchase minimum one share (Rs. 1,000 per share)",
+        "Provide citizenship certificate or valid ID",
+        "Submit passport-sized photograph"
+      ],
+      "downloadForm": "Download Application Form"
+    },
+    "requirements": {
+      "title": "Membership Requirements",
+      "subtitle": "Who can join our cooperative",
+      "eligibility": {
+        "title": "Eligibility",
+        "description": "Any individual aged 16 years or above can join our cooperative"
+      },
+      "financial": {
+        "title": "Financial Commitment",
+        "membershipFee": "Membership fee: Rs. 100",
+        "shareMinimum": "Minimum share purchase: Rs. 1,000"
+      },
+      "geographic": {
+        "title": "Geographic Area",
+        "description": "Priority given to residents of Gulmi district and surrounding areas"
+      },
+      "note": "Note: Membership is open to all regardless of religion, race, political affiliation, or gender. We welcome everyone who shares our cooperative values."
+    },
+    "cta": {
+      "title": "Ready to Join?",
+      "description": "Visit any of our service centers or contact us to start your membership journey with Maitree Cooperative.",
+      "findBranch": "Find Nearest Branch",
+      "contact": "Contact Us"
+    }
+  },
+  "news": {
+    "title": "News & Notices",
+    "intro": "Stay updated with the latest announcements, events, and news from our cooperative.",
+    "recentUpdates": "Recent Updates",
+    "categories": {
+      "all": "All",
+      "news": "News",
+      "notices": "Notices"
+    },
+    "items": {
+      "agm": {
+        "type": "Notice",
+        "date": "2080-03-15",
+        "title": "Annual General Meeting 2080",
+        "excerpt": "The Annual General Meeting for the fiscal year 2079/80 will be held on Ashad 15th at the cooperative headquarters."
+      },
+      "loanProgram": {
+        "type": "News",
+        "date": "2080-02-10", 
+        "title": "New Agricultural Loan Program Launched",
+        "excerpt": "Introducing our new agricultural loan program with reduced interest rates and flexible repayment options for farmers."
+      },
+      "mobileUpdate": {
+        "type": "Notice",
+        "date": "2080-01-05",
+        "title": "Mobile Banking App Update",
+        "excerpt": "Important update for our mobile banking application. All users are requested to update to the latest version."
+      }
+    },
+    "readMore": "Read More",
+    "loadMore": "Load More",
+    "stayUpdated": "Stay Updated",
+    "viewAllNews": "View All News"
+  },
+  "quickLinks": {
+    "title": "Quick Links",
+    "membership": "Membership",
+    "financialReports": "Financial Reports",
+    "eventsCalendar": "Events Calendar",
+    "findUs": "Find Us"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We're here to help you with all your cooperative needs. Reach out to us through any of the channels below.",
+    "getInTouch": {
+      "title": "Get in Touch",
+      "description": "You can reach us through various channels or visit our offices in person."
+    },
+    "mainOffice": {
+      "title": "Head Office",
+      "name": "Maitree Multipurpose Cooperative Ltd.",
+      "address": "Resunga Municipality-8, Gulmi, Nepal",
+      "phoneLabel": "Phone",
+      "phone": "+977 9876543210",
+      "landline": "+977 079-520123",
+      "emailLabel": "Email",
+      "email": "maitreecooperative@gmail.com",
+      "emailSecondary": "info@maitreecooperative.org.np"
+    },
+    "serviceCenters": {
+      "title": "Our Service Centers",
+      "subtitle": "Find us at these locations across multiple districts",
+      "phoneLabel": "Phone",
+      "centers": {
+        "tamghas": {
+          "name": "Tamghas (Head Office)",
+          "address": "Resunga Municipality-8, Gulmi",
+          "phone": "+977 079-520123"
+        },
+        "baletaxar": {
+          "name": "Baletaxar Branch",
+          "address": "Baletaxar, Gulmi",
+          "phone": "+977 98XXXXXXXX"
+        },
+        "dhurkot": {
+          "name": "Dhurkot Branch",
+          "address": "Dhurkot, Gulmi",
+          "phone": "+977 98XXXXXXXX"
+        },
+        "ishma": {
+          "name": "Ishma Branch",
+          "address": "Ishma, Gulmi",
+          "phone": "+977 98XXXXXXXX"
+        },
+        "purkotdah": {
+          "name": "Purkotdah Branch",
+          "address": "Purkotdah, Gulmi",
+          "phone": "+977 98XXXXXXXX"
+        },
+        "ampchaur": {
+          "name": "Ampchaur Branch",
+          "address": "Ampchaur, Gulmi",
+          "phone": "+977 98XXXXXXXX"
+        },
+        "butwal": {
+          "name": "Butwal Branch",
+          "address": "Butwal, Rupandehi",
+          "phone": "+977 98XXXXXXXX"
+        },
+        "taulihawa": {
+          "name": "Taulihawa Branch",
+          "address": "Taulihawa, Kapilbastu",
+          "phone": "+977 98XXXXXXXX"
+        }
+      }
+    },
+    "businessHours": {
+      "title": "Working Hours",
+      "weekdays": {
+        "label": "Sunday - Friday",
+        "hours": "10:00 AM - 5:00 PM"
+      },
+      "saturday": {
+        "label": "Saturday",
+        "hours": "Closed"
+      }
+    },
+    "contactForm": {
+      "title": "Send Us a Message",
+      "description": "Fill out the form below, and our team will get back to you as soon as possible.",
+      "fields": {
+        "name": "Full Name*",
+        "email": "Email Address*",
+        "phone": "Phone Number",
+        "subject": "Subject*",
+        "message": "Message*"
+      },
+      "sendButton": "Send Message",
+      "sending": "Sending...",
+      "successTitle": "Message Sent!",
+      "successMessage": "We've received your message and will get back to you soon."
+    },
+    "map": {
+      "title": "Map Location",
+      "location": "Resunga Municipality-8, Gulmi",
+      "placeholder": "Interactive map will be integrated here"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Find quick answers to common questions",
+      "questions": {
+        "membership": {
+          "question": "What are the requirements to become a member?",
+          "answer": "To become a member, you need to be a resident of our service area, provide citizenship or identity proof, fill out the membership form, and purchase at least one share (value determined by current share price)."
+        },
+        "loans": {
+          "question": "How can I apply for a loan?",
+          "answer": "Loans are available to members who have maintained an active savings account for at least 3 months. Visit any of our branches with your membership card to fill out a loan application form."
+        },
+        "hours": {
+          "question": "What are the cooperative's working hours?",
+          "answer": "Our branches are open Sunday through Friday from 10:00 AM to 5:00 PM. We are closed on Saturdays and national holidays. Mobile banking services are available 24/7."
+        },
+        "mobile": {
+          "question": "How do I access mobile banking services?",
+          "answer": "You need to register for mobile banking at any of our branches by bringing your membership card and valid ID. After registration, you can download our app and log in with the provided credentials."
+        }
+      }
+    }
+  },
+  "board": {
+    "title": "Board Members & Staff",
+    "subtitle": "Meet the dedicated team leading and operating our cooperative.",
+    "languageToggle": "नेपालीमा हेर्नुहोस्",
+    "leadership": "Leadership",
+    "operations": "Operations",
+    "structure": "Structure",
+    "boardMembers": {
+      "title": "Our Board of Directors",
+      "description": "The board members are elected by our members and are responsible for setting the strategic direction and ensuring good governance of the cooperative.",
+      "executiveCommittee": "Executive Committee",
+      "boardMembersTitle": "Board Members",
+      "members": {
+        "shankarGautam": {
+          "name": "Shankar Prasad Gautam",
+          "position": "Chairman"
+        },
+        "khumanandaGhimire": {
+          "name": "Khumananda Ghimire",
+          "position": "Vice Chairman"
+        },
+        "hariPokhrel": {
+          "name": "Hari Prasad Pokhrel",
+          "position": "Secretary"
+        },
+        "omKarki": {
+          "name": "Om Bahadur Karki",
+          "position": "Joint Secretary"
+        },
+        "ramKunwar": {
+          "name": "Ram Bahadur Kunwar",
+          "position": "Treasurer"
+        },
+        "saritaSunar": {
+          "name": "Sarita Sunar Bishowkarma",
+          "position": "Joint Treasurer"
+        },
+        "jangaNepali": {
+          "name": "Janga Bahadur Nepali",
+          "position": "Board Member"
+        },
+        "puspaPanthi": {
+          "name": "Puspa Panthi",
+          "position": "Board Member"
+        },
+        "cholrajSharma": {
+          "name": "Cholraj Sharma",
+          "position": "Board Member"
+        },
+        "tekKhattri": {
+          "name": "Tek Bahadur Khattri",
+          "position": "Board Member"
+        },
+        "ritaPanday": {
+          "name": "Rita Panday",
+          "position": "Board Member"
+        },
+        "jayChudara": {
+          "name": "Jay Bahadur Chudara",
+          "position": "Board Member"
+        },
+        "tilachanPandey": {
+          "name": "Tilachan Pandey",
+          "position": "Board Member"
+        }
+      }
+    },
+    "staff": {
+      "title": "Our Staff",
+      "description": "Our dedicated staff members work tirelessly to provide excellent service to our members and implement the cooperative's programs.",
+      "managementTeam": "Management Team",
+      "branchHeads": "Branch Heads & Support Staff",
+      "employees": {
+        "arjunAcharya": {
+          "name": "Arjun Prasad Acharya",
+          "position": "Chief Executive Officer",
+          "location": "Resunga – 1, Gulmi"
+        },
+        "ghanashyamMarasini": {
+          "name": "Ghanashyam Marasini",
+          "position": "Deputy Chief Executive Officer",
+          "location": "Gulmi"
+        },
+        "dinnathAcharya": {
+          "name": "Dinnath Acharya",
+          "position": "Account Head",
+          "location": "Gulmi"
+        },
+        "laxmiMalla": {
+          "name": "Laxmi Malla",
+          "position": "Baletaksar Branch Head",
+          "location": "Gulmi"
+        },
+        "amarMarasini": {
+          "name": "Amar Marasini",
+          "position": "Dhurkot Branch Head",
+          "location": "Gulmi"
+        },
+        "jiblalLamsal": {
+          "name": "Jiblal Lamsal",
+          "position": "Khairani Branch Head",
+          "location": "Gulmi"
+        },
+        "surajPokhrel": {
+          "name": "Suraj Pokhrel",
+          "position": "Kalikanagar Branch Head",
+          "location": "Gulmi"
+        },
+        "deviMarasini": {
+          "name": "Devi Marasini",
+          "position": "Senior Administrative Assistant",
+          "location": "Gulmi"
+        },
+        "krishnaAryal": {
+          "name": "Krishna Aryal",
+          "position": "I.T. Officer",
+          "location": "Gulmi"
+        }
+      }
+    },
+    "organizationalStructure": {
+      "title": "Organizational Structure",
+      "generalAssembly": {
+        "title": "General Assembly",
+        "subtitle": "All Members"
+      },
+      "boardOfDirectors": {
+        "title": "Board of Directors",
+        "subtitle": "13 Elected Members"
+      },
+      "executiveManagement": {
+        "title": "Executive Management",
+        "subtitle": "CEO & Department Heads"
+      },
+      "departments": {
+        "finance": "Finance",
+        "memberServices": "Member Services",
+        "agriculturalServices": "Agricultural Services",
+        "administration": "Administration"
+      }
+    }
+  },
+  "cta": {
+    "joinTitle": "Join Maitree Multipurpose Cooperative Today",
+    "joinDescription": "Become a member and enjoy the benefits of financial services, agricultural support, and community development.",
+    "becomeMember": "Become a Member"
+  },
+  "footer": {
+    "title": "Maitree Cooperative",
+    "description": "Established to improve members' living standards through agricultural initiatives, financial services, and community development.",
+    "quickLinks": "Quick Links",
+    "aboutUs": "About Us",
+    "services": "Services",
+    "membership": "Membership",
+    "newsNotices": "News & Notices",
+    "community": "Community",
+    "ourServices": "Our Services",
+    "savings": "Savings",
+    "loans": "Loans",
+    "remittance": "Remittance",
+    "mobileBanking": "Mobile Banking",
+    "cooperativeStore": "Cooperative Store",
+    "contactUs": "Contact Us",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "sitemap": "Sitemap",
+    "copyright": "© 2025 Maitree Multipurpose Cooperative. All rights reserved."
+  }
+}

@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Mail, Phone, MapPin, Calendar, FileText, Users, Info } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import Hero from '@/components/Hero';
 import ServiceCard from '@/components/ServiceCard';
@@ -11,6 +12,7 @@ import Footer from '@/components/Footer';
 const Index = () => {
   const aboutSectionRef = useRef<HTMLDivElement>(null);
   const [aboutVisible, setAboutVisible] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -36,23 +38,23 @@ const Index = () => {
   const notices = [
     {
       id: 1,
-      title: 'Annual General Meeting Notice',
+      titleKey: 'news.items.agm',
       date: 'June 15, 2023',
-      type: 'Meeting',
+      typeKey: 'news.categories.meeting',
       link: '/news/annual-general-meeting'
     },
     {
       id: 2,
-      title: 'New Agricultural Loan Program Launched',
+      titleKey: 'news.items.loanProgram',
       date: 'May 28, 2023',
-      type: 'Announcement',
+      typeKey: 'news.categories.announcement',
       link: '/news/agricultural-loan-program'
     },
     {
       id: 3,
-      title: 'Mobile Banking App Update Available',
+      titleKey: 'news.items.mobileUpdate',
       date: 'May 15, 2023',
-      type: 'Update',
+      typeKey: 'news.categories.update',
       link: '/news/mobile-banking-update'
     }
   ];
@@ -80,11 +82,11 @@ const Index = () => {
             >
               <div className="aspect-[4/3] bg-gradient-to-tr from-green-100 to-white rounded-2xl flex items-center justify-center p-8">
                 <div className="text-center space-y-4">
-                  <h3 className="text-2xl font-bold text-green-800">Our Founding Vision</h3>
+                  <h3 className="text-2xl font-bold text-green-800">{t('about.foundingVision')}</h3>
                   <p className="text-gray-600 italic">
-                    "To improve members' living standards and foster social capital through cooperation."
+                    "{t('about.founderQuote')}"
                   </p>
-                  <p className="text-sm text-gray-500">— Bom Bahadur Khadka, Founder</p>
+                  <p className="text-sm text-gray-500">{t('about.founderName')}</p>
                 </div>
               </div>
               
@@ -102,22 +104,19 @@ const Index = () => {
               )}
             >
               <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
-                About Us
+                {t('about.title')}
               </span>
               
               <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-                Strengthening Communities Through Cooperation
+                {t('about.subtitle')}
               </h2>
               
               <p className="text-gray-600">
-                Established under cooperative principles, Maitree Multipurpose Cooperative 
-                focuses on agricultural development, livestock business transformation, and 
-                financial inclusion through accessible savings and loans.
+                {t('about.description')}
               </p>
               
               <p className="text-gray-600">
-                Our cooperative is guided by the vision of improving our members' living standards 
-                and fostering social capital within our community.
+                {t('about.vision')}
               </p>
               
               <div className="pt-2">
@@ -125,7 +124,7 @@ const Index = () => {
                   to="/about" 
                   className="button-primary flex items-center"
                 >
-                  Learn Our Story
+                  {t('about.learnStory')}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </div>
@@ -139,22 +138,22 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
-              Our Services
+              {t('services.title')}
             </span>
             
             <h2 className="mt-4 text-3xl md:text-4xl font-bold">
-              Comprehensive Financial & Agricultural Services
+              {t('services.subtitle')}
             </h2>
             
             <p className="mt-4 text-lg text-gray-600">
-              We offer a range of services designed to support our members' financial needs and agricultural endeavors.
+              {t('services.description')}
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <ServiceCard
-              title="Savings"
-              description="Secure your financial future with our flexible savings plans tailored to your goals and needs."
+              title={t('services.savings.title')}
+              description={t('services.savings.description')}
               icon={
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -165,8 +164,8 @@ const Index = () => {
             />
             
             <ServiceCard
-              title="Loans"
-              description="Access affordable credit for personal, business, or agricultural needs with flexible repayment options."
+              title={t('services.loans.title')}
+              description={t('services.loans.description')}
               icon={
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -177,8 +176,8 @@ const Index = () => {
             />
             
             <ServiceCard
-              title="Remittance"
-              description="Send and receive money quickly and securely with our trusted remittance services."
+              title={t('services.remittance.title')}
+              description={t('services.remittance.description')}
               icon={
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
@@ -189,8 +188,8 @@ const Index = () => {
             />
             
             <ServiceCard
-              title="Mobile Banking"
-              description="Access your accounts, transfer funds, and manage finances conveniently from your mobile device."
+              title={t('hero.mobile.title')}
+              description={t('hero.mobile.description')}
               icon={
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -201,8 +200,8 @@ const Index = () => {
             />
             
             <ServiceCard
-              title="Cooperative Store"
-              description="Purchase quality agricultural inputs, tools, and daily necessities at fair prices at our cooperative store."
+              title={t('services.store.title')}
+              description={t('services.store.description')}
               icon={
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -213,8 +212,8 @@ const Index = () => {
             />
             
             <ServiceCard
-              title="Agricultural Support"
-              description="Get guidance and support for agricultural production, processing, and marketing to enhance productivity."
+              title={t('services.agriculture.title')}
+              description={t('services.agriculture.description')}
               icon={
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
@@ -230,7 +229,7 @@ const Index = () => {
               to="/services" 
               className="button-primary inline-flex items-center"
             >
-              View All Services
+              {t('services.viewAllServices')}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </div>
@@ -243,11 +242,11 @@ const Index = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
             <div>
               <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
-                Stay Updated
+                {t('news.stayUpdated')}
               </span>
               
               <h2 className="mt-4 text-3xl md:text-4xl font-bold">
-                Latest News & Notices
+                {t('news.title')}
               </h2>
             </div>
             
@@ -255,7 +254,7 @@ const Index = () => {
               to="/news" 
               className="mt-4 md:mt-0 text-green-600 font-medium hover:text-green-800 transition-colors flex items-center"
             >
-              View All News
+              {t('news.viewAllNews')}
               <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
           </div>
@@ -268,18 +267,18 @@ const Index = () => {
               >
                 <div className="mb-4 flex items-center justify-between">
                   <span className="inline-block py-1 px-2 rounded bg-green-100 text-green-800 text-xs font-medium">
-                    {notice.type}
+                    {t(notice.typeKey)}
                   </span>
                   <span className="text-sm text-gray-500">{notice.date}</span>
                 </div>
                 
-                <h3 className="text-lg font-semibold mb-3">{notice.title}</h3>
+                <h3 className="text-lg font-semibold mb-3">{t(notice.titleKey)}</h3>
                 
                 <Link 
                   to={notice.link} 
                   className="text-green-600 font-medium hover:text-green-800 transition-colors flex items-center text-sm"
                 >
-                  Read More
+                  {t('news.readMore')}
                   <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
               </div>
@@ -292,28 +291,28 @@ const Index = () => {
       <section className="py-16 bg-green-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2 className="text-2xl font-bold text-center mb-12">
-            Quick Links
+            {t('quickLinks.title')}
           </h2>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <Link to="/members" className="glass-card py-8 px-4 rounded-xl hover-card flex flex-col items-center text-center">
               <Users className="h-8 w-8 text-green-600 mb-4" />
-              <span className="text-sm font-medium">Membership</span>
+              <span className="text-sm font-medium">{t('quickLinks.membership')}</span>
             </Link>
             
             <Link to="/financial" className="glass-card py-8 px-4 rounded-xl hover-card flex flex-col items-center text-center">
               <FileText className="h-8 w-8 text-green-600 mb-4" />
-              <span className="text-sm font-medium">Financial Reports</span>
+              <span className="text-sm font-medium">{t('quickLinks.financialReports')}</span>
             </Link>
             
             <Link to="/community" className="glass-card py-8 px-4 rounded-xl hover-card flex flex-col items-center text-center">
               <Calendar className="h-8 w-8 text-green-600 mb-4" />
-              <span className="text-sm font-medium">Events Calendar</span>
+              <span className="text-sm font-medium">{t('quickLinks.eventsCalendar')}</span>
             </Link>
             
             <Link to="/contact" className="glass-card py-8 px-4 rounded-xl hover-card flex flex-col items-center text-center">
               <MapPin className="h-8 w-8 text-green-600 mb-4" />
-              <span className="text-sm font-medium">Find Us</span>
+              <span className="text-sm font-medium">{t('quickLinks.findUs')}</span>
             </Link>
           </div>
         </div>
@@ -325,22 +324,22 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
-                Contact Us
+                {t('contact.title')}
               </span>
               
               <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-                We're Here to Help
+                {t('contact.subtitle')}
               </h2>
               
               <p className="text-gray-600">
-                Have questions or need assistance? Reach out to us through any of the following channels.
+                {t('contact.description')}
               </p>
               
               <div className="space-y-4 pt-4">
                 <div className="flex items-start">
                   <MapPin className="text-green-600 mt-1 mr-4 flex-shrink-0" />
                   <div>
-                    <h3 className="font-medium">Address</h3>
+                    <h3 className="font-medium">{t('common.address')}</h3>
                     <p className="text-gray-600">रेसुङ्गा नगरपालिका - ८ गुल्मी</p>
                   </div>
                 </div>
@@ -348,7 +347,7 @@ const Index = () => {
                 <div className="flex items-start">
                   <Mail className="text-green-600 mt-1 mr-4 flex-shrink-0" />
                   <div>
-                    <h3 className="font-medium">Email</h3>
+                    <h3 className="font-medium">{t('common.email')}</h3>
                     <a 
                       href="mailto:maitreecooperative@gmail.com"
                       className="text-green-600 hover:text-green-800 transition-colors"
@@ -361,7 +360,7 @@ const Index = () => {
                 <div className="flex items-start">
                   <Phone className="text-green-600 mt-1 mr-4 flex-shrink-0" />
                   <div>
-                    <h3 className="font-medium">Phone</h3>
+                    <h3 className="font-medium">{t('common.phone')}</h3>
                     <a 
                       href="tel:+9779876543210"
                       className="text-green-600 hover:text-green-800 transition-colors"
@@ -377,7 +376,7 @@ const Index = () => {
                   to="/contact" 
                   className="button-primary flex items-center"
                 >
-                  Contact Us
+                  {t('contact.title')}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </div>
@@ -389,7 +388,7 @@ const Index = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center p-6">
                     <MapPin className="h-10 w-10 text-green-600 mx-auto mb-4" />
-                    <h3 className="font-medium">Interactive Map</h3>
+                    <h3 className="font-medium">{t('contact.interactiveMap')}</h3>
                     <p className="text-sm text-gray-600 mt-2">
                       रेसुङ्गा नगरपालिका - ८ गुल्मी
                     </p>
@@ -405,11 +404,11 @@ const Index = () => {
       <section className="py-16 bg-gradient-to-r from-green-600 to-green-700 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
           <h2 className="text-3xl md:text-4xl font-bold">
-            Join Maitree Multipurpose Cooperative Today
+            {t('cta.joinTitle')}
           </h2>
           
           <p className="text-green-100">
-            Become a member and enjoy the benefits of financial services, agricultural support, and community development.
+            {t('cta.joinDescription')}
           </p>
           
           <div className="pt-4">
@@ -417,7 +416,7 @@ const Index = () => {
               to="/members" 
               className="bg-white text-green-700 px-6 py-3 rounded-full shadow-sm hover:shadow-lg transition-all duration-300 font-medium inline-block"
             >
-              Become a Member
+              {t('cta.becomeMember')}
             </Link>
           </div>
         </div>

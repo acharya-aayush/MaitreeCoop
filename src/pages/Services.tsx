@@ -13,6 +13,7 @@ import {
   CreditCard, 
   FileText
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -28,15 +29,17 @@ const ServiceCard = ({ icon, title, description }) => (
 );
 
 const Services = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
       
       <div className="page-header text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h1 className="text-4xl md:text-5xl font-bold">Our Services</h1>
+          <h1 className="text-4xl md:text-5xl font-bold">{t('services.title')}</h1>
           <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-            Explore the comprehensive services we offer to our members and community.
+            {t('services.intro')}
           </p>
         </div>
       </div>
@@ -45,12 +48,11 @@ const Services = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
-              What We Offer
+              {t('services.what.title')}
             </span>
-            <h2 className="mt-4 text-3xl font-bold">Services Designed For You</h2>
+            <h2 className="mt-4 text-3xl font-bold">{t('services.what.subtitle')}</h2>
             <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-              Our service offerings are designed to cater to the financial and practical needs of our members, 
-              all while staying true to our cooperative principles.
+              {t('services.what.description')}
             </p>
           </div>
           
@@ -58,38 +60,38 @@ const Services = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             <ServiceCard 
               icon={<PiggyBank className="h-7 w-7 text-green-600" />}
-              title="Savings (बचत)"
-              description="We offer various savings plans tailored to different needs, helping members build financial security and achieve their goals."
+              title={t('services.main.savings.title')}
+              description={t('services.main.savings.description')}
             />
             
             <ServiceCard 
               icon={<Banknote className="h-7 w-7 text-green-600" />}
-              title="Loans (ऋण)"
-              description="Access affordable credit for personal, business, or agricultural needs with flexible repayment options and competitive rates."
+              title={t('services.main.loans.title')}
+              description={t('services.main.loans.description')}
             />
             
             <ServiceCard 
               icon={<SendHorizontal className="h-7 w-7 text-green-600" />}
-              title="Remittance (रेमिट्यान्स)"
-              description="Send and receive money safely and quickly, with both domestic and international transfer options available."
+              title={t('services.main.remittance.title')}
+              description={t('services.main.remittance.description')}
             />
             
             <ServiceCard 
               icon={<Store className="h-7 w-7 text-green-600" />}
-              title="Cooperative Store (सहकारी पसल)"
-              description="Shop for quality agricultural inputs, household necessities, and more at fair prices at our cooperative store."
+              title={t('services.main.store.title')}
+              description={t('services.main.store.description')}
             />
             
             <ServiceCard 
               icon={<Smartphone className="h-7 w-7 text-green-600" />}
-              title="Mobile Banking (मोबाइल बैंकिङ)"
-              description="Manage your accounts, transfer funds, and access our services conveniently from your mobile device."
+              title={t('services.main.mobile.title')}
+              description={t('services.main.mobile.description')}
             />
             
             <ServiceCard 
               icon={<Sprout className="h-7 w-7 text-green-600" />}
-              title="Agricultural Support"
-              description="Get guidance on farming practices, access to quality seeds and fertilizers, and marketing support for your produce."
+              title={t('services.main.agricultural.title')}
+              description={t('services.main.agricultural.description')}
             />
           </div>
           
@@ -108,50 +110,45 @@ const Services = () => {
               
               <TabsContent value="savings" className="mt-6">
                 <div className="bg-green-50 rounded-xl p-8">
-                  <h3 className="text-2xl font-bold mb-4">Savings Plans</h3>
+                  <h3 className="text-2xl font-bold mb-4">{t('services.savingsPlans.title')}</h3>
                   <p className="mb-6 text-gray-700">
-                    Saving with Maitree helps you build financial security while enabling us to provide loans to other members.
-                    We offer several types of savings accounts to meet different needs:
+                    {t('services.savingsPlans.description')}
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-2">Regular Savings</h4>
+                      <h4 className="font-semibold text-lg mb-2">{t('services.savingsPlans.regular.title')}</h4>
                       <ul className="space-y-2 text-gray-600">
-                        <li>• Minimum deposit: Rs. 100 per month</li>
-                        <li>• Flexible deposits and withdrawals</li>
-                        <li>• Competitive interest rates</li>
-                        <li>• Quarterly interest calculation</li>
+                        {(t('services.savingsPlans.regular.features', { returnObjects: true }) as string[]).map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
                       </ul>
                     </div>
                     
                     <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-2">Fixed Deposit</h4>
+                      <h4 className="font-semibold text-lg mb-2">{t('services.savingsPlans.fixed.title')}</h4>
                       <ul className="space-y-2 text-gray-600">
-                        <li>• Higher interest rates</li>
-                        <li>• Terms from 3 months to 5 years</li>
-                        <li>• Minimum deposit: Rs. 10,000</li>
-                        <li>• Loan facility against deposit</li>
+                        {(t('services.savingsPlans.fixed.features', { returnObjects: true }) as string[]).map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
                       </ul>
                     </div>
                     
                     <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-2">Children's Savings</h4>
+                      <h4 className="font-semibold text-lg mb-2">{t('services.savingsPlans.children.title')}</h4>
                       <ul className="space-y-2 text-gray-600">
-                        <li>• Special account for minors</li>
-                        <li>• Educational benefits</li>
-                        <li>• Long-term saving option</li>
-                        <li>• Bonus on maturity</li>
+                        {(t('services.savingsPlans.children.features', { returnObjects: true }) as string[]).map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
                       </ul>
                     </div>
                     
                     <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-2">Retirement Savings</h4>
+                      <h4 className="font-semibold text-lg mb-2">{t('services.savingsPlans.retirement.title')}</h4>
                       <ul className="space-y-2 text-gray-600">
-                        <li>• Long-term security planning</li>
-                        <li>• Higher interest rates</li>
-                        <li>• Regular monthly contribution</li>
-                        <li>• Additional benefits at maturity</li>
+                        {(t('services.savingsPlans.retirement.features', { returnObjects: true }) as string[]).map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
                       </ul>
                     </div>
                   </div>
@@ -161,7 +158,7 @@ const Services = () => {
                       to="/members" 
                       className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full shadow transition-all duration-300"
                     >
-                      Open a Savings Account
+                      {t('services.savingsPlans.cta')}
                     </Link>
                   </div>
                 </div>
@@ -429,8 +426,8 @@ const Services = () => {
       <section className="py-16 bg-green-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold">Additional Services</h2>
-            <p className="mt-2 text-gray-600">Other ways we support our members and community</p>
+            <h2 className="text-2xl font-bold">{t('services.additional.title')}</h2>
+            <p className="mt-2 text-gray-600">{t('services.additional.subtitle')}</p>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -438,32 +435,32 @@ const Services = () => {
               <div className="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
                 <Users className="h-6 w-6 text-green-600" />
               </div>
-              <h3 className="font-medium mb-2">Financial Literacy</h3>
-              <p className="text-sm text-gray-600">Training programs to improve financial knowledge and skills</p>
+              <h3 className="font-medium mb-2">{t('services.additional.literacy.title')}</h3>
+              <p className="text-sm text-gray-600">{t('services.additional.literacy.description')}</p>
             </div>
             
             <div className="glass-card p-5 rounded-xl text-center hover-card">
               <div className="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
                 <Calendar className="h-6 w-6 text-green-600" />
               </div>
-              <h3 className="font-medium mb-2">Community Events</h3>
-              <p className="text-sm text-gray-600">Regular gatherings, celebrations, and awareness programs</p>
+              <h3 className="font-medium mb-2">{t('services.additional.community.title')}</h3>
+              <p className="text-sm text-gray-600">{t('services.additional.community.description')}</p>
             </div>
             
             <div className="glass-card p-5 rounded-xl text-center hover-card">
               <div className="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
                 <CreditCard className="h-6 w-6 text-green-600" />
               </div>
-              <h3 className="font-medium mb-2">Insurance Services</h3>
-              <p className="text-sm text-gray-600">Various insurance options for health, crops, and livestock</p>
+              <h3 className="font-medium mb-2">{t('services.additional.insurance.title')}</h3>
+              <p className="text-sm text-gray-600">{t('services.additional.insurance.description')}</p>
             </div>
             
             <div className="glass-card p-5 rounded-xl text-center hover-card">
               <div className="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
                 <FileText className="h-6 w-6 text-green-600" />
               </div>
-              <h3 className="font-medium mb-2">Document Services</h3>
-              <p className="text-sm text-gray-600">Assistance with forms, applications, and official documents</p>
+              <h3 className="font-medium mb-2">{t('services.additional.documents.title')}</h3>
+              <p className="text-sm text-gray-600">{t('services.additional.documents.description')}</p>
             </div>
           </div>
         </div>
@@ -472,22 +469,22 @@ const Services = () => {
       {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-2xl font-bold mb-6">Have Questions About Our Services?</h2>
+          <h2 className="text-2xl font-bold mb-6">{t('services.cta.title')}</h2>
           <p className="text-gray-600 mb-8">
-            Our team is ready to help you find the right services for your needs. Contact us today!
+            {t('services.cta.description')}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link 
               to="/contact" 
               className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full shadow transition-all duration-300"
             >
-              Contact Us
+              {t('services.cta.contact')}
             </Link>
             <Link 
               to="/members" 
               className="bg-white border border-green-600 text-green-600 hover:bg-green-50 px-6 py-3 rounded-full shadow transition-all duration-300"
             >
-              Become a Member
+              {t('services.cta.member')}
             </Link>
           </div>
         </div>

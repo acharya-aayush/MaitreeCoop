@@ -2,19 +2,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, MapPin, Users, Briefcase, Heart, Sprout, PiggyBank, Building } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 const AboutUs = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
       
       <div className="page-header text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h1 className="text-4xl md:text-5xl font-bold">About Us</h1>
+          <h1 className="text-4xl md:text-5xl font-bold">{t('about.title')}</h1>
           <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-            Learn about our history, mission, and the people behind Maitree Multipurpose Cooperative.
+            {t('about.intro')}
           </p>
         </div>
       </div>
@@ -24,15 +27,13 @@ const AboutUs = () => {
         <div className="max-w-4xl mx-auto mb-16">
           <div className="text-center mb-12">
             <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
-              Our Mission
+              {t('about.mission.title')}
             </span>
-            <h2 className="mt-4 text-3xl font-bold">Community Empowerment Through Cooperation</h2>
+            <h2 className="mt-4 text-3xl font-bold">{t('about.mission.subtitle')}</h2>
           </div>
           
           <p className="text-gray-700 mb-6">
-            Maitree Multipurpose Cooperative is dedicated to uplifting the local community by leveraging 
-            cooperative values in every aspect of its operation. We believe in the power of cooperation 
-            to transform lives and build sustainable communities.
+            {t('about.mission.description')}
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
@@ -42,9 +43,9 @@ const AboutUs = () => {
                   <Sprout className="h-6 w-6 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg mb-2">Agricultural Excellence</h3>
+                  <h3 className="font-semibold text-lg mb-2">{t('about.goals.agricultural.title')}</h3>
                   <p className="text-gray-600">
-                    Engage in agricultural production, collection, processing, and marketing based on cooperative values.
+                    {t('about.goals.agricultural.description')}
                   </p>
                 </div>
               </div>
@@ -56,9 +57,9 @@ const AboutUs = () => {
                   <Briefcase className="h-6 w-6 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg mb-2">Livestock & Enterprise</h3>
+                  <h3 className="font-semibold text-lg mb-2">{t('about.goals.livestock.title')}</h3>
                   <p className="text-gray-600">
-                    Commercialize animal husbandry and promote self-employment opportunities among members.
+                    {t('about.goals.livestock.description')}
                   </p>
                 </div>
               </div>
@@ -70,9 +71,9 @@ const AboutUs = () => {
                   <Heart className="h-6 w-6 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg mb-2">Community Empowerment</h3>
+                  <h3 className="font-semibold text-lg mb-2">{t('about.goals.empowerment.title')}</h3>
                   <p className="text-gray-600">
-                    Build social capital by increasing cooperation among members, improving living standards through savings and loans at concessional rates.
+                    {t('about.goals.empowerment.description')}
                   </p>
                 </div>
               </div>
@@ -84,9 +85,9 @@ const AboutUs = () => {
                   <Building className="h-6 w-6 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg mb-2">Cooperative Advancement</h3>
+                  <h3 className="font-semibold text-lg mb-2">{t('about.goals.advancement.title')}</h3>
                   <p className="text-gray-600">
-                    Expand the cooperative movement throughout the district and beyond, touching more lives and communities.
+                    {t('about.goals.advancement.description')}
                   </p>
                 </div>
               </div>
@@ -100,9 +101,9 @@ const AboutUs = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
             <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
-              Our Journey
+              {t('about.journey.title')}
             </span>
-            <h2 className="mt-4 text-3xl font-bold">A Brief History & Milestones</h2>
+            <h2 className="mt-4 text-3xl font-bold">{t('about.journey.subtitle')}</h2>
           </div>
           
           <div className="relative">
@@ -115,10 +116,10 @@ const AboutUs = () => {
               <div className="mb-16 flex flex-col md:flex-row items-center">
                 <div className="flex-1 md:text-right md:pr-8 mb-4 md:mb-0">
                   <div className="glass-card p-6 rounded-xl inline-block">
-                    <h3 className="font-bold text-lg text-green-800">Registration & Foundation</h3>
+                    <h3 className="font-bold text-lg text-green-800">{t('about.journey.registration.title')}</h3>
                     <p className="text-sm text-gray-500 mb-2">1st Kartik 2058</p>
                     <p className="text-gray-700">
-                      Registered under Cooperative Act 2048 and Regulation 2049 with 33 members and an initial capital of 13,200.
+                      {t('about.journey.registration.description')}
                     </p>
                   </div>
                 </div>
@@ -136,10 +137,10 @@ const AboutUs = () => {
                 </div>
                 <div className="flex-1 md:pl-8 mb-4 md:mb-0">
                   <div className="glass-card p-6 rounded-xl inline-block">
-                    <h3 className="font-bold text-lg text-green-800">Early Operations</h3>
+                    <h3 className="font-bold text-lg text-green-800">{t('about.journey.early.title')}</h3>
                     <p className="text-sm text-gray-500 mb-2">2058-2064</p>
                     <p className="text-gray-700">
-                      Started with savings & loan programs, microfinance awareness, dairy business, and a fair price shop. Later added electric vehicle service.
+                      {t('about.journey.early.description')}
                     </p>
                   </div>
                 </div>
@@ -149,10 +150,10 @@ const AboutUs = () => {
               <div className="mb-16 flex flex-col md:flex-row items-center">
                 <div className="flex-1 md:text-right md:pr-8 mb-4 md:mb-0">
                   <div className="glass-card p-6 rounded-xl inline-block">
-                    <h3 className="font-bold text-lg text-green-800">First Expansion</h3>
+                    <h3 className="font-bold text-lg text-green-800">{t('about.journey.expansion.title')}</h3>
                     <p className="text-sm text-gray-500 mb-2">2064</p>
                     <p className="text-gray-700">
-                      Expanded operations to 17 Village Development Committees (VDCs), reaching more rural communities.
+                      {t('about.journey.expansion.description')}
                     </p>
                   </div>
                 </div>
@@ -170,10 +171,10 @@ const AboutUs = () => {
                 </div>
                 <div className="flex-1 md:pl-8 mb-4 md:mb-0">
                   <div className="glass-card p-6 rounded-xl inline-block">
-                    <h3 className="font-bold text-lg text-green-800">District-wide Growth</h3>
+                    <h3 className="font-bold text-lg text-green-800">{t('about.journey.growth.title')}</h3>
                     <p className="text-sm text-gray-500 mb-2">2072</p>
                     <p className="text-gray-700">
-                      Operations expanded to 75 gavis in Gulmi and 4 gavis in Arghakhanchi, cementing our regional presence.
+                      {t('about.journey.growth.description')}
                     </p>
                   </div>
                 </div>
@@ -183,13 +184,13 @@ const AboutUs = () => {
               <div className="flex flex-col md:flex-row items-center">
                 <div className="flex-1 md:text-right md:pr-8 mb-4 md:mb-0">
                   <div className="glass-card p-6 rounded-xl inline-block">
-                    <h3 className="font-bold text-lg text-green-800">Multi-District Reach</h3>
+                    <h3 className="font-bold text-lg text-green-800">{t('about.journey.reach.title')}</h3>
                     <p className="text-sm text-gray-500 mb-2">2077 - Present</p>
                     <p className="text-gray-700">
-                      Extended to six districts (Gulmi, Palpa, Arghakhanchi, Kapilbastu, Rupandehi, and Nawalparasi) with headquarters in Tamghas and multiple service centers.
+                      {t('about.journey.reach.description')}
                     </p>
                     <p className="mt-2 font-medium text-green-800">
-                      Today, we proudly serve 13,836 share members!
+                      {t('about.journey.today')}
                     </p>
                   </div>
                 </div>
@@ -208,9 +209,9 @@ const AboutUs = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
-              Our Values
+              {t('about.values.title')}
             </span>
-            <h2 className="mt-4 text-3xl font-bold">What Guides Us</h2>
+            <h2 className="mt-4 text-3xl font-bold">{t('about.values.subtitle')}</h2>
           </div>
           
           <div className="glass-card p-8 rounded-xl">
@@ -220,9 +221,9 @@ const AboutUs = () => {
                   <Users className="h-5 w-5 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2">Community First</h3>
+                  <h3 className="font-semibold mb-2">{t('about.values.community.title')}</h3>
                   <p className="text-gray-600 text-sm">
-                    We prioritize the welfare of our members and the broader community in all our decisions and actions.
+                    {t('about.values.community.description')}
                   </p>
                 </div>
               </div>
@@ -232,9 +233,9 @@ const AboutUs = () => {
                   <PiggyBank className="h-5 w-5 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2">Financial Inclusion</h3>
+                  <h3 className="font-semibold mb-2">{t('about.values.inclusion.title')}</h3>
                   <p className="text-gray-600 text-sm">
-                    We strive to make financial services accessible to all, especially those underserved by traditional banking.
+                    {t('about.values.inclusion.description')}
                   </p>
                 </div>
               </div>
@@ -244,9 +245,9 @@ const AboutUs = () => {
                   <Sprout className="h-5 w-5 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2">Sustainable Growth</h3>
+                  <h3 className="font-semibold mb-2">{t('about.values.sustainability.title')}</h3>
                   <p className="text-gray-600 text-sm">
-                    We believe in growing our cooperative in ways that are environmentally sustainable and socially responsible.
+                    {t('about.values.sustainability.description')}
                   </p>
                 </div>
               </div>
@@ -256,9 +257,9 @@ const AboutUs = () => {
                   <Heart className="h-5 w-5 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-2">Compassionate Service</h3>
+                  <h3 className="font-semibold mb-2">{t('about.values.service.title')}</h3>
                   <p className="text-gray-600 text-sm">
-                    We approach our work with empathy and a genuine desire to improve lives through our services.
+                    {t('about.values.service.description')}
                   </p>
                 </div>
               </div>
@@ -271,11 +272,11 @@ const AboutUs = () => {
       <section className="py-16 bg-gradient-to-r from-green-600 to-green-700 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
           <h2 className="text-3xl md:text-4xl font-bold">
-            Join Our Cooperative Community
+            {t('about.cta.title')}
           </h2>
           
           <p className="text-green-100">
-            Become a member and be part of a movement that's transforming lives and building stronger communities.
+            {t('about.cta.description')}
           </p>
           
           <div className="pt-4">
@@ -283,7 +284,7 @@ const AboutUs = () => {
               to="/members" 
               className="bg-white text-green-700 px-6 py-3 rounded-full shadow-sm hover:shadow-lg transition-all duration-300 font-medium inline-block"
             >
-              Become a Member
+              {t('about.cta.button')}
             </Link>
           </div>
         </div>

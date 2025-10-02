@@ -2,12 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -30,16 +33,16 @@ const Navbar = () => {
   }, [location]);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About Us', path: '/about' },
-    { name: 'Services', path: '/services' },
-    { name: 'Members', path: '/members' },
-    { name: 'News', path: '/news' },
-    { name: 'Gallery', path: '/gallery' },
-    { name: 'Board', path: '/board' },
-    { name: 'Financial', path: '/financial' },
-    { name: 'Contact', path: '/contact' },
-    { name: 'Community', path: '/community' },
+    { name: t('navigation.home'), path: '/' },
+    { name: t('navigation.aboutUs'), path: '/about' },
+    { name: t('navigation.services'), path: '/services' },
+    { name: t('navigation.members'), path: '/members' },
+    { name: t('navigation.news'), path: '/news' },
+    { name: t('navigation.gallery'), path: '/gallery' },
+    { name: t('navigation.board'), path: '/board' },
+    { name: t('navigation.financial'), path: '/financial' },
+    { name: t('navigation.contact'), path: '/contact' },
+    { name: t('navigation.community'), path: '/community' },
   ];
 
   return (
@@ -54,29 +57,29 @@ const Navbar = () => {
           <div className="flex items-center justify-start">
             <Link to="/" className="flex items-center">
               <img 
-                src="/lovable-uploads/5735d83e-b1d9-4a09-b942-bd955fb979f5.png" 
+                src="/images/logo.png" 
                 alt="Maitree Cooperative Logo" 
                 className="h-12 md:h-14 mr-2"
               />
-              <div className="flex flex-col">
+              <div className="flex flex-col -ml-2">
                 <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-green-800">
                   Maitree Cooperative
                 </span>
-                <span className="text-xs text-green-600 hidden md:inline-block">
-                  Empowering Communities, Strengthening Livelihoods
+                <span className="text-[10px] text-green-600 hidden md:inline-block leading-tight">
+                  {t('navigation.tagline')}
                 </span>
               </div>
             </Link>
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-6 lg:space-x-8">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
                 className={cn(
-                  "text-sm font-medium transition-colors duration-300 hover:text-primary",
+                  "text-sm font-medium transition-colors duration-300 hover:text-primary whitespace-nowrap",
                   location.pathname === link.path ? "text-primary" : "text-foreground/80"
                 )}
               >
@@ -85,17 +88,19 @@ const Navbar = () => {
             ))}
           </div>
           
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center space-x-4">
+            <LanguageSwitcher />
             <Link 
               to="/members"
-              className="ml-8 px-5 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium bg-primary text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50 transition-all duration-300"
+              className="px-5 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium bg-primary text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50 transition-all duration-300"
             >
-              Member Login
+              {t('navigation.members')}
             </Link>
           </div>
           
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center space-x-2">
+            <LanguageSwitcher />
             <button
               onClick={toggleMenu}
               className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
@@ -137,7 +142,7 @@ const Navbar = () => {
             to="/members"
             className="block mt-4 px-3 py-2 rounded-md text-base font-medium bg-primary text-white hover:bg-primary/90"
           >
-            Member Login
+            {t('navigation.members')}
           </Link>
         </div>
       </div>

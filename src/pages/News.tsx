@@ -1,36 +1,11 @@
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 const News = () => {
-  // Sample news data
-  const newsItems = [
-    {
-      id: 1,
-      title: "Annual General Meeting 2080",
-      date: "2080-03-15",
-      category: "Notice",
-      excerpt: "The Annual General Meeting for the fiscal year 2079/80 will be held on Ashad 15th at the cooperative headquarters.",
-      content: "All members are cordially invited to attend the Annual General Meeting for the fiscal year 2079/80. The meeting will discuss the annual report, financial statements, and elect new board members."
-    },
-    {
-      id: 2,
-      title: "New Agricultural Loan Program Launched",
-      date: "2080-02-10",
-      category: "News",
-      excerpt: "Introducing our new agricultural loan program with reduced interest rates and flexible repayment options for farmers.",
-      content: "We are excited to announce our new agricultural loan program designed specifically for small-scale farmers. The program offers loans at competitive interest rates with flexible repayment terms tailored to harvest cycles."
-    },
-    {
-      id: 3,
-      title: "Mobile Banking App Update",
-      date: "2080-01-05",
-      category: "Notice",
-      excerpt: "Important update for our mobile banking application. All users are requested to update to the latest version.",
-      content: "We have released an important security update for our mobile banking application. All users are requested to update to the latest version from the app store or by visiting our office."
-    }
-  ];
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen bg-white">
@@ -38,9 +13,9 @@ const News = () => {
       
       <div className="page-header text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h1 className="text-4xl md:text-5xl font-bold">News & Notices</h1>
+          <h1 className="text-4xl md:text-5xl font-bold">{t('news.title')}</h1>
           <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-            Stay updated with the latest announcements, events, and news from our cooperative.
+            {t('news.intro')}
           </p>
         </div>
       </div>
@@ -48,31 +23,31 @@ const News = () => {
       <div className="section-container">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-green-800">Recent Updates</h2>
-              <div className="flex space-x-2">
-                <button className="px-4 py-2 bg-white rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 border border-gray-200">
-                  All
-                </button>
-                <button className="px-4 py-2 bg-green-100 rounded-md shadow-sm text-sm font-medium text-green-800 hover:bg-green-200 border border-green-200">
-                  News
-                </button>
-                <button className="px-4 py-2 bg-white rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 border border-gray-200">
-                  Notices
-                </button>
-              </div>
+            <h2 className="text-2xl font-bold mb-6">{t('news.recentUpdates')}</h2>
+            
+            {/* Filter Tabs */}
+            <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg mb-8 w-fit">
+              <button className="px-4 py-2 text-sm font-medium rounded-md bg-white text-green-600 shadow-sm">
+                {t('news.categories.all')}
+              </button>
+              <button className="px-4 py-2 text-sm font-medium rounded-md text-gray-600 hover:text-green-600">
+                {t('news.categories.news')}
+              </button>
+              <button className="px-4 py-2 text-sm font-medium rounded-md text-gray-600 hover:text-green-600">
+                {t('news.categories.notices')}
+              </button>
             </div>
           </div>
           
           <div className="space-y-8">
-            {newsItems.map((item) => (
-              <div key={item.id} className="glass-card p-6 rounded-xl overflow-hidden hover-card">
+            {Object.entries(t('news.items', { returnObjects: true })).map(([key, item]) => (
+              <div key={key} className="glass-card p-6 rounded-xl overflow-hidden hover-card">
                 <div className="flex flex-col sm:flex-row justify-between mb-3">
                   <div>
                     <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-                      item.category === 'Notice' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'
+                      item.type === t('news.categories.notices') ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'
                     }`}>
-                      {item.category}
+                      {item.type}
                     </span>
                   </div>
                   <time className="text-sm text-gray-500 mt-1 sm:mt-0">{item.date}</time>
@@ -83,7 +58,7 @@ const News = () => {
                 
                 <div className="border-t border-gray-100 pt-4 flex items-center justify-between">
                   <button className="text-sm font-medium text-green-600 hover:text-green-800 transition-colors">
-                    Read More
+                    {t('news.readMore')}
                   </button>
                   
                   <div className="flex space-x-3">
@@ -105,7 +80,7 @@ const News = () => {
           
           <div className="mt-12 flex justify-center">
             <button className="px-6 py-3 bg-white border border-gray-200 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">
-              Load More
+              {t('news.loadMore')}
             </button>
           </div>
         </div>
