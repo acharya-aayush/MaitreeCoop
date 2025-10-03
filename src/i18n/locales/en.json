@@ -138,36 +138,176 @@
   "services": {
     "title": "Our Services",
     "intro": "Explore the comprehensive services we offer to our members and community.",
+    "tabs": {
+      "savings": "Savings",
+      "loans": "Loans", 
+      "remittance": "Remittance",
+      "store": "Cooperative Store",
+      "mobile": "Mobile Banking"
+    },
+    "savings": {
+      "title": "Savings",
+      "description": "We offer various savings plans tailored to different needs, helping members build financial security and achieve their goals."
+    },
+    "loans": {
+      "title": "Loans",
+      "description": "We provide accessible and affordable credit to our members to help them meet their financial needs, grow their businesses, and improve their lives.",
+      "agricultural": {
+        "title": "Agricultural Loans",
+        "description": "Support for farming activities, equipment purchase, and seasonal requirements.",
+        "features": [
+          "Lower interest rates for farming",
+          "Flexible repayment schedules aligned with harvest cycles",
+          "Loans for seeds, equipment, irrigation, and more"
+        ]
+      },
+      "business": {
+        "title": "Business Loans",
+        "description": "Financing for small businesses, entrepreneurs, and self-employment initiatives.",
+        "features": [
+          "Capital for new and existing businesses",
+          "Competitive interest rates",
+          "Business guidance and support"
+        ]
+      },
+      "personal": {
+        "title": "Personal Loans",
+        "description": "Credit for personal needs like education, health, home improvement, etc.",
+        "features": [
+          "Quick processing for emergencies",
+          "Flexible loan amounts based on need",
+          "Simple documentation process"
+        ]
+      },
+      "livestock": {
+        "title": "Livestock Loans",
+        "description": "Special loans for animal husbandry and livestock business development.",
+        "features": [
+          "Financing for purchase of livestock",
+          "Support for dairy and poultry business",
+          "Loans for sheds, feed, and equipment"
+        ]
+      },
+      "apply": "Apply for a Loan"
+    },
+    "remittance": {
+      "title": "Remittance",
+      "description": "Our remittance service allows for safe, quick, and affordable money transfers both within Nepal and internationally.",
+      "domestic": {
+        "title": "Domestic Remittance",
+        "description": "Send money to family and friends across Nepal quickly and securely.",
+        "features": [
+          "Same-day transfers",
+          "Low service charges",
+          "ID verification for security",
+          "Available at all our service centers"
+        ]
+      },
+      "international": {
+        "title": "International Remittance",
+        "description": "Receive money from family members working abroad safely and conveniently.",
+        "features": [
+          "Partnerships with global remittance providers",
+          "Competitive exchange rates",
+          "Quick processing time",
+          "SMS notifications upon receipt"
+        ]
+      },
+      "partners": {
+        "title": "Our Remittance Partners:",
+        "list": "Western Union, IME, Prabhu Money Transfer, City Express"
+      }
+    },
+    "store": {
+      "title": "Cooperative Store",
+      "description": "Our Cooperative Store provides quality products at fair prices, ensuring our members have access to essential goods and agricultural inputs.",
+      "products": {
+        "title": "Products Available:",
+        "agricultural": {
+          "title": "Agricultural Inputs",
+          "items": [
+            "Quality seeds",
+            "Organic fertilizers",
+            "Plant protection products",
+            "Farming tools and equipment"
+          ]
+        },
+        "livestock": {
+          "title": "Livestock Supplies",
+          "items": [
+            "Animal feed",
+            "Veterinary medicines",
+            "Dairy supplies",
+            "Poultry equipment"
+          ]
+        },
+        "daily": {
+          "title": "Daily Essentials",
+          "items": [
+            "Groceries and food items",
+            "Household goods",
+            "Personal care products",
+            "Stationery items"
+          ]
+        }
+      },
+      "benefits": {
+        "title": "Benefits of Shopping at Our Store:",
+        "list": [
+          "Fair pricing without unnecessary markup",
+          "Quality-checked products",
+          "Special discounts for cooperative members",
+          "Expert advice on agricultural inputs",
+          "Support for local producers and suppliers"
+        ]
+      },
+      "visit": "Visit our store at our main office in Tamghas or at any of our service centers.",
+      "findLocations": "Find Our Locations"
+    },
+    "mobile": {
+      "title": "Mobile Banking",
+      "description": "Our Mobile Banking service brings the cooperative to your fingertips, allowing you to manage your accounts and conduct transactions from anywhere, anytime.",
+      "features": {
+        "title": "Features",
+        "list": [
+          "Check account balances and transaction history",
+          "Transfer funds between accounts",
+          "Pay bills and make payments",
+          "Apply for loans",
+          "Locate nearest service centers",
+          "Receive transaction notifications"
+        ]
+      },
+      "benefits": {
+        "title": "Benefits",
+        "list": [
+          "24/7 access to your accounts",
+          "Convenience of banking from anywhere",
+          "Save time and travel costs",
+          "Secure and encrypted transactions",
+          "User-friendly interface",
+          "Free service for members"
+        ]
+      },
+      "howToStart": {
+        "title": "How to Get Started",
+        "steps": [
+          "Visit any of our service centers with your membership card and valid ID",
+          "Complete the mobile banking registration form",
+          "Download our mobile app from Google Play Store or App Store",
+          "Log in with your provided credentials and set up your password",
+          "Start using mobile banking services immediately"
+        ]
+      }
+    },
+    "agriculture": {
+      "title": "Agricultural Support",
+      "description": "Get guidance on farming practices, access to quality seeds and fertilizers, and marketing support for your produce."
+    },
     "what": {
       "title": "What We Offer",
       "subtitle": "Services Designed For You",
       "description": "Our service offerings are designed to cater to the financial and practical needs of our members, all while staying true to our cooperative principles."
-    },
-    "main": {
-      "savings": {
-        "title": "Savings (बचत)",
-        "description": "We offer various savings plans tailored to different needs, helping members build financial security and achieve their goals."
-      },
-      "loans": {
-        "title": "Loans (ऋण)",
-        "description": "Access affordable credit for personal, business, or agricultural needs with flexible repayment options and competitive rates."
-      },
-      "remittance": {
-        "title": "Remittance (रेमिट्यान्स)",
-        "description": "Send and receive money safely and quickly, with both domestic and international transfer options available."
-      },
-      "store": {
-        "title": "Cooperative Store (सहकारी पसल)",
-        "description": "Shop for quality agricultural inputs, household necessities, and more at fair prices at our cooperative store."
-      },
-      "mobile": {
-        "title": "Mobile Banking (मोबाइल बैंकिङ)",
-        "description": "Manage your accounts, transfer funds, and access our services conveniently from your mobile device."
-      },
-      "agricultural": {
-        "title": "Agricultural Support",
-        "description": "Get guidance on farming practices, access to quality seeds and fertilizers, and marketing support for your produce."
-      }
     },
     "savingsPlans": {
       "title": "Savings Plans",
@@ -374,6 +514,7 @@
       "title": "Our Service Centers",
       "subtitle": "Find us at these locations across multiple districts",
       "phoneLabel": "Phone",
+      "branch": "Branch Office",
       "centers": {
         "tamghas": {
           "name": "Tamghas (Head Office)",
@@ -638,5 +779,12 @@
     "termsOfService": "Terms of Service",
     "sitemap": "Sitemap",
     "copyright": "© 2025 Maitree Multipurpose Cooperative. All rights reserved."
+  },
+  "map": {
+    "loading": "Loading map...",
+    "getDirections": "Get Directions",
+    "viewOnGoogleMaps": "View on Google Maps",
+    "mainOfficeLocation": "Main Office Location",
+    "branchLocations": "Branch Locations"
   }
 }

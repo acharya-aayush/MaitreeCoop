@@ -44,16 +44,3 @@ public/images/
 2. Place board member photos in `public/images/board/`
 3. Place staff photos in `public/images/staff/`
 4. Replace the cooperative logo at `public/images/logo.png`
-
-## Current Status
-
-✅ Directory structure created
-✅ Lovable references removed
-✅ Code updated to use new image paths
-⏳ Actual photos need to be added (currently placeholder files)
-
-## Notes
-
-- All Lovable upload references have been cleaned up
-- The application now uses a clean, organized image structure
-- Photos will automatically appear once you add them with the correct filenames

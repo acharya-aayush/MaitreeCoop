@@ -60,38 +60,38 @@ const Services = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             <ServiceCard 
               icon={<PiggyBank className="h-7 w-7 text-green-600" />}
-              title={t('services.main.savings.title')}
-              description={t('services.main.savings.description')}
+              title={t('services.savings.title')}
+              description={t('services.savings.description')}
             />
             
             <ServiceCard 
               icon={<Banknote className="h-7 w-7 text-green-600" />}
-              title={t('services.main.loans.title')}
-              description={t('services.main.loans.description')}
+              title={t('services.loans.title')}
+              description={t('services.loans.description')}
             />
             
             <ServiceCard 
               icon={<SendHorizontal className="h-7 w-7 text-green-600" />}
-              title={t('services.main.remittance.title')}
-              description={t('services.main.remittance.description')}
+              title={t('services.remittance.title')}
+              description={t('services.remittance.description')}
             />
             
             <ServiceCard 
               icon={<Store className="h-7 w-7 text-green-600" />}
-              title={t('services.main.store.title')}
-              description={t('services.main.store.description')}
+              title={t('services.store.title')}
+              description={t('services.store.description')}
             />
             
             <ServiceCard 
               icon={<Smartphone className="h-7 w-7 text-green-600" />}
-              title={t('services.main.mobile.title')}
-              description={t('services.main.mobile.description')}
+              title={t('services.mobile.title')}
+              description={t('services.mobile.description')}
             />
             
             <ServiceCard 
               icon={<Sprout className="h-7 w-7 text-green-600" />}
-              title={t('services.main.agricultural.title')}
-              description={t('services.main.agricultural.description')}
+              title={t('services.agriculture.title')}
+              description={t('services.agriculture.description')}
             />
           </div>
           
@@ -100,11 +100,11 @@ const Services = () => {
             <Tabs defaultValue="savings" className="w-full">
               <div className="flex justify-center mb-8">
                 <TabsList className="bg-green-50">
-                  <TabsTrigger value="savings">Savings</TabsTrigger>
-                  <TabsTrigger value="loans">Loans</TabsTrigger>
-                  <TabsTrigger value="remittance">Remittance</TabsTrigger>
-                  <TabsTrigger value="store">Cooperative Store</TabsTrigger>
-                  <TabsTrigger value="mobile">Mobile Banking</TabsTrigger>
+                  <TabsTrigger value="savings">{t('services.tabs.savings')}</TabsTrigger>
+                  <TabsTrigger value="loans">{t('services.tabs.loans')}</TabsTrigger>
+                  <TabsTrigger value="remittance">{t('services.tabs.remittance')}</TabsTrigger>
+                  <TabsTrigger value="store">{t('services.tabs.store')}</TabsTrigger>
+                  <TabsTrigger value="mobile">{t('services.tabs.mobile')}</TabsTrigger>
                 </TabsList>
               </div>
               
@@ -166,58 +166,57 @@ const Services = () => {
               
               <TabsContent value="loans" className="mt-6">
                 <div className="bg-green-50 rounded-xl p-8">
-                  <h3 className="text-2xl font-bold mb-4">Loan Services</h3>
+                  <h3 className="text-2xl font-bold mb-4">{t('services.loans.title')}</h3>
                   <p className="mb-6 text-gray-700">
-                    We provide accessible and affordable credit to our members to help them meet their financial needs, 
-                    grow their businesses, and improve their lives.
+                    {t('services.loans.description')}
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-2">Agricultural Loans</h4>
+                      <h4 className="font-semibold text-lg mb-2">{t('services.loans.agricultural.title')}</h4>
                       <p className="text-gray-600 mb-3">
-                        Support for farming activities, equipment purchase, and seasonal requirements.
+                        {t('services.loans.agricultural.description')}
                       </p>
                       <ul className="space-y-1 text-gray-600 text-sm">
-                        <li>• Lower interest rates for farming</li>
-                        <li>• Flexible repayment schedules aligned with harvest cycles</li>
-                        <li>• Loans for seeds, equipment, irrigation, and more</li>
+                        {(t('services.loans.agricultural.features', { returnObjects: true }) as string[]).map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
                       </ul>
                     </div>
                     
                     <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-2">Business Loans</h4>
+                      <h4 className="font-semibold text-lg mb-2">{t('services.loans.business.title')}</h4>
                       <p className="text-gray-600 mb-3">
-                        Financing for small businesses, entrepreneurs, and self-employment initiatives.
+                        {t('services.loans.business.description')}
                       </p>
                       <ul className="space-y-1 text-gray-600 text-sm">
-                        <li>• Capital for new and existing businesses</li>
-                        <li>• Competitive interest rates</li>
-                        <li>• Business guidance and support</li>
+                        {(t('services.loans.business.features', { returnObjects: true }) as string[]).map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
                       </ul>
                     </div>
                     
                     <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-2">Personal Loans</h4>
+                      <h4 className="font-semibold text-lg mb-2">{t('services.loans.personal.title')}</h4>
                       <p className="text-gray-600 mb-3">
-                        Credit for personal needs like education, health, home improvement, etc.
+                        {t('services.loans.personal.description')}
                       </p>
                       <ul className="space-y-1 text-gray-600 text-sm">
-                        <li>• Quick processing for emergencies</li>
-                        <li>• Flexible loan amounts based on need</li>
-                        <li>• Simple documentation process</li>
+                        {(t('services.loans.personal.features', { returnObjects: true }) as string[]).map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
                       </ul>
                     </div>
                     
                     <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-2">Livestock Loans</h4>
+                      <h4 className="font-semibold text-lg mb-2">{t('services.loans.livestock.title')}</h4>
                       <p className="text-gray-600 mb-3">
-                        Special loans for animal husbandry and livestock business development.
+                        {t('services.loans.livestock.description')}
                       </p>
                       <ul className="space-y-1 text-gray-600 text-sm">
-                        <li>• Financing for purchase of livestock</li>
-                        <li>• Support for dairy and poultry business</li>
-                        <li>• Loans for sheds, feed, and equipment</li>
+                        {(t('services.loans.livestock.features', { returnObjects: true }) as string[]).map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
                       </ul>
                     </div>
                   </div>
@@ -227,7 +226,7 @@ const Services = () => {
                       to="/members" 
                       className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full shadow transition-all duration-300"
                     >
-                      Apply for a Loan
+                      {t('services.loans.apply')}
                     </Link>
                   </div>
                 </div>
@@ -235,54 +234,45 @@ const Services = () => {
               
               <TabsContent value="remittance" className="mt-6">
                 <div className="bg-green-50 rounded-xl p-8">
-                  <h3 className="text-2xl font-bold mb-4">Remittance Services</h3>
+                  <h3 className="text-2xl font-bold mb-4">{t('services.remittance.title')}</h3>
                   <p className="mb-6 text-gray-700">
-                    Our remittance service allows for safe, quick, and affordable money transfers both within Nepal and internationally.
+                    {t('services.remittance.description')}
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-2">Domestic Remittance</h4>
+                      <h4 className="font-semibold text-lg mb-2">{t('services.remittance.domestic.title')}</h4>
                       <p className="text-gray-600 mb-3">
-                        Send money to family and friends across Nepal quickly and securely.
+                        {t('services.remittance.domestic.description')}
                       </p>
                       <ul className="space-y-2 text-gray-600">
-                        <li>• Same-day transfers</li>
-                        <li>• Low service charges</li>
-                        <li>• ID verification for security</li>
-                        <li>• Available at all our service centers</li>
+                        {(t('services.remittance.domestic.features', { returnObjects: true }) as string[]).map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
                       </ul>
                     </div>
                     
                     <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-2">International Remittance</h4>
+                      <h4 className="font-semibold text-lg mb-2">{t('services.remittance.international.title')}</h4>
                       <p className="text-gray-600 mb-3">
-                        Receive money from family members working abroad safely and conveniently.
+                        {t('services.remittance.international.description')}
                       </p>
                       <ul className="space-y-2 text-gray-600">
-                        <li>• Partnerships with global remittance providers</li>
-                        <li>• Competitive exchange rates</li>
-                        <li>• Quick processing time</li>
-                        <li>• SMS notifications upon receipt</li>
+                        {(t('services.remittance.international.features', { returnObjects: true }) as string[]).map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
                       </ul>
                     </div>
                   </div>
                   
                   <div className="mt-8">
-                    <h4 className="font-semibold text-lg mb-2">Our Remittance Partners:</h4>
+                    <h4 className="font-semibold text-lg mb-2">{t('services.remittance.partners.title')}</h4>
                     <div className="flex flex-wrap gap-4 justify-center">
-                      <div className="bg-white p-4 rounded-lg shadow-sm">
-                        <p className="font-medium">Western Union</p>
-                      </div>
-                      <div className="bg-white p-4 rounded-lg shadow-sm">
-                        <p className="font-medium">IME</p>
-                      </div>
-                      <div className="bg-white p-4 rounded-lg shadow-sm">
-                        <p className="font-medium">Prabhu Money Transfer</p>
-                      </div>
-                      <div className="bg-white p-4 rounded-lg shadow-sm">
-                        <p className="font-medium">City Express</p>
-                      </div>
+                      {t('services.remittance.partners.list').split(', ').map((partner, index) => (
+                        <div key={index} className="bg-white p-4 rounded-lg shadow-sm">
+                          <p className="font-medium">{partner}</p>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -290,129 +280,100 @@ const Services = () => {
               
               <TabsContent value="store" className="mt-6">
                 <div className="bg-green-50 rounded-xl p-8">
-                  <h3 className="text-2xl font-bold mb-4">Cooperative Store</h3>
+                  <h3 className="text-2xl font-bold mb-4">{t('services.store.title')}</h3>
                   <p className="mb-6 text-gray-700">
-                    Our Cooperative Store (सहकारी पसल) provides quality products at fair prices, ensuring our members have 
-                    access to essential goods and agricultural inputs.
+                    {t('services.store.description')}
                   </p>
                   
                   <div className="glass-card p-6 rounded-xl mb-6">
-                    <h4 className="font-semibold text-lg mb-3">Products Available:</h4>
+                    <h4 className="font-semibold text-lg mb-3">{t('services.store.products.title')}</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
-                        <h5 className="font-medium text-green-700 mb-2">Agricultural Inputs</h5>
+                        <h5 className="font-medium text-green-700 mb-2">{t('services.store.products.agricultural.title')}</h5>
                         <ul className="space-y-1 text-gray-600">
-                          <li>• Quality seeds</li>
-                          <li>• Organic fertilizers</li>
-                          <li>• Plant protection products</li>
-                          <li>• Farming tools and equipment</li>
+                          {(t('services.store.products.agricultural.items', { returnObjects: true }) as string[]).map((item, index) => (
+                            <li key={index}>• {item}</li>
+                          ))}
                         </ul>
                       </div>
                       
                       <div>
-                        <h5 className="font-medium text-green-700 mb-2">Livestock Supplies</h5>
+                        <h5 className="font-medium text-green-700 mb-2">{t('services.store.products.livestock.title')}</h5>
                         <ul className="space-y-1 text-gray-600">
-                          <li>• Animal feed</li>
-                          <li>• Veterinary medicines</li>
-                          <li>• Dairy supplies</li>
-                          <li>• Poultry equipment</li>
+                          {(t('services.store.products.livestock.items', { returnObjects: true }) as string[]).map((item, index) => (
+                            <li key={index}>• {item}</li>
+                          ))}
                         </ul>
                       </div>
                       
                       <div>
-                        <h5 className="font-medium text-green-700 mb-2">Daily Essentials</h5>
+                        <h5 className="font-medium text-green-700 mb-2">{t('services.store.products.daily.title')}</h5>
                         <ul className="space-y-1 text-gray-600">
-                          <li>• Groceries and food items</li>
-                          <li>• Household goods</li>
-                          <li>• Personal care products</li>
-                          <li>• Stationery items</li>
+                          {(t('services.store.products.daily.items', { returnObjects: true }) as string[]).map((item, index) => (
+                            <li key={index}>• {item}</li>
+                          ))}
                         </ul>
                       </div>
                     </div>
                   </div>
                   
                   <div className="glass-card p-6 rounded-xl">
-                    <h4 className="font-semibold text-lg mb-3">Benefits of Shopping at Our Store:</h4>
+                    <h4 className="font-semibold text-lg mb-3">{t('services.store.benefits.title')}</h4>
                     <ul className="space-y-2 text-gray-600">
-                      <li>• Fair pricing without unnecessary markup</li>
-                      <li>• Quality-checked products</li>
-                      <li>• Special discounts for cooperative members</li>
-                      <li>• Expert advice on agricultural inputs</li>
-                      <li>• Support for local producers and suppliers</li>
+                      {(t('services.store.benefits.list', { returnObjects: true }) as string[]).map((benefit, index) => (
+                        <li key={index}>• {benefit}</li>
+                      ))}
                     </ul>
                   </div>
                   
                   <div className="mt-8 text-center">
                     <p className="text-gray-700 mb-4">
-                      Visit our store at our main office in Tamghas or at any of our service centers.
+                      {t('services.store.visit')}
                     </p>
                     <Link 
                       to="/contact" 
                       className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full shadow transition-all duration-300"
                     >
-                      Find Our Locations
+                      {t('services.store.findLocations')}
                     </Link>
                   </div>
                 </div>
-              </TabsContent>
-              
-              <TabsContent value="mobile" className="mt-6">
+              </TabsContent>              <TabsContent value="mobile" className="mt-6">
                 <div className="bg-green-50 rounded-xl p-8">
-                  <h3 className="text-2xl font-bold mb-4">Mobile Banking</h3>
+                  <h3 className="text-2xl font-bold mb-4">{t('services.mobile.title')}</h3>
                   <p className="mb-6 text-gray-700">
-                    Our Mobile Banking service (मोबाइल बैंकिङ) brings the cooperative to your fingertips, allowing you to 
-                    manage your accounts and conduct transactions from anywhere, anytime.
+                    {t('services.mobile.description')}
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-3">Features</h4>
+                      <h4 className="font-semibold text-lg mb-3">{t('services.mobile.features.title')}</h4>
                       <ul className="space-y-2 text-gray-600">
-                        <li>• Check account balances and transaction history</li>
-                        <li>• Transfer funds between accounts</li>
-                        <li>• Pay bills and make payments</li>
-                        <li>• Apply for loans</li>
-                        <li>• Locate nearest service centers</li>
-                        <li>• Receive transaction notifications</li>
+                        {(t('services.mobile.features.list', { returnObjects: true }) as string[]).map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
                       </ul>
                     </div>
                     
                     <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-3">Benefits</h4>
+                      <h4 className="font-semibold text-lg mb-3">{t('services.mobile.benefits.title')}</h4>
                       <ul className="space-y-2 text-gray-600">
-                        <li>• 24/7 access to your accounts</li>
-                        <li>• Convenience of banking from anywhere</li>
-                        <li>• Save time and travel costs</li>
-                        <li>• Secure and encrypted transactions</li>
-                        <li>• User-friendly interface</li>
-                        <li>• Free service for members</li>
+                        {(t('services.mobile.benefits.list', { returnObjects: true }) as string[]).map((benefit, index) => (
+                          <li key={index}>• {benefit}</li>
+                        ))}
                       </ul>
                     </div>
                   </div>
                   
                   <div className="text-center bg-white rounded-xl p-6 max-w-xl mx-auto">
-                    <h4 className="font-semibold text-lg mb-3">How to Get Started</h4>
+                    <h4 className="font-semibold text-lg mb-3">{t('services.mobile.howToStart.title')}</h4>
                     <ol className="space-y-3 text-left text-gray-700">
-                      <li className="flex items-start">
-                        <span className="bg-green-100 text-green-800 rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
-                        <span>Visit any of our service centers with your membership card and valid ID</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-green-100 text-green-800 rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
-                        <span>Complete the mobile banking registration form</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-green-100 text-green-800 rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
-                        <span>Download our mobile app from Google Play Store or App Store</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-green-100 text-green-800 rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
-                        <span>Log in with your provided credentials and set up your password</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="bg-green-100 text-green-800 rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">5</span>
-                        <span>Start using mobile banking services immediately</span>
-                      </li>
+                      {(t('services.mobile.howToStart.steps', { returnObjects: true }) as string[]).map((step, index) => (
+                        <li key={index} className="flex items-start">
+                          <span className="bg-green-100 text-green-800 rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">{index + 1}</span>
+                          <span>{step}</span>
+                        </li>
+                      ))}
                     </ol>
                   </div>
                 </div>

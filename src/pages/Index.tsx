@@ -8,6 +8,7 @@ import Hero from '@/components/Hero';
 import ServiceCard from '@/components/ServiceCard';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import GoogleMap from '@/components/GoogleMap';
 
 const Index = () => {
   const aboutSectionRef = useRef<HTMLDivElement>(null);
@@ -38,23 +39,23 @@ const Index = () => {
   const notices = [
     {
       id: 1,
-      titleKey: 'news.items.agm',
+      titleKey: 'news.items.agm.title',
       date: 'June 15, 2023',
-      typeKey: 'news.categories.meeting',
+      typeKey: 'news.categories.notices',
       link: '/news/annual-general-meeting'
     },
     {
       id: 2,
-      titleKey: 'news.items.loanProgram',
+      titleKey: 'news.items.loanProgram.title',
       date: 'May 28, 2023',
-      typeKey: 'news.categories.announcement',
+      typeKey: 'news.categories.news',
       link: '/news/agricultural-loan-program'
     },
     {
       id: 3,
-      titleKey: 'news.items.mobileUpdate',
+      titleKey: 'news.items.mobileUpdate.title',
       date: 'May 15, 2023',
-      typeKey: 'news.categories.update',
+      typeKey: 'news.categories.notices',
       link: '/news/mobile-banking-update'
     }
   ];
@@ -395,6 +396,60 @@ const Index = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Find Us Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase mb-4">
+                {t('map.mainOfficeLocation')}
+              </span>
+              
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                {t('contact.getInTouch.title')}
+              </h2>
+              
+              <div className="space-y-4 mb-8">
+                <div className="flex items-start">
+                  <MapPin className="h-5 w-5 text-green-600 mt-1 mr-3" />
+                  <div>
+                    <p className="font-medium">मैत्री बहुउद्देश्यीय सहकारी संस्था</p>
+                    <p className="text-gray-600">रेसुङ्गा नगरपालिका - ८, गुल्मी</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center">
+                  <Phone className="h-5 w-5 text-green-600 mr-3" />
+                  <p className="text-gray-600">+977 9876543210</p>
+                </div>
+                
+                <div className="flex items-center">
+                  <Mail className="h-5 w-5 text-green-600 mr-3" />
+                  <p className="text-gray-600">maitreecooperative@gmail.com</p>
+                </div>
+              </div>
+              
+              <Link 
+                to="/contact" 
+                className="button-primary inline-flex items-center"
+              >
+                {t('footer.contactUs')}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </div>
+            
+            <div>
+              <GoogleMap
+                location="Resunga Municipality-8, Gulmi, Nepal"
+                height="400px"
+                className="w-full"
+                showDirectionsLink={true}
+              />
             </div>
           </div>
         </div>

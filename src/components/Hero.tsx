@@ -94,14 +94,14 @@ const Hero = () => {
             <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-white rounded-2xl shadow-lg p-4 glass-card animate-fade-up" style={{ animationDelay: '0.6s' }}>
               <div className="h-full flex flex-col justify-center">
                 <p className="text-xs text-gray-500 mb-1">{t('hero.members')}</p>
-                <p className="text-xl font-bold text-green-600">2,500+</p>
+                <p className="text-xl font-bold text-green-600">14,800+</p>
               </div>
             </div>
             
             <div className="absolute -top-4 -right-4 w-28 h-28 bg-white rounded-2xl shadow-lg p-4 glass-card animate-fade-up" style={{ animationDelay: '0.8s' }}>
               <div className="h-full flex flex-col justify-center">
                 <p className="text-xs text-gray-500 mb-1">{t('hero.since')}</p>
-                <p className="text-xl font-bold text-green-600">2005</p>
+                <p className="text-xl font-bold text-green-600">2001</p>
               </div>
             </div>
           </div>

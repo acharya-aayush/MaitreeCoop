@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useToast } from "@/hooks/use-toast";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import GoogleMap from '@/components/GoogleMap';
+import MultiLocationMap from '@/components/MultiLocationMap';
 
 const Contact = () => {
   const { t } = useTranslation();
@@ -210,27 +212,20 @@ const Contact = () => {
                 </div>
               </div>
               
-              {/* Map (Placeholder) */}
-              <div className="glass-card rounded-xl overflow-hidden h-72 bg-green-50">
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="text-center p-6">
-                    <MapPin className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                    <h3 className="font-medium">{t('contact.map.title')}</h3>
-                    <p className="text-sm text-gray-600 mt-2">
-                      {t('contact.map.location')}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-4">
-                      {t('contact.map.placeholder')}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              {/* Interactive Google Map */}
+              <GoogleMap
+                location="Resunga Municipality-8, Gulmi, Nepal"
+                title={t('map.mainOfficeLocation')}
+                height="300px"
+                className="w-full"
+                showDirectionsLink={true}
+              />
             </div>
           </div>
         </div>
       </section>
       
-      {/* Service Centers */}
+      {/* Service Centers with Map */}
       <section className="py-16 bg-green-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
@@ -238,15 +233,53 @@ const Contact = () => {
             <p className="mt-2 text-gray-600">{t('contact.serviceCenters.subtitle')}</p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {Object.entries(t('contact.serviceCenters.centers', { returnObjects: true }) as Record<string, any>).map(([key, center]) => (
-              <div key={key} className="glass-card p-5 rounded-xl hover-card">
-                <h3 className="font-semibold mb-2">{center.name}</h3>
-                <p className="text-sm text-gray-600 mb-1">{center.address}</p>
-                <p className="text-sm text-gray-600">{t('contact.serviceCenters.phoneLabel')}: {center.phone}</p>
-              </div>
-            ))}
-          </div>
+          <MultiLocationMap
+            mainOffice={{
+              name: "मैत्री बहुउद्देश्यीय सहकारी संस्था (Head Office)",
+              address: "Resunga Municipality-8, Gulmi, Nepal",
+              phone: "+977 9876543210"
+            }}
+            branches={[
+              {
+                name: "Baletaxar Branch",
+                address: "Baletaxar, Gulmi, Nepal",
+                phone: "+977 98XXXXXXXX"
+              },
+              {
+                name: "Dhurkot Branch", 
+                address: "Dhurkot, Gulmi, Nepal",
+                phone: "+977 98XXXXXXXX"
+              },
+              {
+                name: "Ishma Branch",
+                address: "Ishma, Gulmi, Nepal", 
+                phone: "+977 98XXXXXXXX"
+              },
+              {
+                name: "Purkotdah Branch",
+                address: "Purkotdah, Gulmi, Nepal",
+                phone: "+977 98XXXXXXXX"
+              },
+              {
+                name: "Ampchaur Branch",
+                address: "Ampchaur, Gulmi, Nepal",
+                phone: "+977 98XXXXXXXX"
+              },
+              {
+                name: "Butwal Branch",
+                address: "Butwal, Rupandehi, Nepal",
+                phone: "+977 98XXXXXXXX"
+              },
+              {
+                name: "Taulihawa Branch",
+                address: "Taulihawa, Kapilbastu, Nepal",
+                phone: "+977 98XXXXXXXX"
+              }
+            ]}
+            height="450px"
+            className="w-full"
+            showBranchList={true}
+          />
         </div>
       </section>
       
