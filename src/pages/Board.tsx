@@ -232,14 +232,6 @@ const Board = () => {
       email: "dhurkot@maitreecooperative.com",
     },
     {
-      nameKey: "board.staff.employees.jiblalLamsal.name",
-      positionKey: "board.staff.employees.jiblalLamsal.position",
-      locationKey: "board.staff.employees.jiblalLamsal.location",
-      photo: "/images/staff/khairani-head.png",
-      contact: "+977 98XXXXXXXX",
-      email: "khairani@maitreecooperative.com",
-    },
-    {
       nameKey: "board.staff.employees.surajPokhrel.name",
       positionKey: "board.staff.employees.surajPokhrel.position",
       locationKey: "board.staff.employees.surajPokhrel.location",
