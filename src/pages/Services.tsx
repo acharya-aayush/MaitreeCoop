@@ -11,7 +11,8 @@ import {
   Users, 
   Calendar, 
   CreditCard, 
-  FileText
+  FileText,
+  Bus
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -93,6 +94,12 @@ const Services = () => {
               title={t('services.agriculture.title')}
               description={t('services.agriculture.description')}
             />
+            
+            <ServiceCard 
+              icon={<Bus className="h-7 w-7 text-green-600" />}
+              title={t('services.transport.title')}
+              description={t('services.transport.description')}
+            />
           </div>
           
           {/* Detailed Service Information */}
@@ -105,6 +112,7 @@ const Services = () => {
                   <TabsTrigger value="remittance">{t('services.tabs.remittance')}</TabsTrigger>
                   <TabsTrigger value="store">{t('services.tabs.store')}</TabsTrigger>
                   <TabsTrigger value="mobile">{t('services.tabs.mobile')}</TabsTrigger>
+                  <TabsTrigger value="transport">{t('services.tabs.transport')}</TabsTrigger>
                 </TabsList>
               </div>
               
@@ -375,6 +383,61 @@ const Services = () => {
                         </li>
                       ))}
                     </ol>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="transport" className="mt-6">
+                <div className="bg-green-50 rounded-xl p-8">
+                  <h3 className="text-2xl font-bold mb-4">{t('services.transport.title')}</h3>
+                  <p className="mb-6 text-gray-700">
+                    {t('services.transport.description')}
+                  </p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div className="glass-card p-6 rounded-xl">
+                      <h4 className="font-semibold text-lg mb-3">{t('services.transport.vehicles.title')}</h4>
+                      <p className="text-gray-600 mb-3">{t('services.transport.vehicles.description')}</p>
+                      <ul className="space-y-2 text-gray-600">
+                        {(t('services.transport.vehicles.types', { returnObjects: true }) as string[]).map((type, index) => (
+                          <li key={index}>• {type}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div className="glass-card p-6 rounded-xl">
+                      <h4 className="font-semibold text-lg mb-3">{t('services.transport.routes.title')}</h4>
+                      <p className="text-gray-600 mb-3">{t('services.transport.routes.description')}</p>
+                      <ul className="space-y-2 text-gray-600">
+                        {(t('services.transport.routes.list', { returnObjects: true }) as string[]).map((route, index) => (
+                          <li key={index}>• {route}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="glass-card p-6 rounded-xl">
+                      <h4 className="font-semibold text-lg mb-3">{t('services.transport.benefits.title')}</h4>
+                      <p className="text-gray-600 mb-3">{t('services.transport.benefits.description')}</p>
+                      <div className="bg-green-100 p-3 rounded-lg mb-3">
+                        <p className="font-medium text-green-800">{t('services.transport.benefits.discount')}</p>
+                      </div>
+                      <ul className="space-y-2 text-gray-600">
+                        {(t('services.transport.benefits.features', { returnObjects: true }) as string[]).map((feature, index) => (
+                          <li key={index}>• {feature}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div className="glass-card p-6 rounded-xl">
+                      <h4 className="font-semibold text-lg mb-3">{t('services.transport.amenities.title')}</h4>
+                      <ul className="space-y-2 text-gray-600">
+                        {(t('services.transport.amenities.list', { returnObjects: true }) as string[]).map((amenity, index) => (
+                          <li key={index}>• {amenity}</li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </TabsContent>

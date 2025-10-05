@@ -143,7 +143,8 @@
       "loans": "Loans", 
       "remittance": "Remittance",
       "store": "Cooperative Store",
-      "mobile": "Mobile Banking"
+      "mobile": "Mobile Banking",
+      "transport": "Maitri Yatayat"
     },
     "savings": {
       "title": "Savings",
@@ -300,6 +301,50 @@
         ]
       }
     },
+    "transport": {
+      "title": "Maitri Yatayat",
+      "description": "Eco-friendly electric vehicle transportation service with comfortable seating, free WiFi, and special discounts for members.",
+      "vehicles": {
+        "title": "Our Fleet",
+        "description": "We operate modern electric vehicles for passenger transportation:",
+        "types": [
+          "14-seater electric vehicles",
+          "19-seater electric vehicles"
+        ]
+      },
+      "routes": {
+        "title": "Available Routes",
+        "description": "We provide transportation services on the following routes:",
+        "list": [
+          "Tamghas ↔ Butwal",
+          "Simaltari ↔ Tamghas", 
+          "Dhurkot ↔ Butwal",
+          "Tamghas ↔ Kathmandu"
+        ]
+      },
+      "benefits": {
+        "title": "Benefits for Share Members",
+        "description": "As a cooperative member, enjoy special benefits:",
+        "discount": "10% discount on long-distance travel",
+        "features": [
+          "Free WiFi on all vehicles",
+          "Air conditioning for comfort",
+          "Comfortable seating",
+          "Eco-friendly electric vehicles",
+          "Reliable and punctual service"
+        ]
+      },
+      "amenities": {
+        "title": "Vehicle Amenities",
+        "list": [
+          "Free WiFi connectivity",
+          "Air conditioning",
+          "Comfortable seats",
+          "Clean and well-maintained vehicles",
+          "Professional drivers"
+        ]
+      }
+    },
     "agriculture": {
       "title": "Agricultural Support",
       "description": "Get guidance on farming practices, access to quality seeds and fertilizers, and marketing support for your produce."
@@ -419,8 +464,8 @@
       "subtitle": "Follow these simple steps to become a member",
       "steps": [
         "Complete membership application form at our office",
-        "Pay the membership fee of Rs. 100",
-        "Purchase minimum one share (Rs. 1,000 per share)",
+        "Pay the membership fee of Rs. 1,000",
+        "Purchase minimum one share (Rs. 100 per share)",
         "Provide citizenship certificate or valid ID",
         "Submit passport-sized photograph"
       ],
@@ -435,12 +480,12 @@
       },
       "financial": {
         "title": "Financial Commitment",
-        "membershipFee": "Membership fee: Rs. 100",
-        "shareMinimum": "Minimum share purchase: Rs. 1,000"
+        "membershipFee": "Membership fee: Rs. 1,000",
+        "shareMinimum": "Minimum share price: Rs. 100"
       },
       "geographic": {
         "title": "Geographic Area",
-        "description": "Priority given to residents of Gulmi district and surrounding areas"
+        "description": "Membership is open to residents of Gulmi, Palpa, Arghakhanchi, Rupandehi, Kapilvastu, and West Nawalparasi districts"
       },
       "note": "Note: Membership is open to all regardless of religion, race, political affiliation, or gender. We welcome everyone who shares our cooperative values."
     },

@@ -142,7 +142,7 @@ const Members = () => {
               
               <div className="mt-8 p-4 bg-green-50 rounded-lg">
                 <p className="text-sm text-green-800">
-                  <strong>Note:</strong> {t('members.requirements.note')}
+                  {t('members.requirements.note')}
                 </p>
               </div>
             </div>
