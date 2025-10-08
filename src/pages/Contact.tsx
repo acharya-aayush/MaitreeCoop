@@ -236,44 +236,58 @@ const Contact = () => {
           <MultiLocationMap
             mainOffice={{
               name: "मैत्री बहुउद्देश्यीय सहकारी संस्था (Head Office)",
-              address: "Resunga Municipality-8, Gulmi, Nepal",
-              phone: "+977 9876543210"
+              address: "Tamghas, Resunga Municipality-8, Gulmi, Nepal",
+              phone: "+977 9876543210",
+              coordinates: "28.06633,83.24750"
             }}
             branches={[
               {
-                name: "Baletaxar Branch",
-                address: "Baletaxar, Gulmi, Nepal",
-                phone: "+977 98XXXXXXXX"
+                name: "Balataksar Branch",
+                address: "Balataksar, Gulmi, Nepal",
+                phone: "+977 98XXXXXXXX",
+                coordinates: "27.99127,83.38925"
               },
               {
-                name: "Dhurkot Branch", 
-                address: "Dhurkot, Gulmi, Nepal",
-                phone: "+977 98XXXXXXXX"
+                name: "Anpchaur Branch", 
+                address: "Anpchaur, Gulmi, Nepal",
+                phone: "+977 98XXXXXXXX",
+                coordinates: "28.11953,83.34686"
               },
               {
                 name: "Ishma Branch",
                 address: "Ishma, Gulmi, Nepal", 
-                phone: "+977 98XXXXXXXX"
+                phone: "+977 98XXXXXXXX",
+                coordinates: "28.19005,83.20319"
               },
               {
-                name: "Purkotdah Branch",
-                address: "Purkotdah, Gulmi, Nepal",
-                phone: "+977 98XXXXXXXX"
+                name: "Purkot Branch",
+                address: "Purkot, Gulmi, Nepal",
+                phone: "+977 98XXXXXXXX",
+                coordinates: "28.14386,83.07331"
               },
               {
-                name: "Ampchaur Branch",
-                address: "Ampchaur, Gulmi, Nepal",
-                phone: "+977 98XXXXXXXX"
+                name: "Dhurkot Branch",
+                address: "Dhurkot, Gulmi, Nepal",
+                phone: "+977 98XXXXXXXX",
+                coordinates: "28.10733,83.15792"
               },
               {
-                name: "Butwal Branch",
-                address: "Butwal, Rupandehi, Nepal",
-                phone: "+977 98XXXXXXXX"
+                name: "Kalikanagar Branch",
+                address: "Kalikanagar, Gulmi, Nepal",
+                phone: "+977 98XXXXXXXX",
+                coordinates: "27.67970,83.46094"
               },
               {
-                name: "Taulihawa Branch",
-                address: "Taulihawa, Kapilbastu, Nepal",
-                phone: "+977 98XXXXXXXX"
+                name: "Kapilvastu Branch",
+                address: "Kapilvastu, Nepal",
+                phone: "+977 98XXXXXXXX",
+                coordinates: "27.553339294842672,83.06115474730112"
+              },
+              {
+                name: "Sandhikharkha Branch",
+                address: "Sandhikharkha, Gulmi, Nepal",
+                phone: "+977 98XXXXXXXX",
+                coordinates: "TBD"
               }
             ]}
             height="450px"

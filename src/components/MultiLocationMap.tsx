@@ -28,16 +28,43 @@ const MultiLocationMap: React.FC<MultiLocationMapProps> = ({
 
   // Create a query that includes all locations for a wider view
   const allLocations = [mainOffice, ...branches];
-  const locationQuery = allLocations.map(loc => encodeURIComponent(loc.address)).join(' OR ');
   
-  // Use a wider area search to show all branches in Gulmi region
-  const multiLocationEmbedUrl = `https://maps.google.com/maps?q=Gulmi+Nepal+cooperative+branches+${locationQuery}&t=&z=10&ie=UTF8&iwloc=&output=embed`;
+  // Use coordinates if available, otherwise fall back to address
+  const getLocationQuery = (location: BranchLocation) => {
+    if (location.coordinates && location.coordinates !== 'TBD') {
+      return location.coordinates;
+    }
+    return encodeURIComponent(location.address);
+  };
   
-  // Main office direct link for directions
-  const mainOfficeUrl = "https://maps.app.goo.gl/CLixzuYHJAYvn64M7";
+  // Main office coordinates for centering
+  const mainOfficeCoords = mainOffice.coordinates && mainOffice.coordinates !== 'TBD' 
+    ? mainOffice.coordinates 
+    : "28.06633,83.24750"; // Default Tamghas coordinates
+  
+  // Create multiple markers URL for Google Maps
+  const createMultiLocationUrl = () => {
+    const baseUrl = "https://maps.google.com/maps?";
+    const params = new URLSearchParams();
+    
+    // Center on main office
+    params.append('q', `${mainOfficeCoords}(Maitree Cooperative Head Office)`);
+    params.append('z', '10');
+    params.append('t', 'm');
+    params.append('output', 'embed');
+    
+    return baseUrl + params.toString();
+  };
+  
+  const multiLocationEmbedUrl = createMultiLocationUrl();
+  
+  // Main office direct link for directions using coordinates
+  const mainOfficeUrl = mainOffice.coordinates && mainOffice.coordinates !== 'TBD'
+    ? `https://www.google.com/maps/dir/?api=1&destination=${mainOffice.coordinates}`
+    : "https://maps.app.goo.gl/CLixzuYHJAYvn64M7";
   
   // General search for all locations
-  const searchUrl = `https://www.google.com/maps/search/?api=1&query=Gulmi+Nepal+cooperative+branches`;
+  const searchUrl = `https://www.google.com/maps/search/?api=1&query=Maitree+Cooperative+Gulmi+Nepal`;
 
   return (
     <div className={`${className}`}>
@@ -134,9 +161,22 @@ const MultiLocationMap: React.FC<MultiLocationMapProps> = ({
                         {branch.phone && (
                           <p className="text-xs text-gray-500 mt-1">{branch.phone}</p>
                         )}
-                        <span className="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full mt-2">
-                          {t('contact.serviceCenters.branch')}
-                        </span>
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">
+                            {t('contact.serviceCenters.branch')}
+                          </span>
+                          {branch.coordinates && branch.coordinates !== 'TBD' && (
+                            <a
+                              href={`https://www.google.com/maps/dir/?api=1&destination=${branch.coordinates}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full hover:bg-green-200 transition-colors"
+                            >
+                              <ExternalLink className="h-3 w-3 mr-1" />
+                              {t('map.directions')}
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>

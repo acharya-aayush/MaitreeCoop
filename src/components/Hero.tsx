@@ -65,28 +65,21 @@ const Hero = () => {
             isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
           )}>
             <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl bg-white p-2">
-              <div className="w-full h-full rounded-xl bg-gradient-to-br from-green-100 via-white to-green-50 flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 backdrop-blur-[2px] bg-white/20"></div>
-                <div className="relative z-10 text-center p-6">
-                  <div className="inline-block mb-6">
-                    <img 
-                      src="/images/logo.png" 
-                      alt="Maitree Cooperative Logo" 
-                      className="w-40 h-40 mx-auto"
-                    />
-                  </div>
-                  <h2 className="text-xl font-semibold text-gray-800 mb-2">
+              <div className="w-full h-full rounded-xl relative overflow-hidden">
+                <img 
+                  src="/images/home/main.jpg" 
+                  alt="Maitree Cooperative" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h2 className="text-xl font-semibold mb-1">
                     {t('hero.title')}
                   </h2>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm opacity-90">
                     बहुउद्देश्यीय सहकारी संस्था
                   </p>
                 </div>
-                
-                {/* Decorative elements */}
-                <div className="absolute top-6 left-6 w-16 h-16 rounded-full bg-green-500/10"></div>
-                <div className="absolute bottom-10 right-10 w-24 h-24 rounded-full bg-green-500/10"></div>
-                <div className="absolute top-1/3 right-12 w-8 h-8 rounded-full bg-green-500/20"></div>
               </div>
             </div>
             

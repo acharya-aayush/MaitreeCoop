@@ -341,7 +341,7 @@ const Index = () => {
                   <MapPin className="text-green-600 mt-1 mr-4 flex-shrink-0" />
                   <div>
                     <h3 className="font-medium">{t('common.address')}</h3>
-                    <p className="text-gray-600">रेसुङ्गा नगरपालिका - ८ गुल्मी</p>
+                    <p className="text-gray-600">रेसुङ्गा नगरपालिका-८, गुल्मी</p>
                   </div>
                 </div>
                 
@@ -389,9 +389,9 @@ const Index = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center p-6">
                     <MapPin className="h-10 w-10 text-green-600 mx-auto mb-4" />
-                    <h3 className="font-medium">{t('contact.interactiveMap')}</h3>
+                    <h3 className="font-medium">{t('contact.mainOffice.name')}</h3>
                     <p className="text-sm text-gray-600 mt-2">
-                      रेसुङ्गा नगरपालिका - ८ गुल्मी
+                      रेसुङ्गा नगरपालिका-८, गुल्मी
                     </p>
                   </div>
                 </div>
@@ -419,7 +419,7 @@ const Index = () => {
                   <MapPin className="h-5 w-5 text-green-600 mt-1 mr-3" />
                   <div>
                     <p className="font-medium">मैत्री बहुउद्देश्यीय सहकारी संस्था</p>
-                    <p className="text-gray-600">रेसुङ्गा नगरपालिका - ८, गुल्मी</p>
+                    <p className="text-gray-600">रेसुङ्गा नगरपालिका-८, गुल्मी</p>
                   </div>
                 </div>
                 
