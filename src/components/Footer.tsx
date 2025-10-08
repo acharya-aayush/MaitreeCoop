@@ -89,11 +89,6 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/services#remittance" className="text-sm text-gray-600 hover:text-primary transition-colors duration-300">
-                  {t('footer.remittance')}
-                </Link>
-              </li>
-              <li>
                 <Link to="/services#mobile-banking" className="text-sm text-gray-600 hover:text-primary transition-colors duration-300">
                   {t('footer.mobileBanking')}
                 </Link>

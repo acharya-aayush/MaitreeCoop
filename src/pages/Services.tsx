@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { 
   PiggyBank, 
   Banknote, 
-  SendHorizontal, 
   Smartphone, 
   Store, 
   Sprout, 
@@ -72,12 +71,6 @@ const Services = () => {
             />
             
             <ServiceCard 
-              icon={<SendHorizontal className="h-7 w-7 text-green-600" />}
-              title={t('services.remittance.title')}
-              description={t('services.remittance.description')}
-            />
-            
-            <ServiceCard 
               icon={<Store className="h-7 w-7 text-green-600" />}
               title={t('services.store.title')}
               description={t('services.store.description')}
@@ -109,7 +102,6 @@ const Services = () => {
                 <TabsList className="bg-green-50">
                   <TabsTrigger value="savings">{t('services.tabs.savings')}</TabsTrigger>
                   <TabsTrigger value="loans">{t('services.tabs.loans')}</TabsTrigger>
-                  <TabsTrigger value="remittance">{t('services.tabs.remittance')}</TabsTrigger>
                   <TabsTrigger value="store">{t('services.tabs.store')}</TabsTrigger>
                   <TabsTrigger value="mobile">{t('services.tabs.mobile')}</TabsTrigger>
                   <TabsTrigger value="transport">{t('services.tabs.transport')}</TabsTrigger>
@@ -236,52 +228,6 @@ const Services = () => {
                     >
                       {t('services.loans.apply')}
                     </Link>
-                  </div>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="remittance" className="mt-6">
-                <div className="bg-green-50 rounded-xl p-8">
-                  <h3 className="text-2xl font-bold mb-4">{t('services.remittance.title')}</h3>
-                  <p className="mb-6 text-gray-700">
-                    {t('services.remittance.description')}
-                  </p>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-2">{t('services.remittance.domestic.title')}</h4>
-                      <p className="text-gray-600 mb-3">
-                        {t('services.remittance.domestic.description')}
-                      </p>
-                      <ul className="space-y-2 text-gray-600">
-                        {(t('services.remittance.domestic.features', { returnObjects: true }) as string[]).map((feature, index) => (
-                          <li key={index}>• {feature}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div className="glass-card p-6 rounded-xl">
-                      <h4 className="font-semibold text-lg mb-2">{t('services.remittance.international.title')}</h4>
-                      <p className="text-gray-600 mb-3">
-                        {t('services.remittance.international.description')}
-                      </p>
-                      <ul className="space-y-2 text-gray-600">
-                        {(t('services.remittance.international.features', { returnObjects: true }) as string[]).map((feature, index) => (
-                          <li key={index}>• {feature}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-8">
-                    <h4 className="font-semibold text-lg mb-2">{t('services.remittance.partners.title')}</h4>
-                    <div className="flex flex-wrap gap-4 justify-center">
-                      {t('services.remittance.partners.list').split(', ').map((partner, index) => (
-                        <div key={index} className="bg-white p-4 rounded-lg shadow-sm">
-                          <p className="font-medium">{partner}</p>
-                        </div>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </TabsContent>

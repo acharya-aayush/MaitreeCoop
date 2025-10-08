@@ -131,7 +131,7 @@
     "foundingVision": "Our Founding Vision",
     "founderQuote": "To improve members' living standards and foster social capital through cooperation.",
     "founderName": "— Bom Bahadur Khadka, Founder",
-    "description": "Established under cooperative principles, Maitree Multipurpose Cooperative focuses on agricultural development, livestock business transformation, and financial inclusion through accessible savings and loans.",
+    "description": "The Maitri Multipurpose Cooperative Society was founded on September 12, 2000 (Bhadra 27, 2057 BS) under the leadership of the late Bom Bahadur Khadka by a group of young, business-minded locals, aiming to promote cooperative values through agricultural production, processing, and marketing, professionalize animal husbandry, create self-employment, build social capital via member unity, improve livelihoods with savings and subsidized loans, and advance the local cooperative movement. It was registered on October 17, 2001 (Kartik 1, 2058 BS), with 33 founding members and NPR 13,200 in share capital, initially covering five VDCs (Tamghas, Arkhale Simichaur, Nayagaun, Jaisithok); since then, the co-op has run savings/loan programs, published the Laghuvitta Maitri Sandesh, operated a dairy business and a fair-price shop, and now even supports an electric vehicle operation. Showing major growth, its working area expanded to 17 VDCs in 2007, then to 75 VDCs of Gulmi and 4 of Arghakhanchi in 2015, and finally, in 2020, its scope covered all six districts of the former Lumbini Zone (Gulmi, Palpa, Arghakhanchi, Kapilbastu, Rupandehi, and Nawalparasi), with its Head Office in Tamghas and service centers in seven other locations, currently boasting 13,836 share members.",
     "vision": "Our cooperative is guided by the vision of improving our members' living standards and fostering social capital within our community.",
     "learnStory": "Learn Our Story"
   },
@@ -141,7 +141,6 @@
     "tabs": {
       "savings": "Savings",
       "loans": "Loans", 
-      "remittance": "Remittance",
       "store": "Cooperative Store",
       "mobile": "Mobile Banking",
       "transport": "Maitri Yatayat"
@@ -190,34 +189,6 @@
         ]
       },
       "apply": "Apply for a Loan"
-    },
-    "remittance": {
-      "title": "Remittance",
-      "description": "Our remittance service allows for safe, quick, and affordable money transfers both within Nepal and internationally.",
-      "domestic": {
-        "title": "Domestic Remittance",
-        "description": "Send money to family and friends across Nepal quickly and securely.",
-        "features": [
-          "Same-day transfers",
-          "Low service charges",
-          "ID verification for security",
-          "Available at all our service centers"
-        ]
-      },
-      "international": {
-        "title": "International Remittance",
-        "description": "Receive money from family members working abroad safely and conveniently.",
-        "features": [
-          "Partnerships with global remittance providers",
-          "Competitive exchange rates",
-          "Quick processing time",
-          "SMS notifications upon receipt"
-        ]
-      },
-      "partners": {
-        "title": "Our Remittance Partners:",
-        "list": "Western Union, IME, Prabhu Money Transfer, City Express"
-      }
     },
     "store": {
       "title": "Cooperative Store",
@@ -811,7 +782,6 @@
     "ourServices": "Our Services",
     "savings": "Savings",
     "loans": "Loans",
-    "remittance": "Remittance",
     "mobileBanking": "Mobile Banking",
     "cooperativeStore": "Cooperative Store",
     "contactUs": "Contact Us",
