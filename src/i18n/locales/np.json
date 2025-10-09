@@ -525,11 +525,9 @@
       "name": "मैत्री बहुउद्देश्यीय सहकारी संस्था लिमिटेड",
       "address": "रेसुङ्गा नगरपालिका-८, गुल्मी, नेपाल",
       "phoneLabel": "फोन",
-      "phone": "+977 9876543210",
-      "landline": "+977 079-520123",
+      "phone": "079-520678",
       "emailLabel": "इमेल",
-      "email": "maitreecooperative@gmail.com",
-      "emailSecondary": "info@maitreecooperative.org.np"
+      "email": "maitreecooperative@gmail.com"
     },
     "serviceCenters": {
       "title": "हाम्रा सेवा केन्द्रहरू",
@@ -750,6 +748,26 @@
           "name": "लक्ष्मण नेपाली",
           "position": "कर्मचारी",
           "location": "गुल्मी"
+        },
+        "sushilPokhrel": {
+          "name": "सुशील पोखरेल",
+          "position": "पुर्कोट शाखा प्रमुख",
+          "location": "पुर्कोट, गुल्मी"
+        },
+        "ashokPanthi": {
+          "name": "अशोक पन्थी",
+          "position": "आपचौर शाखा प्रमुख",
+          "location": "आपचौर, गुल्मी"
+        },
+        "dharmendraChaudhary": {
+          "name": "धर्मेन्द्र चौधरी",
+          "position": "कपिलवस्तु शाखा प्रमुख",
+          "location": "कपिलवस्तु"
+        },
+        "ghanashyamMarasiniSandhikharka": {
+          "name": "घनश्याम मरासिनी",
+          "position": "सन्धिखर्क शाखा प्रमुख",
+          "location": "सन्धिखर्क, गुल्मी"
         }
       }
     },

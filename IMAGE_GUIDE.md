@@ -25,7 +25,6 @@ public/images/
     ├── account-head.jpg       # Dinnath Acharya
     ├── baletaksar-head.jpg    # Laxmi Malla
     ├── dhurkot-head.jpg       # Amar Marasini
-    ├── khairani-head.jpg      # Jiblal Lamsal
     ├── kalikanagar-head.jpg   # Suraj Pokhrel
     ├── admin-assistant.jpg    # Devi Marasini
     └── it-officer.jpg         # Krishna Aryal

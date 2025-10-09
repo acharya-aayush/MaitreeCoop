@@ -352,10 +352,10 @@ const Index = () => {
                 <div>
                   <h3 className="font-medium">{t('common.phone')}</h3>
                   <a 
-                    href="tel:+9779876543210"
+                    href="tel:079520678"
                     className="text-green-600 hover:text-green-800 transition-colors"
                   >
-                    +977 9876543210
+                    079-520678
                   </a>
                 </div>
               </div>
@@ -398,7 +398,7 @@ const Index = () => {
                 
                 <div className="flex items-center">
                   <Phone className="h-5 w-5 text-green-600 mr-3" />
-                  <p className="text-gray-600">+977 9876543210</p>
+                  <p className="text-gray-600">079-520678</p>
                 </div>
                 
                 <div className="flex items-center">

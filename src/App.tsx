@@ -20,6 +20,9 @@ import Board from "./pages/Board";
 import Financial from "./pages/Financial";
 import Contact from "./pages/Contact";
 import Community from "./pages/Community";
+import MapTest from "./pages/MapTest";
+import BoardAdmin from "./pages/BoardAdmin";
+import DynamicBoard from "./pages/DynamicBoard";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +43,9 @@ const App = () => (
           <Route path="/financial" element={<Financial />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/map-test" element={<MapTest />} />
+          <Route path="/admin/board" element={<BoardAdmin />} />
+          <Route path="/board-dynamic" element={<DynamicBoard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

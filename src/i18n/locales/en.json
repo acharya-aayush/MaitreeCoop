@@ -525,11 +525,9 @@
       "name": "Maitree Multipurpose Cooperative Ltd.",
       "address": "Resunga Municipality-8, Gulmi, Nepal",
       "phoneLabel": "Phone",
-      "phone": "+977 9876543210",
-      "landline": "+977 079-520123",
+      "phone": "079-520678",
       "emailLabel": "Email",
-      "email": "maitreecooperative@gmail.com",
-      "emailSecondary": "info@maitreecooperative.org.np"
+      "email": "maitreecooperative@gmail.com"
     },
     "serviceCenters": {
       "title": "Our Service Centers",
@@ -750,6 +748,26 @@
           "name": "Laxman Nepali",
           "position": "Staff",
           "location": "Gulmi"
+        },
+        "sushilPokhrel": {
+          "name": "Sushil Pokhrel",
+          "position": "Purkot Branch Head",
+          "location": "Purkot, Gulmi"
+        },
+        "ashokPanthi": {
+          "name": "Ashok Panthi",
+          "position": "Aapchaur Branch Head",
+          "location": "Aapchaur, Gulmi"
+        },
+        "dharmendraChaudhary": {
+          "name": "Dharmendra Chaudhary",
+          "position": "Kapilvastu Branch Head",
+          "location": "Kapilvastu"
+        },
+        "ghanashyamMarasiniSandhikharka": {
+          "name": "Ghanashyam Marasini",
+          "position": "Sandhikharka Branch Head",
+          "location": "Sandhikharka, Gulmi"
         }
       }
     },

@@ -137,7 +137,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
                   ></textarea>
                 </div>
                 
@@ -186,7 +186,6 @@ const Contact = () => {
                     <div>
                       <h3 className="font-semibold mb-1">{t('contact.mainOffice.phoneLabel')}</h3>
                       <p className="text-gray-600">{t('contact.mainOffice.phone')}</p>
-                      <p className="text-gray-600">{t('contact.mainOffice.landline')}</p>
                     </div>
                   </div>
                   
@@ -197,7 +196,6 @@ const Contact = () => {
                     <div>
                       <h3 className="font-semibold mb-1">{t('contact.mainOffice.emailLabel')}</h3>
                       <p className="text-gray-600">{t('contact.mainOffice.email')}</p>
-                      <p className="text-gray-600">{t('contact.mainOffice.emailSecondary')}</p>
                     </div>
                   </div>
                   
@@ -238,57 +236,51 @@ const Contact = () => {
           <MultiLocationMap
             mainOffice={{
               name: "मैत्री बहुउद्देश्यीय सहकारी संस्था (Head Office)",
-              address: "Tamghas, Resunga Municipality-8, Gulmi, Nepal",
-              phone: "+977 9876543210",
+              address: "Resunga Municipality-8, Gulmi, Nepal",
+              phone: "079-520678",
               coordinates: "28.06633,83.24750"
             }}
             branches={[
               {
-                name: "Balataksar Branch",
-                address: "Balataksar, Gulmi, Nepal",
-                phone: "+977 98XXXXXXXX",
-                coordinates: "27.99127,83.38925"
+                name: "Dhurkot Branch",
+                address: "Dhurkot, Gulmi, Nepal",
+                phone: "9765875701",
+                coordinates: "28.10733,83.15792"
               },
               {
-                name: "Anpchaur Branch", 
-                address: "Anpchaur, Gulmi, Nepal",
-                phone: "+977 98XXXXXXXX",
-                coordinates: "28.11953,83.34686"
-              },
-              {
-                name: "Ishma Branch",
-                address: "Ishma, Gulmi, Nepal", 
-                phone: "+977 98XXXXXXXX",
+                name: "Ishma Branch", 
+                address: "Ishma, Gulmi, Nepal",
+                phone: "9765875702",
                 coordinates: "28.19005,83.20319"
               },
               {
                 name: "Purkot Branch",
-                address: "Purkot, Gulmi, Nepal",
-                phone: "+977 98XXXXXXXX",
+                address: "Purkot, Gulmi, Nepal", 
+                phone: "9765875703",
                 coordinates: "28.14386,83.07331"
               },
               {
-                name: "Dhurkot Branch",
-                address: "Dhurkot, Gulmi, Nepal",
-                phone: "+977 98XXXXXXXX",
-                coordinates: "28.10733,83.15792"
+                name: "Aapchaur Branch",
+                address: "Aapchaur, Gulmi, Nepal",
+                phone: "9765875705",
+                coordinates: "28.11953,83.34686"
               },
               {
                 name: "Kalikanagar Branch",
                 address: "Kalikanagar, Gulmi, Nepal",
-                phone: "+977 98XXXXXXXX",
+                phone: "974804507",
                 coordinates: "27.67970,83.46094"
               },
               {
-                name: "Kapilvastu Branch",
-                address: "Kapilvastu, Nepal",
-                phone: "+977 98XXXXXXXX",
-                coordinates: "27.553339294842672,83.06115474730112"
+                name: "Baletaksar Branch",
+                address: "Baletaksar, Gulmi, Nepal",
+                phone: "079410078",
+                coordinates: "27.99127,83.38925"
               },
               {
                 name: "Sandhikharkha Branch",
                 address: "Sandhikharkha, Gulmi, Nepal",
-                phone: "+977 98XXXXXXXX",
+                phone: "077590678",
                 coordinates: "TBD"
               }
             ]}

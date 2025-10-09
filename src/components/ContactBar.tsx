@@ -70,12 +70,12 @@ const ContactBar: React.FC = () => {
           <div className="flex flex-wrap items-center gap-2 sm:gap-6">
             <div className="flex items-center gap-1">
               <Phone className="h-3 w-3" />
-              <span>+977 9876543210</span>
+              <span>079-520678</span>
             </div>
             <div className="flex items-center gap-1">
               <Mail className="h-3 w-3" />
-              <span className="hidden sm:inline">info@maitriecoop.com.np</span>
-              <span className="sm:hidden text-xs">info@maitrie.com</span>
+              <span className="hidden sm:inline">maitreecooperative@gmail.com</span>
+              <span className="sm:hidden text-xs">maitree@gmail.com</span>
             </div>
           </div>
           
@@ -88,7 +88,7 @@ const ContactBar: React.FC = () => {
             </div>
             <div className="hidden sm:flex items-center gap-1">
               <MapPin className="h-3 w-3" />
-              <span>Tamghas, Gulmi</span>
+              <span>Resunga Municipality-8, Gulmi</span>
             </div>
           </div>
         </div>
