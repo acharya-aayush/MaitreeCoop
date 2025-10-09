@@ -9,6 +9,7 @@ import ServiceCard from '@/components/ServiceCard';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import GoogleMap from '@/components/GoogleMap';
+import ContactBar from '@/components/ContactBar';
 
 const Index = () => {
   const aboutSectionRef = useRef<HTMLDivElement>(null);
@@ -62,6 +63,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <ContactBar />
       <Navbar />
       
       {/* Hero Section */}
@@ -112,11 +114,11 @@ const Index = () => {
                 {t('about.subtitle')}
               </h2>
               
-              <p className="text-gray-600">
+              <p className="text-gray-600 text-justify">
                 {t('about.description')}
               </p>
               
-              <p className="text-gray-600">
+              <p className="text-gray-600 text-justify">
                 {t('about.vision')}
               </p>
               
@@ -310,80 +312,63 @@ const Index = () => {
       {/* Contact Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
-                {t('contact.title')}
-              </span>
-              
-              <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-                {t('contact.subtitle')}
-              </h2>
-              
-              <p className="text-gray-600">
-                {t('contact.description')}
-              </p>
-              
-              <div className="space-y-4 pt-4">
-                <div className="flex items-start">
-                  <MapPin className="text-green-600 mt-1 mr-4 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-medium">{t('common.address')}</h3>
-                    <p className="text-gray-600">रेसुङ्गा नगरपालिका-८, गुल्मी</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <Mail className="text-green-600 mt-1 mr-4 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-medium">{t('common.email')}</h3>
-                    <a 
-                      href="mailto:maitreecooperative@gmail.com"
-                      className="text-green-600 hover:text-green-800 transition-colors"
-                    >
-                      maitreecooperative@gmail.com
-                    </a>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <Phone className="text-green-600 mt-1 mr-4 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-medium">{t('common.phone')}</h3>
-                    <a 
-                      href="tel:+9779876543210"
-                      className="text-green-600 hover:text-green-800 transition-colors"
-                    >
-                      +977 9876543210
-                    </a>
-                  </div>
+          <div className="space-y-6">
+            <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
+              {t('contact.title')}
+            </span>
+            
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+              {t('contact.subtitle')}
+            </h2>
+            
+            <p className="text-gray-600">
+              {t('contact.description')}
+            </p>
+            
+            <div className="space-y-4 pt-4">
+              <div className="flex items-start">
+                <MapPin className="text-green-600 mt-1 mr-4 flex-shrink-0" />
+                <div>
+                  <h3 className="font-medium">{t('common.address')}</h3>
+                  <p className="text-gray-600">रेसुङ्गा नगरपालिका-८, गुल्मी</p>
                 </div>
               </div>
               
-              <div className="pt-6">
-                <Link 
-                  to="/contact" 
-                  className="button-primary flex items-center"
-                >
-                  {t('contact.title')}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
+              <div className="flex items-start">
+                <Mail className="text-green-600 mt-1 mr-4 flex-shrink-0" />
+                <div>
+                  <h3 className="font-medium">{t('common.email')}</h3>
+                  <a 
+                    href="mailto:maitreecooperative@gmail.com"
+                    className="text-green-600 hover:text-green-800 transition-colors"
+                  >
+                    maitreecooperative@gmail.com
+                  </a>
+                </div>
+              </div>
+              
+              <div className="flex items-start">
+                <Phone className="text-green-600 mt-1 mr-4 flex-shrink-0" />
+                <div>
+                  <h3 className="font-medium">{t('common.phone')}</h3>
+                  <a 
+                    href="tel:+9779876543210"
+                    className="text-green-600 hover:text-green-800 transition-colors"
+                  >
+                    +977 9876543210
+                  </a>
+                </div>
               </div>
             </div>
             
-            <div className="glass-card rounded-xl overflow-hidden hover-card">
-              <div className="aspect-video bg-green-50 relative">
-                {/* Placeholder for map - In a real implementation, you would use Google Maps or similar */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center p-6">
-                    <MapPin className="h-10 w-10 text-green-600 mx-auto mb-4" />
-                    <h3 className="font-medium">{t('contact.mainOffice.name')}</h3>
-                    <p className="text-sm text-gray-600 mt-2">
-                      रेसुङ्गा नगरपालिका-८, गुल्मी
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className="pt-6">
+              <Link 
+                to="/contact" 
+                className="button-primary inline-flex items-center"
+              >
+                {t('contact.title')}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </div>
           </div>
         </div>

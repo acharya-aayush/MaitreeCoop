@@ -9,23 +9,55 @@ import LanguageSwitcher from './LanguageSwitcher';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [contactBarVisible, setContactBarVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
   const { t } = useTranslation();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   useEffect(() => {
+    // Check if it's mobile screen
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768); // md breakpoint
+    };
+
+    // Initial check
+    checkScreenSize();
+
+    // Listen for screen size changes
+    window.addEventListener('resize', checkScreenSize);
+
     const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
       if (window.scrollY > 10) {
         setScrolled(true);
       } else {
         setScrolled(false);
       }
+
+      // Track ContactBar visibility on mobile
+      if (isMobile) {
+        if (currentScrollY < lastScrollY || currentScrollY < 100) {
+          setContactBarVisible(true);
+        } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          setContactBarVisible(false);
+        }
+      } else {
+        setContactBarVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, [lastScrollY, isMobile]);
 
   // Close mobile menu when location changes
   useEffect(() => {
@@ -48,8 +80,11 @@ const Navbar = () => {
   return (
     <nav 
       className={cn(
-        'fixed w-full z-50 transition-all duration-300',
-        scrolled ? 'navbar-fixed navbar-scrolled' : 'navbar-fixed'
+        'fixed w-full transition-all duration-300 border-0 m-0',
+        scrolled ? 'navbar-fixed navbar-scrolled' : 'navbar-fixed',
+        // Dynamic positioning based on screen size and ContactBar visibility
+        isMobile && !contactBarVisible ? 'navbar-mobile-top' : '',
+        !isMobile ? 'navbar-desktop' : 'navbar-mobile'
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">

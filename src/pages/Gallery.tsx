@@ -4,6 +4,7 @@ import { X, ZoomIn, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ContactBar from '@/components/ContactBar';
 
 // Sample data - In a real application, this would come from a CMS or database
 const photos = [
@@ -165,6 +166,7 @@ const Gallery = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <ContactBar />
       <Navbar />
       
       <div className="page-header text-center">

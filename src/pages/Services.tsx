@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ContactBar from '@/components/ContactBar';
 
 const ServiceCard = ({ icon, title, description }) => (
   <div className="glass-card p-6 rounded-xl hover-card">
@@ -33,6 +34,7 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <ContactBar />
       <Navbar />
       
       <div className="page-header text-center">

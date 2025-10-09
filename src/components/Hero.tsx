@@ -18,7 +18,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative bg-gradient-to-b from-green-50 to-white pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden">
+    <div className="relative bg-gradient-to-b from-green-50 to-white pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMxNDI1MzkiIGZpbGwtb3BhY2l0eT0iLjAyIj48cGF0aCBkPSJNMzYgMzBoLTZWMGg2djMwWk0wIDMwaDZWMEgwdjMwWk0xMiAzMGg2VjBoLTZ2MzBaTTI0IDMwaDZWMGgtNnYzMFoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">

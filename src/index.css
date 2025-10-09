@@ -92,6 +92,13 @@
     @apply pt-32 pb-16 bg-gradient-to-b from-green-50 to-white;
   }
   
+  /* Desktop page header - account for ContactBar + Navbar */
+  @media (min-width: 768px) {
+    .page-header {
+      @apply pt-40;
+    }
+  }
+  
   .button-primary {
     @apply bg-primary text-primary-foreground px-6 py-3 rounded-full shadow-sm hover:shadow-md transition-all duration-300 font-medium;
   }
@@ -111,11 +118,31 @@
 
 /* Header animation */
 .navbar-fixed {
-  @apply fixed w-full backdrop-blur-lg bg-white/80 shadow-sm z-50 transition-all duration-300;
+  @apply fixed w-full backdrop-blur-lg bg-white/80 shadow-sm transition-all duration-300 border-0;
 }
 
 .navbar-scrolled {
   @apply shadow-md bg-white/90;
+}
+
+/* Desktop navbar - always account for ContactBar */
+.navbar-desktop {
+  top: 36px; /* Precise match for ContactBar height on desktop */
+  z-index: 40; /* Below ContactBar */
+  margin-top: -1px; /* Remove any gap */
+}
+
+/* Mobile navbar - default position with ContactBar */
+.navbar-mobile {
+  top: 28px; /* Precise match for ContactBar height on mobile */
+  z-index: 40; /* Below ContactBar */
+  margin-top: -1px; /* Remove any gap */
+}
+
+/* Mobile navbar when ContactBar is hidden */
+.navbar-mobile-top {
+  top: 0px !important; /* Move to top when ContactBar is hidden */
+  z-index: 50; /* Above hidden ContactBar */
 }
 
 /* Smooth transitions for page content */
@@ -148,4 +175,38 @@
 
 .gallery-image:hover {
   @apply scale-105 shadow-lg;
+}
+
+/* Professional Map Styles */
+.leaflet-popup-content-wrapper {
+  @apply rounded-lg shadow-xl border-0;
+  border-radius: 12px !important;
+}
+
+.leaflet-popup-tip {
+  @apply shadow-lg;
+}
+
+.custom-popup .leaflet-popup-content {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 200px;
+}
+
+.custom-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Map container styling */
+.leaflet-container {
+  font-family: 'Inter', sans-serif !important;
+}
+
+.leaflet-control-zoom a {
+  @apply text-gray-700 bg-white shadow-md;
+}
+
+.leaflet-control-zoom a:hover {
+  @apply bg-blue-50 text-blue-600;
 }

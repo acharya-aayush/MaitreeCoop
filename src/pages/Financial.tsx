@@ -4,6 +4,7 @@ import { Download, FileText, Calendar, Shield, Users, FileCheck } from 'lucide-r
 import { useTranslation } from 'react-i18next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ContactBar from '@/components/ContactBar';
 
 interface Document {
   title: string;
@@ -126,6 +127,7 @@ const Financial = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <ContactBar />
       <Navbar />
       
       <div className="page-header text-center">

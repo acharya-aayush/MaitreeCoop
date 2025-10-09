@@ -46,14 +46,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
           title="Maitree Multipurpose Cooperative Ltd - Location"
           className="w-full"
         />
-        
-        {/* Loading fallback */}
-        <div className="absolute inset-0 bg-green-50 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100">
-          <div className="text-center p-4">
-            <MapPin className="h-8 w-8 text-green-600 mx-auto mb-2" />
-            <p className="text-sm text-gray-600">{t('map.loading', { defaultValue: 'Loading map...' })}</p>
-          </div>
-        </div>
       </div>
       
       {showDirectionsLink && (

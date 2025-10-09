@@ -2,6 +2,7 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ContactBar from '@/components/ContactBar';
 import { Calendar, MapPin, Clock, Users, Award } from 'lucide-react';
 
 const Community = () => {
@@ -58,6 +59,7 @@ const Community = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <ContactBar />
       <Navbar />
       
       <div className="page-header text-center">

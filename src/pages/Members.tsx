@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Users, FileText, CreditCard, Award, Vote, Store } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ContactBar from '@/components/ContactBar';
 
 const Members = () => {
   const { t } = useTranslation();
@@ -43,6 +44,7 @@ const Members = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <ContactBar />
       <Navbar />
       
       <div className="page-header text-center">

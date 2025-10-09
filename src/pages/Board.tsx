@@ -4,6 +4,7 @@ import { Phone, Mail } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ContactBar from '@/components/ContactBar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
@@ -254,6 +255,14 @@ const Board = () => {
       photo: "/images/staff/it-officer.png",
       contact: "+977 98XXXXXXXX",
       email: "it@maitreecooperative.com",
+    },
+    {
+      nameKey: "board.staff.employees.laxmanNepali.name",
+      positionKey: "board.staff.employees.laxmanNepali.position",
+      locationKey: "board.staff.employees.laxmanNepali.location",
+      photo: "/images/staff/staff1.png",
+      contact: "+977 98XXXXXXXX",
+      email: "laxman@maitreecooperative.com",
     }
   ];
 
@@ -267,6 +276,7 @@ const Board = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <ContactBar />
       <Navbar />
       
       <div className="page-header text-center">

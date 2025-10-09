@@ -5,12 +5,14 @@ import { Clock, MapPin, Users, Briefcase, Heart, Sprout, PiggyBank, Building } f
 import { useTranslation } from 'react-i18next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ContactBar from '@/components/ContactBar';
 
 const AboutUs = () => {
   const { t } = useTranslation();
 
   return (
     <div className="min-h-screen bg-white">
+      <ContactBar />
       <Navbar />
       
       <div className="page-header text-center">
@@ -32,7 +34,7 @@ const AboutUs = () => {
             <h2 className="mt-4 text-3xl font-bold">{t('about.mission.subtitle')}</h2>
           </div>
           
-          <p className="text-gray-700 mb-6">
+          <p className="text-gray-700 mb-6 text-justify">
             {t('about.mission.description')}
           </p>
           
@@ -44,7 +46,7 @@ const AboutUs = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-2">{t('about.goals.agricultural.title')}</h3>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-justify">
                     {t('about.goals.agricultural.description')}
                   </p>
                 </div>
@@ -58,7 +60,7 @@ const AboutUs = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-2">{t('about.goals.livestock.title')}</h3>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-justify">
                     {t('about.goals.livestock.description')}
                   </p>
                 </div>
@@ -72,7 +74,7 @@ const AboutUs = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-2">{t('about.goals.empowerment.title')}</h3>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-justify">
                     {t('about.goals.empowerment.description')}
                   </p>
                 </div>
@@ -86,7 +88,7 @@ const AboutUs = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-2">{t('about.goals.advancement.title')}</h3>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-justify">
                     {t('about.goals.advancement.description')}
                   </p>
                 </div>
@@ -275,7 +277,7 @@ const AboutUs = () => {
             {t('about.cta.title')}
           </h2>
           
-          <p className="text-green-100">
+          <p className="text-green-100 text-justify">
             {t('about.cta.description')}
           </p>
           

@@ -15,6 +15,7 @@ interface MultiLocationMapProps {
   className?: string;
   height?: string;
   showBranchList?: boolean;
+  customEmbedUrl?: string;
 }
 
 const MultiLocationMap: React.FC<MultiLocationMapProps> = ({
@@ -22,7 +23,8 @@ const MultiLocationMap: React.FC<MultiLocationMapProps> = ({
   branches,
   className = "",
   height = "400px",
-  showBranchList = true
+  showBranchList = true,
+  customEmbedUrl
 }) => {
   const { t } = useTranslation();
 
@@ -44,19 +46,40 @@ const MultiLocationMap: React.FC<MultiLocationMapProps> = ({
   
   // Create multiple markers URL for Google Maps
   const createMultiLocationUrl = () => {
-    const baseUrl = "https://maps.google.com/maps?";
-    const params = new URLSearchParams();
+    // Collect all valid coordinates
+    const locations = [];
     
-    // Center on main office
-    params.append('q', `${mainOfficeCoords}(Maitree Cooperative Head Office)`);
-    params.append('z', '10');
-    params.append('t', 'm');
-    params.append('output', 'embed');
+    // Add main office with label
+    if (mainOffice.coordinates && mainOffice.coordinates !== 'TBD') {
+      locations.push(`${mainOffice.coordinates}(${encodeURIComponent(mainOffice.name)})`);
+    }
     
-    return baseUrl + params.toString();
+    // Add all branches with labels
+    branches.forEach(branch => {
+      if (branch.coordinates && branch.coordinates !== 'TBD') {
+        locations.push(`${branch.coordinates}(${encodeURIComponent(branch.name)})`);
+      }
+    });
+    
+    // Create a multi-location map URL
+    if (locations.length > 0) {
+      // Use the first location (main office) as the center and add all others as waypoints
+      const baseLocation = locations[0];
+      const waypoints = locations.slice(1).join('|');
+      
+      if (waypoints.length > 0) {
+        return `https://maps.google.com/maps?q=${baseLocation}&destinations=${encodeURIComponent(waypoints)}&output=embed&z=9`;
+      } else {
+        return `https://maps.google.com/maps?q=${baseLocation}&output=embed&z=12`;
+      }
+    }
+    
+    // Fallback to default location
+    return `https://maps.google.com/maps?q=28.06633,83.24750(Maitree Cooperative)&output=embed&z=10`;
   };
   
-  const multiLocationEmbedUrl = createMultiLocationUrl();
+  // Use custom embed URL if provided, otherwise generate one
+  const multiLocationEmbedUrl = customEmbedUrl || createMultiLocationUrl();
   
   // Main office direct link for directions using coordinates
   const mainOfficeUrl = mainOffice.coordinates && mainOffice.coordinates !== 'TBD'
@@ -173,7 +196,7 @@ const MultiLocationMap: React.FC<MultiLocationMapProps> = ({
                               className="inline-flex items-center text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full hover:bg-green-200 transition-colors"
                             >
                               <ExternalLink className="h-3 w-3 mr-1" />
-                              {t('map.directions')}
+                              {t('map.getDirections')}
                             </a>
                           )}
                         </div>

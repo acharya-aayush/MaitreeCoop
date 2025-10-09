@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import GoogleMap from '@/components/GoogleMap';
 import MultiLocationMap from '@/components/MultiLocationMap';
+import ContactBar from '@/components/ContactBar';
 
 const Contact = () => {
   const { t } = useTranslation();
@@ -48,6 +49,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <ContactBar />
       <Navbar />
       
       <div className="page-header text-center">
