@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook } from 'lucide-react';
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -19,25 +19,13 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4 pt-2">
               <a 
-                href="#" 
+                href="https://www.facebook.com/maitri.bahu.uddesyiya.sahakari.sanstha" 
                 aria-label="Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-500 hover:text-primary transition-colors duration-300"
               >
                 <Facebook size={20} />
-              </a>
-              <a 
-                href="#" 
-                aria-label="Instagram"
-                className="text-gray-500 hover:text-primary transition-colors duration-300"
-              >
-                <Instagram size={20} />
-              </a>
-              <a 
-                href="#" 
-                aria-label="Twitter"
-                className="text-gray-500 hover:text-primary transition-colors duration-300"
-              >
-                <Twitter size={20} />
               </a>
             </div>
           </div>

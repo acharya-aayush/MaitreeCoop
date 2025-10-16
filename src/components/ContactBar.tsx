@@ -81,10 +81,9 @@ const ContactBar: React.FC = () => {
           
           {/* Right side - Office hours and location */}
           <div className="flex flex-wrap items-center gap-3 sm:gap-6">
-            <div className="flex items-center gap-1">
+            <div className="hidden sm:flex items-center gap-1">
               <Clock className="h-3 w-3" />
-              <span className="hidden sm:inline">{t('contactBar.hours', 'Sun-Fri: 10:00 AM - 5:00 PM')}</span>
-              <span className="sm:hidden text-xs">{t('contactBar.hoursMobile', 'Mon-Fri: 10-5')}</span>
+              <span>{t('contactBar.hours', 'Sun-Fri: 10:00 AM - 5:00 PM')}</span>
             </div>
             <div className="hidden sm:flex items-center gap-1">
               <MapPin className="h-3 w-3" />

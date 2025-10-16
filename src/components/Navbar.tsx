@@ -94,7 +94,8 @@ const Navbar = () => {
               <img 
                 src="/images/logo.svg" 
                 alt="Maitree Cooperative Logo" 
-                className="h-20 md:h-24 lg:h-18 w-auto object-contain"
+                className="h-[105px] w-[506.88px] object-contain"
+                style={{ width: '506.88px', height: '105px' }}
               />
             </Link>
           </div>
