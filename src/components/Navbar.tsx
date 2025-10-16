@@ -88,22 +88,14 @@ const Navbar = () => {
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex justify-between items-center py-3 md:space-x-10">
-          <div className="flex items-center justify-start">
+        <div className="flex justify-between items-center py-2 md:py-3 md:space-x-10">
+          <div className="flex items-center justify-start -ml-2">
             <Link to="/" className="flex items-center">
               <img 
-                src="/images/logo.png" 
+                src="/images/logo.svg" 
                 alt="Maitree Cooperative Logo" 
-                className="h-12 md:h-14 mr-2"
+                className="h-20 md:h-24 lg:h-18 w-auto object-contain"
               />
-              <div className="flex flex-col -ml-2">
-                <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-green-800">
-                  Maitree Cooperative
-                </span>
-                <span className="text-[10px] text-green-600 hidden md:inline-block leading-tight">
-                  {t('navigation.tagline')}
-                </span>
-              </div>
             </Link>
           </div>
           
