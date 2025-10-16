@@ -8,6 +8,7 @@ import ContactBar from '@/components/ContactBar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
+import { getAssetPath } from '@/lib/assets';
 import { cn } from '@/lib/utils';
 
 type PersonProps = {
@@ -104,7 +105,7 @@ const Board = () => {
   const chairman = {
     nameKey: "board.boardMembers.members.shankarGautam.name",
     positionKey: "board.boardMembers.members.shankarGautam.position",
-    photo: "/images/board/chairman.png"
+    photo: getAssetPath("/images/board/chairman.png")
   };
 
   const keyOfficers = [
