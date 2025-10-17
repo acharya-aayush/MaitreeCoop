@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
-import { getAssetPath } from '@/lib/assets';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const Navbar = () => {
@@ -89,11 +88,11 @@ const Navbar = () => {
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex justify-between items-center py-2 md:py-3 md:space-x-10">
+        <div className="flex justify-between items-center py-1 md:py-1.5 md:space-x-10">
           <div className="flex items-center justify-start -ml-2">
             <Link to="/" className="flex items-center">
               <img 
-                src={getAssetPath("/images/logo.svg")} 
+                src="/images/logo.svg" 
                 alt="Maitree Cooperative Logo" 
                 className="h-[105px] w-[506.88px] object-contain"
                 style={{ width: '506.88px', height: '105px' }}
