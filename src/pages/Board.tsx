@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { client, queries, getImageUrl } from '@/lib/sanity';
+import { getStaffDisplayPosition, getLocationDisplay } from '@/lib/staff-positions';
 
 interface BoardMember {
   _id: string;
@@ -34,17 +35,19 @@ interface StaffMember {
   name: string;
   nameNepali?: string;
   photo?: any;
-  post: 'ceo' | 'deputy-ceo' | 'account-head' | 'it-officer' | 'branch-manager' | 'assistant-manager' | 'loan-officer' | 'cashier' | 'field-assistant' | 'admin-staff' | 'security' | 'cleaner' | 'custom';
+  post: 'ceo' | 'deputy-ceo' | 'account-head' | 'it-officer' | 'branch-manager' | 'assistant-manager' | 'loan-officer' | 'cashier' | 'senior-admin-assistant' | 'field-assistant' | 'admin-staff' | 'security' | 'cleaner' | 'custom';
   postNepali?: string;
   customPost?: string;
   customPostNepali?: string;
-  location?: 'main-office' | 'baletaksar' | 'dhurkot' | 'kalikanagar' | 'purkot' | 'aapchaur' | 'kapilvastu' | 'sandhikharka' | 'custom';
+  location: 'main-office' | 'baletaksar' | 'dhurkot' | 'kalikanagar' | 'purkot' | 'aapchaur' | 'kapilvastu' | 'sandhikharka' | 'custom';
   locationNepali?: string;
+  customLocation?: string;
+  customLocationNepali?: string;
   phone: string;
   email: string;
   displayOrder: number;
   isCEO: boolean;
-  department?: 'management' | 'finance' | 'operations' | 'hr' | 'it' | 'marketing' | 'branch-operations' | 'admin';
+  department?: string;
 }
 
 type PersonCardProps = {
@@ -68,6 +71,13 @@ const PersonCard: React.FC<PersonCardProps> = ({
   };
 
   const getDisplayPosition = () => {
+    // For staff members with new enhanced position logic
+    if (isStaff && 'position' in person) {
+      const isNepali = i18n.language === 'ne';
+      return getStaffDisplayPosition(person as StaffMember, isNepali);
+    }
+    
+    // For board members - use existing logic
     // Handle custom positions first
     if (person.post === 'custom') {
       if (i18n.language === 'ne' && person.customPostNepali) {
@@ -113,11 +123,11 @@ const PersonCard: React.FC<PersonCardProps> = ({
     const staffPerson = person as StaffMember;
     if (!staffPerson.location) return null;
     
-    if (i18n.language === 'ne' && staffPerson.locationNepali) {
-      return staffPerson.locationNepali;
-    }
+    // Don't show location for branch managers as it's included in their position title
+    if (staffPerson.post === 'branch-manager') return null;
     
-    return t(`locations.${staffPerson.location}`, staffPerson.location);
+    const isNepali = i18n.language === 'ne';
+    return getLocationDisplay(staffPerson, isNepali);
   };
 
   const photoUrl = (person as any).photoUrl || (person.photo ? getImageUrl(person.photo) : null);

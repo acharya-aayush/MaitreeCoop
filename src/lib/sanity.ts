@@ -99,6 +99,8 @@ export const queries = {
     customPostNepali,
     location,
     locationNepali,
+    customLocation,
+    customLocationNepali,
     phone,
     email,
     displayOrder,

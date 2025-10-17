@@ -44,25 +44,51 @@ export const staffMember = defineType({
       options: {
         list: [
           {title: 'CEO (Chief Executive Officer)', value: 'ceo'},
-          {title: 'Manager', value: 'manager'},
-          {title: 'Assistant Manager', value: 'assistant_manager'},
-          {title: 'Officer', value: 'officer'},
-          {title: 'Senior Officer', value: 'senior_officer'},
-          {title: 'Accountant', value: 'accountant'},
+          {title: 'Deputy CEO', value: 'deputy-ceo'},
+          {title: 'Account Head', value: 'account-head'},
+          {title: 'IT Officer', value: 'it-officer'},
+          {title: 'Branch Manager', value: 'branch-manager'},
+          {title: 'Assistant Manager', value: 'assistant-manager'},
+          {title: 'Loan Officer', value: 'loan-officer'},
           {title: 'Cashier', value: 'cashier'},
-          {title: 'Branch Head', value: 'branch_head'},
-          {title: 'IT Officer', value: 'it_officer'},
-          {title: 'Other', value: 'other'}
+          {title: 'Senior Administrative Assistant', value: 'senior-admin-assistant'},
+          {title: 'Field Assistant', value: 'field-assistant'},
+          {title: 'Admin Staff', value: 'admin-staff'},
+          {title: 'Security', value: 'security'},
+          {title: 'Cleaner', value: 'cleaner'},
+          {title: 'Custom', value: 'custom'}
         ]
       },
-      validation: Rule => Rule.required().error('Position is required')
+      validation: Rule => Rule.required().error('Position is required'),
+      initialValue: 'admin-staff'
     }),
     
     defineField({
       name: 'postNepali',
-      title: 'Position in Nepali',
+      title: 'Position in Nepali (Auto-generated)',
       type: 'string',
-      description: 'पद नेपालीमा'
+      description: 'पद नेपालीमा (स्वचालित)',
+      readOnly: true,
+      initialValue: (params) => {
+        const postTranslations = {
+          'ceo': 'मुख्य कार्यकारी अधिकृत',
+          'deputy-ceo': 'उप मुख्य कार्यकारी अधिकृत',
+          'account-head': 'लेखा प्रमुख',
+          'it-officer': 'सूचना प्रविधि अधिकृत',
+          'branch-manager': 'शाखा प्रबन्धक',
+          'assistant-manager': 'सहायक प्रबन्धक',
+          'loan-officer': 'ऋण अधिकृत',
+          'cashier': 'खजान्ची',
+          'senior-admin-assistant': 'वरिष्ठ प्रशासनिक सहायक',
+          'field-assistant': 'क्षेत्रीय सहायक',
+          'admin-staff': 'प्रशासनिक कर्मचारी',
+          'security': 'सुरक्षा गार्ड',
+          'cleaner': 'सफाई कर्मचारी',
+          'custom': 'अन्य'
+        };
+        const post = params?.parent?.post as keyof typeof postTranslations;
+        return postTranslations[post] || '';
+      }
     }),
     
     defineField({
@@ -83,17 +109,63 @@ export const staffMember = defineType({
     
     defineField({
       name: 'location',
-      title: 'Work Location',
+      title: 'Work Location/Branch',
       type: 'string',
+      options: {
+        list: [
+          {title: 'Main Office', value: 'main-office'},
+          {title: 'Baletaksar Branch', value: 'baletaksar'},
+          {title: 'Dhurkot Branch', value: 'dhurkot'},
+          {title: 'Kalikanagar Branch', value: 'kalikanagar'},
+          {title: 'Purkot Branch', value: 'purkot'},
+          {title: 'Aapchaur Branch', value: 'aapchaur'},
+          {title: 'Kapilvastu Branch', value: 'kapilvastu'},
+          {title: 'Sandhikharka Branch', value: 'sandhikharka'},
+          {title: 'Custom Location', value: 'custom'}
+        ]
+      },
       validation: Rule => Rule.required().error('Work location is required'),
-      description: 'Branch office or work location'
+      description: 'Branch office or work location',
+      initialValue: 'main-office'
     }),
     
     defineField({
       name: 'locationNepali',
-      title: 'Work Location in Nepali',
+      title: 'Location in Nepali (Auto-generated)',
       type: 'string',
-      description: 'कार्यक्षेत्र नेपालीमा'
+      description: 'कार्यक्षेत्र नेपालीमा (स्वचालित)',
+      readOnly: true,
+      initialValue: (params) => {
+        const locationTranslations = {
+          'main-office': 'मुख्य कार्यालय',
+          'baletaksar': 'बालेटकसार शाखा',
+          'dhurkot': 'धुर्कोट शाखा',
+          'kalikanagar': 'कालिकानगर शाखा',
+          'purkot': 'पुर्कोट शाखा',
+          'aapchaur': 'आपचौर शाखा',
+          'kapilvastu': 'कपिलवस्तु शाखा',
+          'sandhikharka': 'सन्धिखर्क शाखा',
+          'custom': 'अन्य स्थान'
+        };
+        const location = params?.parent?.location as keyof typeof locationTranslations;
+        return locationTranslations[location] || '';
+      }
+    }),
+    
+    defineField({
+      name: 'customLocation',
+      title: 'Custom Location Name',
+      type: 'string',
+      description: 'Enter custom location if "Custom Location" is selected above',
+      hidden: ({parent}) => parent?.location !== 'custom'
+    }),
+    
+    defineField({
+      name: 'customLocationNepali',
+      title: 'Custom Location in Nepali',
+      type: 'string',
+      description: 'Custom location name in Nepali',
+      hidden: ({parent}) => parent?.location !== 'custom'
     }),
     
     defineField({
@@ -114,12 +186,28 @@ export const staffMember = defineType({
       name: 'displayOrder',
       title: 'Display Order',
       type: 'number',
-      description: 'Order in which to display (1 = first). CEO is always 1.',
+      description: 'Order in which to display (lower number = higher position)',
       validation: Rule => Rule.required().min(1).error('Display order is required and must be at least 1'),
-      initialValue: ({document}) => {
-        // Auto-assign based on post
-        if (document?.post === 'ceo') return 1;
-        return 2; // Default for others
+      initialValue: (params) => {
+        // Auto-assign hierarchical order based on post
+        const orderMap = {
+          'ceo': 1,
+          'deputy-ceo': 2,
+          'account-head': 3,
+          'it-officer': 4,
+          'branch-manager': 5,
+          'assistant-manager': 6,
+          'loan-officer': 7,
+          'cashier': 8,
+          'senior-admin-assistant': 9,
+          'field-assistant': 10,
+          'admin-staff': 11,
+          'security': 12,
+          'cleaner': 13,
+          'custom': 99
+        };
+        const post = params?.parent?.post as keyof typeof orderMap;
+        return orderMap[post] || 50;
       }
     }),
     
