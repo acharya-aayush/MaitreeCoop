@@ -122,14 +122,7 @@ const PersonCard: React.FC<PersonCardProps> = ({
 
   const photoUrl = (person as any).photoUrl || (person.photo ? getImageUrl(person.photo) : null);
   
-  // Debug photo loading
-  console.log(`Photo debug for ${person.name}:`, {
-    hasPhoto: !!person.photo,
-    directPhotoUrl: (person as any).photoUrl,
-    processedPhotoUrl: person.photo ? getImageUrl(person.photo) : null,
-    finalPhotoUrl: photoUrl,
-    fallbackUsed: !photoUrl
-  });
+
   
 
   
@@ -221,29 +214,6 @@ const Board = () => {
           client.fetch(queries.staffMembers)
         ]);
         
-        console.log('Fetched board members:', boardData?.map(m => ({ 
-          name: m.name, 
-          hasPhoto: !!m.photo,
-          photoData: m.photo 
-        })));
-        
-        // Debug: Check how many have photos
-        const withPhotos = boardData?.filter(m => m.photo) || [];
-        console.log(`Found ${boardData?.length || 0} board members, ${withPhotos.length} have photos`);
-        
-        // Show raw data for first member with photo
-        const firstWithPhoto = withPhotos[0];
-        if (firstWithPhoto && process.env.NODE_ENV === 'development') {
-          console.log('First member with photo:', JSON.stringify(firstWithPhoto, null, 2));
-          // Temporary alert for debugging - remove in production
-          if (boardData.length > 0) {
-            setTimeout(() => {
-              const photoCount = boardData.filter(m => m.photo || (m as any).photoUrl).length;
-              console.log(`Debug: Found ${photoCount} members with photos out of ${boardData.length} total`);
-            }, 1000);
-          }
-        }
-        
         setBoardMembers(boardData || []);
         setStaffMembers(staffData || []);
       } catch (error) {
@@ -294,27 +264,6 @@ const Board = () => {
         </div>
       </div>
       
-      {/* Debug Section - Remove in production */}
-      {process.env.NODE_ENV === 'development' && (
-        <section className="py-4 bg-yellow-50 border-l-4 border-yellow-400">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <h3 className="text-lg font-semibold text-yellow-800 mb-2">Debug Info</h3>
-            <p className="text-sm text-yellow-700">
-              Total board members: {boardMembers.length}, 
-              With photos: {boardMembers.filter(m => m.photo).length},
-              With photoUrl: {boardMembers.filter(m => (m as any).photoUrl).length}
-            </p>
-            {boardMembers.slice(0, 3).map(member => (
-              <div key={member._id} className="text-xs text-yellow-600 mt-1">
-                {member.name}: 
-                {member.photo ? ' [photo obj]' : ' [no photo]'} 
-                {(member as any).photoUrl ? ` [url: ${(member as any).photoUrl.substring(0, 40)}...]` : ' [no url]'}
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
       {/* Board Members Section */}
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">

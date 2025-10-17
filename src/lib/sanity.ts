@@ -33,35 +33,25 @@ export const getFileUrl = (asset: any) => {
 export const getImageUrl = (photoObject: any) => {
   if (!photoObject) return null
   
-  console.log('getImageUrl input:', photoObject);
-  
   // Handle image object with asset reference (most common case)
   if (photoObject.asset && photoObject.asset._ref) {
-    const url = urlFor(photoObject).url();
-    console.log('Generated URL from asset ref:', url);
-    return url;
+    return urlFor(photoObject).url();
   }
   
   // Handle expanded asset object (from asset-> query)  
   if (photoObject.asset && photoObject.asset.url) {
-    console.log('Using direct asset URL:', photoObject.asset.url);
     return photoObject.asset.url;
   }
   
   // Handle direct asset reference
   if (photoObject._ref) {
-    const url = urlFor(photoObject).url();
-    console.log('Generated URL from direct ref:', url);
-    return url;
+    return urlFor(photoObject).url();
   }
   
   // Handle direct URL
   if (photoObject.url) {
-    console.log('Using direct URL:', photoObject.url);
     return photoObject.url;
   }
-  
-  console.log('No valid photo URL found');
   return null;
 }
 
