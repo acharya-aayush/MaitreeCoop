@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { Phone, Mail } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Phone, Mail, MapPin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -8,31 +8,130 @@ import ContactBar from '@/components/ContactBar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
-import { getAssetPath } from '@/lib/assets';
 import { cn } from '@/lib/utils';
+import { client, queries, getImageUrl } from '@/lib/sanity';
 
-type PersonProps = {
-  nameKey: string;
-  positionKey: string;
-  photo: string;
-  fallbackPhoto?: string;
-  contact?: string;
+interface BoardMember {
+  _id: string;
+  name: string;
+  nameNepali?: string;
+  photo?: any;
+  photoUrl?: string;
+  post: 'chairman' | 'vice-chairman' | 'secretary' | 'joint-secretary' | 'treasurer' | 'joint-treasurer' | 'member' | 'custom';
+  postNepali?: string;
+  customPost?: string;
+  customPostNepali?: string;
+  displayOrder: number;
+  isChairman: boolean;
+  isViceChairman: boolean;
+  phone?: string;
   email?: string;
-  locationKey?: string;
+  notes?: string;
+}
+
+interface StaffMember {
+  _id: string;
+  name: string;
+  nameNepali?: string;
+  photo?: any;
+  post: 'ceo' | 'deputy-ceo' | 'account-head' | 'it-officer' | 'branch-manager' | 'assistant-manager' | 'loan-officer' | 'cashier' | 'field-assistant' | 'admin-staff' | 'security' | 'cleaner' | 'custom';
+  postNepali?: string;
+  customPost?: string;
+  customPostNepali?: string;
+  location?: 'main-office' | 'baletaksar' | 'dhurkot' | 'kalikanagar' | 'purkot' | 'aapchaur' | 'kapilvastu' | 'sandhikharka' | 'custom';
+  locationNepali?: string;
+  phone: string;
+  email: string;
+  displayOrder: number;
+  isCEO: boolean;
+  department?: 'management' | 'finance' | 'operations' | 'hr' | 'it' | 'marketing' | 'branch-operations' | 'admin';
+}
+
+type PersonCardProps = {
+  person: BoardMember | StaffMember;
+  isStaff?: boolean;
   featured?: boolean;
 };
 
-const PersonCard: React.FC<PersonProps> = ({ 
-  nameKey,
-  positionKey,
-  photo,
-  fallbackPhoto,
-  contact,
-  email,
-  locationKey,
+const PersonCard: React.FC<PersonCardProps> = ({ 
+  person,
+  isStaff = false,
   featured = false
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  
+  const getDisplayName = () => {
+    if (i18n.language === 'ne' && person.nameNepali) {
+      return person.nameNepali;
+    }
+    return person.name;
+  };
+
+  const getDisplayPosition = () => {
+    // Handle custom positions first
+    if (person.post === 'custom') {
+      if (i18n.language === 'ne' && person.customPostNepali) {
+        return person.customPostNepali;
+      }
+      return person.customPost || person.post;
+    }
+    
+    // Handle predefined positions with translations or default formatting
+    if (i18n.language === 'ne' && person.postNepali) {
+      return person.postNepali;
+    }
+    
+    // Create proper sentence case for English positions
+    const positionMap = {
+      'chairman': 'Chairman',
+      'vice-chairman': 'Vice Chairman',
+      'secretary': 'Secretary',
+      'joint-secretary': 'Joint Secretary',
+      'treasurer': 'Treasurer',
+      'joint-treasurer': 'Joint Treasurer',
+      'member': 'Member',
+      'ceo': 'Chief Executive Officer',
+      'deputy-ceo': 'Deputy CEO',
+      'account-head': 'Account Head',
+      'it-officer': 'IT Officer',
+      'branch-manager': 'Branch Manager',
+      'assistant-manager': 'Assistant Manager',
+      'loan-officer': 'Loan Officer',
+      'cashier': 'Cashier',
+      'field-assistant': 'Field Assistant',
+      'admin-staff': 'Admin Staff',
+      'security': 'Security',
+      'cleaner': 'Cleaner'
+    };
+    
+    return positionMap[person.post] || person.post.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  };
+
+  const getDisplayLocation = () => {
+    if (!isStaff || !('location' in person)) return null;
+    
+    const staffPerson = person as StaffMember;
+    if (!staffPerson.location) return null;
+    
+    if (i18n.language === 'ne' && staffPerson.locationNepali) {
+      return staffPerson.locationNepali;
+    }
+    
+    return t(`locations.${staffPerson.location}`, staffPerson.location);
+  };
+
+  const photoUrl = (person as any).photoUrl || (person.photo ? getImageUrl(person.photo) : null);
+  
+  // Debug photo loading
+  console.log(`Photo debug for ${person.name}:`, {
+    hasPhoto: !!person.photo,
+    directPhotoUrl: (person as any).photoUrl,
+    processedPhotoUrl: person.photo ? getImageUrl(person.photo) : null,
+    finalPhotoUrl: photoUrl,
+    fallbackUsed: !photoUrl
+  });
+  
+
   
   return (
     <Card className={cn(
@@ -45,21 +144,15 @@ const PersonCard: React.FC<PersonProps> = ({
           featured && "w-28 h-28 md:w-36 md:h-36 border-green-200"
         )}>
           <AvatarImage 
-            src={photo} 
-            alt={t(nameKey)} 
+            src={photoUrl || "/images/logo.png"} 
+            alt={getDisplayName()} 
             className="object-cover"
-            onError={(e) => {
-              if (fallbackPhoto) {
-                const target = e.target as HTMLImageElement;
-                target.src = fallbackPhoto;
-              }
-            }}
           />
           <AvatarFallback className={cn(
             "bg-green-100 text-green-700 text-xl font-semibold",
             featured && "text-2xl"
           )}>
-            {t(nameKey).charAt(0)}
+            {getDisplayName().charAt(0)}
           </AvatarFallback>
         </Avatar>
       </CardHeader>
@@ -68,28 +161,41 @@ const PersonCard: React.FC<PersonProps> = ({
           "font-bold",
           featured ? "text-xl text-green-700" : "text-lg"
         )}>
-          {t(nameKey)}
+          {getDisplayName()}
         </h3>
         <p className="text-green-600 font-medium text-sm mb-3">
-          {t(positionKey)}
+          {getDisplayPosition()}
         </p>
         
         <div className="space-y-1 text-sm">
-          {locationKey && (
-            <p className="text-gray-600 text-xs">
-              {t(locationKey)}
-            </p>
-          )}
-          {contact && (
-            <div className="flex items-center justify-center text-gray-600">
-              <Phone className="h-3 w-3 mr-1" />
-              <span className="text-xs">{contact}</span>
+          {getDisplayLocation() && (
+            <div className="flex items-center justify-center text-gray-600 mb-2">
+              <MapPin className="h-3 w-3 mr-1" />
+              <span className="text-xs">{getDisplayLocation()}</span>
             </div>
           )}
-          {email && (
+          {isStaff && 'phone' in person && person.phone && (
+            <div className="flex items-center justify-center text-gray-600">
+              <Phone className="h-3 w-3 mr-1" />
+              <span className="text-xs">{person.phone}</span>
+            </div>
+          )}
+          {isStaff && 'email' in person && person.email && (
             <div className="flex items-center justify-center text-gray-600">
               <Mail className="h-3 w-3 mr-1" />
-              <span className="text-xs">{email}</span>
+              <span className="text-xs break-all">{person.email}</span>
+            </div>
+          )}
+          {!isStaff && person.phone && (
+            <div className="flex items-center justify-center text-gray-600">
+              <Phone className="h-3 w-3 mr-1" />
+              <span className="text-xs">{person.phone}</span>
+            </div>
+          )}
+          {!isStaff && person.email && (
+            <div className="flex items-center justify-center text-gray-600">
+              <Mail className="h-3 w-3 mr-1" />
+              <span className="text-xs break-all">{person.email}</span>
             </div>
           )}
         </div>
@@ -100,204 +206,77 @@ const PersonCard: React.FC<PersonProps> = ({
 
 const Board = () => {
   const { t } = useTranslation();
+  const [boardMembers, setBoardMembers] = useState<BoardMember[]>([]);
+  const [staffMembers, setStaffMembers] = useState<StaffMember[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Board members data organized by hierarchy (without contact info)
-  const chairman = {
-    nameKey: "board.boardMembers.members.shankarGautam.name",
-    positionKey: "board.boardMembers.members.shankarGautam.position",
-    photo: getAssetPath("/images/board/chairman.png")
-  };
+  // Fetch data from Sanity
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        
+        const [boardData, staffData] = await Promise.all([
+          client.fetch(queries.boardMembers),
+          client.fetch(queries.staffMembers)
+        ]);
+        
+        console.log('Fetched board members:', boardData?.map(m => ({ 
+          name: m.name, 
+          hasPhoto: !!m.photo,
+          photoData: m.photo 
+        })));
+        
+        // Debug: Check how many have photos
+        const withPhotos = boardData?.filter(m => m.photo) || [];
+        console.log(`Found ${boardData?.length || 0} board members, ${withPhotos.length} have photos`);
+        
+        // Show raw data for first member with photo
+        const firstWithPhoto = withPhotos[0];
+        if (firstWithPhoto && process.env.NODE_ENV === 'development') {
+          console.log('First member with photo:', JSON.stringify(firstWithPhoto, null, 2));
+          // Temporary alert for debugging - remove in production
+          if (boardData.length > 0) {
+            setTimeout(() => {
+              const photoCount = boardData.filter(m => m.photo || (m as any).photoUrl).length;
+              console.log(`Debug: Found ${photoCount} members with photos out of ${boardData.length} total`);
+            }, 1000);
+          }
+        }
+        
+        setBoardMembers(boardData || []);
+        setStaffMembers(staffData || []);
+      } catch (error) {
+        console.error('Error fetching board/staff data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const keyOfficers = [
-    {
-      nameKey: "board.boardMembers.members.khumanandaGhimire.name",
-      positionKey: "board.boardMembers.members.khumanandaGhimire.position",
-      photo: "/images/board/vice-chairman.png"
-    },
-    {
-      nameKey: "board.boardMembers.members.hariPokhrel.name",
-      positionKey: "board.boardMembers.members.hariPokhrel.position",
-      photo: "/images/board/secretary.png"
-    },
-    {
-      nameKey: "board.boardMembers.members.omKarki.name",
-      positionKey: "board.boardMembers.members.omKarki.position",
-      photo: "/images/board/joint-secretary.png"
-    }
-  ];
+    fetchData();
+  }, []);
 
-  const otherBoardMembers = [
-    {
-      nameKey: "board.boardMembers.members.ramKunwar.name",
-      positionKey: "board.boardMembers.members.ramKunwar.position",
-      photo: "/images/board/treasurer.png"
-    },
-    {
-      nameKey: "board.boardMembers.members.saritaSunar.name",
-      positionKey: "board.boardMembers.members.saritaSunar.position",
-      photo: "/images/board/joint-treasurer.png"
-    },
-    {
-      nameKey: "board.boardMembers.members.jangaNepali.name",
-      positionKey: "board.boardMembers.members.jangaNepali.position",
-      photo: "/images/board/member-1.png"
-    },
-    {
-      nameKey: "board.boardMembers.members.puspaPanthi.name",
-      positionKey: "board.boardMembers.members.puspaPanthi.position",
-      photo: "/images/board/member-2.png"
-    },
-    {
-      nameKey: "board.boardMembers.members.cholrajSharma.name",
-      positionKey: "board.boardMembers.members.cholrajSharma.position",
-      photo: "/images/board/member-3.png"
-    },
-    {
-      nameKey: "board.boardMembers.members.tekKhattri.name",
-      positionKey: "board.boardMembers.members.tekKhattri.position",
-      photo: "/images/board/member-4.png"
-    },
-    {
-      nameKey: "board.boardMembers.members.ritaPanday.name",
-      positionKey: "board.boardMembers.members.ritaPanday.position",
-      photo: "/images/board/member-5.png"
-    },
-    {
-      nameKey: "board.boardMembers.members.jayChudara.name",
-      positionKey: "board.boardMembers.members.jayChudara.position",
-      photo: "/images/board/member-6.png"
-    },
-    {
-      nameKey: "board.boardMembers.members.tilachanPandey.name",
-      positionKey: "board.boardMembers.members.tilachanPandey.position",
-      photo: "/images/board/member-7.png"
-    }
-  ];
+  // Organize board members
+  const chairman = boardMembers.find(member => member.isChairman);
+  const keyOfficers = boardMembers.filter(member => 
+    !member.isChairman && 
+    ['vice-chairman', 'secretary', 'joint-secretary'].includes(member.post)
+  );
+  const otherBoardMembers = boardMembers.filter(member =>
+    !member.isChairman &&
+    !['vice-chairman', 'secretary', 'joint-secretary'].includes(member.post)
+  );
 
-  // Staff data organized by hierarchy with contact info
-  const ceo = {
-    nameKey: "board.staff.employees.arjunAcharya.name",
-    positionKey: "board.staff.employees.arjunAcharya.position",
-    locationKey: "board.staff.employees.arjunAcharya.location",
-    photo: "/images/staff/ceo.png",
-    fallbackPhoto: "/images/logo.png",
-    contact: "9857061987",
-    email: "acharyaarjun1@gmail.com"
-  };
-
-  const seniorManagement = [
-    {
-      nameKey: "board.staff.employees.ghanashyamMarasini.name",
-      positionKey: "board.staff.employees.ghanashyamMarasini.position",
-      locationKey: "board.staff.employees.ghanashyamMarasini.location",
-      photo: "/images/staff/deputy-ceo.png",
-      fallbackPhoto: "/images/logo.png",
-      contact: "9857049619",
-      email: "ghanashyammarasini@gmail.com"
-    },
-    {
-      nameKey: "board.staff.employees.dinnathAcharya.name",
-      positionKey: "board.staff.employees.dinnathAcharya.position",
-      locationKey: "board.staff.employees.dinnathAcharya.location",
-      photo: "/images/staff/account-head.png",
-      fallbackPhoto: "/images/logo.png",
-      contact: "9857064549",
-      email: "dina.acharya549@gmail.com"
-    },
-    {
-      nameKey: "board.staff.employees.krishnaAryal.name",
-      positionKey: "board.staff.employees.krishnaAryal.position",
-      locationKey: "board.staff.employees.krishnaAryal.location",
-      photo: "/images/staff/it-officer.png",
-      fallbackPhoto: "/images/logo.png",
-      contact: "9857064404",
-      email: "krishnaaryal404@gmail.com"
-    }
-  ];
-
-  const otherStaff = [
-    {
-      nameKey: "board.staff.employees.laxmiMalla.name",
-      positionKey: "board.staff.employees.laxmiMalla.position",
-      locationKey: "board.staff.employees.laxmiMalla.location",
-      photo: "/images/staff/baletaksar-head.png",
-      fallbackPhoto: "/images/logo.png",
-      contact: "9847570662",
-      email: "laxmimalla331@gmail.com"
-    },
-    {
-      nameKey: "board.staff.employees.amarMarasini.name",
-      positionKey: "board.staff.employees.amarMarasini.position",
-      locationKey: "board.staff.employees.amarMarasini.location",
-      photo: "/images/staff/dhurkot-head.png",
-      fallbackPhoto: "/images/logo.png",
-      contact: "9857076519",
-      email: "marasini.amar@gmail.com"
-    },
-    {
-      nameKey: "board.staff.employees.surajPokhrel.name",
-      positionKey: "board.staff.employees.surajPokhrel.position",
-      locationKey: "board.staff.employees.surajPokhrel.location",
-      photo: "/images/staff/kalikanagar-head.png",
-      fallbackPhoto: "/images/logo.png",
-      contact: "9857064684",
-      email: "isurajpokhrel@gmail.com"
-    },
-    {
-      nameKey: "board.staff.employees.sushilPokhrel.name",
-      positionKey: "board.staff.employees.sushilPokhrel.position",
-      locationKey: "board.staff.employees.sushilPokhrel.location",
-      photo: "/images/staff/purkot-head.png",
-      fallbackPhoto: "/images/logo.png",
-      contact: "9847574773",
-      email: "sushilpokhrel31@gmail.com"
-    },
-    {
-      nameKey: "board.staff.employees.ashokPanthi.name",
-      positionKey: "board.staff.employees.ashokPanthi.position",
-      locationKey: "board.staff.employees.ashokPanthi.location",
-      photo: "/images/staff/aapchaur-head.png",
-      fallbackPhoto: "/images/logo.png",
-      contact: "9840458536",
-      email: "panthia099@gmail.com"
-    },
-    {
-      nameKey: "board.staff.employees.dharmendraChaudhary.name",
-      positionKey: "board.staff.employees.dharmendraChaudhary.position",
-      locationKey: "board.staff.employees.dharmendraChaudhary.location",
-      photo: "/images/staff/kapilvastu-head.png",
-      fallbackPhoto: "/images/logo.png",
-      contact: "9867400139",
-      email: "dc.tharu.nepal@gmail.com"
-    },
-    {
-      nameKey: "board.staff.employees.ghanashyamMarasiniSandhikharka.name",
-      positionKey: "board.staff.employees.ghanashyamMarasiniSandhikharka.position",
-      locationKey: "board.staff.employees.ghanashyamMarasiniSandhikharka.location",
-      photo: "/images/staff/sandhikharka-head.png",
-      fallbackPhoto: "/images/logo.png",
-      contact: "9857049619",
-      email: "ghanashyammarasini@gmail.com"
-    },
-    {
-      nameKey: "board.staff.employees.deviMarasini.name",
-      positionKey: "board.staff.employees.deviMarasini.position",
-      locationKey: "board.staff.employees.deviMarasini.location",
-      photo: "/images/staff/admin-assistant.png",
-      fallbackPhoto: "/images/logo.png",
-      contact: "9844753699",
-      email: "admin@maitreecooperative.com"
-    },
-    {
-      nameKey: "board.staff.employees.laxmanNepali.name",
-      positionKey: "board.staff.employees.laxmanNepali.position",
-      locationKey: "board.staff.employees.laxmanNepali.location",
-      photo: "/images/staff/staff-1.png",
-      fallbackPhoto: "/images/logo.png",
-      contact: "+977 98XXXXXXXX",
-      email: "laxman@maitreecooperative.com"
-    }
-  ];
+  // Organize staff members
+  const ceo = staffMembers.find(member => member.isCEO);
+  const seniorManagement = staffMembers.filter(member => 
+    !member.isCEO && 
+    ['deputy-ceo', 'account-head', 'it-officer'].includes(member.post)
+  );
+  const otherStaff = staffMembers.filter(member =>
+    !member.isCEO && 
+    !['deputy-ceo', 'account-head', 'it-officer'].includes(member.post)
+  );
 
   return (
     <div className="min-h-screen bg-white">
@@ -315,6 +294,27 @@ const Board = () => {
         </div>
       </div>
       
+      {/* Debug Section - Remove in production */}
+      {process.env.NODE_ENV === 'development' && (
+        <section className="py-4 bg-yellow-50 border-l-4 border-yellow-400">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <h3 className="text-lg font-semibold text-yellow-800 mb-2">Debug Info</h3>
+            <p className="text-sm text-yellow-700">
+              Total board members: {boardMembers.length}, 
+              With photos: {boardMembers.filter(m => m.photo).length},
+              With photoUrl: {boardMembers.filter(m => (m as any).photoUrl).length}
+            </p>
+            {boardMembers.slice(0, 3).map(member => (
+              <div key={member._id} className="text-xs text-yellow-600 mt-1">
+                {member.name}: 
+                {member.photo ? ' [photo obj]' : ' [no photo]'} 
+                {(member as any).photoUrl ? ` [url: ${(member as any).photoUrl.substring(0, 40)}...]` : ' [no url]'}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Board Members Section */}
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -330,48 +330,63 @@ const Board = () => {
             </p>
           </div>
           
+          {/* Loading state */}
+          {loading && (
+            <div className="text-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto"></div>
+              <p className="mt-2 text-gray-600">Loading board members...</p>
+            </div>
+          )}
+          
           {/* Chairman - Featured and alone at the top */}
-          <div className="mb-12">
-            <div className="flex justify-center">
-              <div className="w-full max-w-sm">
-                <PersonCard 
-                  nameKey={chairman.nameKey}
-                  positionKey={chairman.positionKey}
-                  photo={chairman.photo}
-                  featured={true}
-                />
+          {!loading && chairman && (
+            <div className="mb-12">
+              <div className="flex justify-center">
+                <div className="w-full max-w-sm">
+                  <PersonCard 
+                    person={chairman}
+                    featured={true}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
           
           {/* Key Officers - Vice Chairman, Secretary, Joint Secretary */}
-          <div className="mb-12">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {keyOfficers.map((member, index) => (
-                <PersonCard 
-                  key={index}
-                  nameKey={member.nameKey}
-                  positionKey={member.positionKey}
-                  photo={member.photo}
-                  featured={false}
-                />
-              ))}
+          {!loading && keyOfficers.length > 0 && (
+            <div className="mb-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                {keyOfficers.map((member) => (
+                  <PersonCard 
+                    key={member._id}
+                    person={member}
+                    featured={false}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
           
           {/* Other Board Members */}
-          <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {otherBoardMembers.map((member, index) => (
-                <PersonCard 
-                  key={index}
-                  nameKey={member.nameKey}
-                  positionKey={member.positionKey}
-                  photo={member.photo}
-                />
-              ))}
+          {!loading && otherBoardMembers.length > 0 && (
+            <div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                {otherBoardMembers.map((member) => (
+                  <PersonCard 
+                    key={member._id}
+                    person={member}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+          
+          {/* Empty state for board members */}
+          {!loading && boardMembers.length === 0 && (
+            <div className="text-center py-8">
+              <p className="text-gray-600">No board members found. Please add some in the CMS.</p>
+            </div>
+          )}
         </div>
       </section>
       
@@ -392,66 +407,72 @@ const Board = () => {
             </p>
           </div>
           
+          {/* Loading state */}
+          {loading && (
+            <div className="text-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto"></div>
+              <p className="mt-2 text-gray-600">Loading staff members...</p>
+            </div>
+          )}
+          
           {/* CEO - Featured and alone at the top */}
-          <div className="mb-12">
-            <div className="flex justify-center">
-              <div className="w-full max-w-sm">
-                <PersonCard 
-                  nameKey={ceo.nameKey}
-                  positionKey={ceo.positionKey}
-                  photo={ceo.photo}
-                  fallbackPhoto={ceo.fallbackPhoto}
-                  contact={ceo.contact}
-                  email={ceo.email}
-                  locationKey={ceo.locationKey}
-                  featured={true}
-                />
+          {!loading && ceo && (
+            <div className="mb-12">
+              <div className="flex justify-center">
+                <div className="w-full max-w-sm">
+                  <PersonCard 
+                    person={ceo}
+                    isStaff={true}
+                    featured={true}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
           
           {/* Senior Management - Deputy CEO, Account Head, IT Officer */}
-          <div className="mb-12">
-            <h3 className="text-xl font-semibold text-green-700 mb-6 text-center">
-              {t('board.staff.managementTeam')}
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {seniorManagement.map((employee, index) => (
-                <PersonCard 
-                  key={index}
-                  nameKey={employee.nameKey}
-                  positionKey={employee.positionKey}
-                  photo={employee.photo}
-                  fallbackPhoto={employee.fallbackPhoto}
-                  contact={employee.contact}
-                  email={employee.email}
-                  locationKey={employee.locationKey}
-                  featured={false}
-                />
-              ))}
+          {!loading && seniorManagement.length > 0 && (
+            <div className="mb-12">
+              <h3 className="text-xl font-semibold text-green-700 mb-6 text-center">
+                {t('board.staff.managementTeam')}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                {seniorManagement.map((employee) => (
+                  <PersonCard 
+                    key={employee._id}
+                    person={employee}
+                    isStaff={true}
+                    featured={false}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
           
           {/* Other Staff */}
-          <div>
-            <h3 className="text-xl font-semibold text-green-700 mb-6 text-center">
-              {t('board.staff.branchHeads')}
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-              {otherStaff.map((employee, index) => (
-                <PersonCard 
-                  key={index}
-                  nameKey={employee.nameKey}
-                  positionKey={employee.positionKey}
-                  photo={employee.photo}
-                  fallbackPhoto={employee.fallbackPhoto}
-                  contact={employee.contact}
-                  email={employee.email}
-                  locationKey={employee.locationKey}
-                />
-              ))}
+          {!loading && otherStaff.length > 0 && (
+            <div>
+              <h3 className="text-xl font-semibold text-green-700 mb-6 text-center">
+                {t('board.staff.branchHeads')}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                {otherStaff.map((employee) => (
+                  <PersonCard 
+                    key={employee._id}
+                    person={employee}
+                    isStaff={true}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+          
+          {/* Empty state for staff */}
+          {!loading && staffMembers.length === 0 && (
+            <div className="text-center py-8">
+              <p className="text-gray-600">No staff members found. Please add some in the CMS.</p>
+            </div>
+          )}
         </div>
       </section>
       

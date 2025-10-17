@@ -15,6 +15,7 @@ import AboutUs from "./pages/AboutUs";
 import Services from "./pages/Services";
 import Members from "./pages/Members";
 import News from "./pages/News";
+import NewsDetail from "./pages/NewsDetail";
 import Gallery from "./pages/Gallery";
 import Board from "./pages/Board";
 import Financial from "./pages/Financial";
@@ -23,6 +24,7 @@ import Community from "./pages/Community";
 import MapTest from "./pages/MapTest";
 import BoardAdmin from "./pages/BoardAdmin";
 import DynamicBoard from "./pages/DynamicBoard";
+import SanityTest from "./components/SanityTest";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,7 @@ const App = () => (
           <Route path="/services" element={<Services />} />
           <Route path="/members" element={<Members />} />
           <Route path="/news" element={<News />} />
+          <Route path="/news/:slug" element={<NewsDetail />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/board" element={<Board />} />
           <Route path="/financial" element={<Financial />} />
@@ -46,6 +49,7 @@ const App = () => (
           <Route path="/map-test" element={<MapTest />} />
           <Route path="/admin/board" element={<BoardAdmin />} />
           <Route path="/board-dynamic" element={<DynamicBoard />} />
+          <Route path="/sanity-test" element={<SanityTest />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

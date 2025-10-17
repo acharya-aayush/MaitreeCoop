@@ -88,7 +88,7 @@ const Navbar = () => {
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex justify-between items-center py-1 md:py-1.5 md:space-x-10">
+        <div className="flex justify-between items-center py-2 md:py-1.5 md:space-x-10">
           <div className="flex items-center justify-start -ml-2">
             <Link to="/" className="flex items-center">
               <img 
