@@ -36,6 +36,7 @@ const BoardAdmin = () => {
 
   const categories = [
     { value: 'board', label: 'Board Members' },
+    { value: 'management', label: 'Management Team' },
     { value: 'staff', label: 'Staff Members' }
   ];
 

@@ -4,8 +4,8 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => ({
-  // Set base path for GitHub Pages
-  base: command === 'build' ? '/MaitreeCoop/' : '/',
+  // Use root path for Vercel deployment
+  base: '/',
   server: {
     host: "::",
     port: 8080,

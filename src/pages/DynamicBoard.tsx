@@ -102,78 +102,8 @@ const PersonCard: React.FC<{ member: BoardMember; featured?: boolean }> = ({
 
 const DynamicBoard = () => {
   const { t, i18n } = useTranslation();
-  const { boardMembers, managementTeam, staffMembers, loading } = useBoardMembers();
+  const { boardMembers, managementTeam, staffMembers, featuredMembers, loading } = useBoardMembers();
   const isNepali = i18n.language === 'np';
-
-  // Hierarchy for Board Members
-  const getPositionPriority = (position: string) => {
-    const pos = position.toLowerCase();
-    if (pos.includes('chairman') || pos.includes('अध्यक्ष')) return 1;
-    if (pos.includes('vice chairman') || pos.includes('उपाध्यक्ष')) return 2;
-    if (pos.includes('secretary') || pos.includes('सचिव')) return 3;
-    if (pos.includes('joint secretary') || pos.includes('सह सचिव')) return 4;
-    if (pos.includes('treasurer') || pos.includes('कोषाध्यक्ष')) return 5;
-    return 6; // Other board members
-  };
-
-  // Hierarchy for Staff Members
-  const getStaffPriority = (position: string) => {
-    const pos = position.toLowerCase();
-    if (pos.includes('ceo') || pos.includes('chief executive') || pos.includes('मुख्य कार्यकारी')) return 1;
-    if (pos.includes('deputy ceo') || pos.includes('उप मुख्य कार्यकारी')) return 2;
-    if (pos.includes('account head') || pos.includes('लेखा प्रमुख')) return 3;
-    if (pos.includes('it officer') || pos.includes('आईटी अधिकृत')) return 4;
-    if (pos.includes('manager') || pos.includes('प्रबन्धक')) return 5;
-    return 6; // Other staff
-  };
-
-  // Sort board members by hierarchy
-  const sortedBoardMembers = [...boardMembers].sort((a, b) => {
-    return getPositionPriority(a.position) - getPositionPriority(b.position);
-  });
-
-  // Sort staff members by hierarchy
-  const sortedStaffMembers = [...managementTeam, ...staffMembers].sort((a, b) => {
-    return getStaffPriority(a.position) - getStaffPriority(b.position);
-  });
-
-  // Get specific positions for special layout
-  const chairman = sortedBoardMembers.find(member => 
-    member.position.toLowerCase().includes('chairman') || 
-    member.position.toLowerCase().includes('अध्यक्ष')
-  );
-  
-  const topThreeBoard = sortedBoardMembers.filter(member => {
-    const pos = member.position.toLowerCase();
-    return (pos.includes('vice chairman') || pos.includes('उपाध्यक्ष') ||
-            pos.includes('secretary') || pos.includes('सचिव') ||
-            pos.includes('joint secretary') || pos.includes('सह सचिव'));
-  }).slice(0, 3);
-
-  const otherBoardMembers = sortedBoardMembers.filter(member => 
-    !chairman || member.id !== chairman.id
-  ).filter(member => 
-    !topThreeBoard.find(topMember => topMember.id === member.id)
-  );
-
-  const ceo = sortedStaffMembers.find(member => 
-    member.position.toLowerCase().includes('ceo') || 
-    member.position.toLowerCase().includes('chief executive') ||
-    member.position.toLowerCase().includes('मुख्य कार्यकारी')
-  );
-
-  const topThreeStaff = sortedStaffMembers.filter(member => {
-    const pos = member.position.toLowerCase();
-    return (pos.includes('deputy ceo') || pos.includes('उप मुख्य कार्यकारी') ||
-            pos.includes('account head') || pos.includes('लेखा प्रमुख') ||
-            pos.includes('it officer') || pos.includes('आईटी अधिकृत'));
-  }).slice(0, 3);
-
-  const otherStaffMembers = sortedStaffMembers.filter(member => 
-    !ceo || member.id !== ceo.id
-  ).filter(member => 
-    !topThreeStaff.find(topMember => topMember.id === member.id)
-  );
 
   if (loading) {
     return (
@@ -222,87 +152,59 @@ const DynamicBoard = () => {
             </div>
           </div>
 
-          {/* Board Members Section */}
-          {sortedBoardMembers.length > 0 && (
+          {/* Featured Members */}
+          {featuredMembers.length > 0 && (
             <section className="mb-16">
-              <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-gray-900">
-                {isNepali ? 'बोर्ड सदस्यहरू' : 'Board Members'}
+              <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900">
+                {isNepali ? 'मुख्य व्यक्तित्वहरू' : 'Leadership Team'}
               </h2>
-
-              {/* Chairman - Top Row Alone */}
-              {chairman && (
-                <div className="mb-12">
-                  <div className="flex justify-center">
-                    <div className="max-w-sm">
-                      <PersonCard member={chairman} featured={true} />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Top 3 Board Members - Second Row */}
-              {topThreeBoard.length > 0 && (
-                <div className="mb-12">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                    {topThreeBoard.map((member) => (
-                      <PersonCard key={member.id} member={member} featured={true} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Other Board Members */}
-              {otherBoardMembers.length > 0 && (
-                <div className="mb-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {otherBoardMembers.map((member) => (
-                      <PersonCard key={member.id} member={member} />
-                    ))}
-                  </div>
-                </div>
-              )}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {featuredMembers.map((member) => (
+                  <PersonCard key={member.id} member={member} featured={true} />
+                ))}
+              </div>
             </section>
           )}
 
-          {/* Staff Members Section */}
-          {sortedStaffMembers.length > 0 && (
+          {/* Board Members */}
+          {boardMembers.length > 0 && (
             <section className="mb-16">
-              <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-gray-900">
-                {isNepali ? 'कर्मचारी टोली' : 'Staff Team'}
+              <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900">
+                {isNepali ? 'बोर्ड सदस्यहरू' : 'Board Members'}
               </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {boardMembers.filter(member => !member.featured).map((member) => (
+                  <PersonCard key={member.id} member={member} />
+                ))}
+              </div>
+            </section>
+          )}
 
-              {/* CEO - Top Row Alone */}
-              {ceo && (
-                <div className="mb-12">
-                  <div className="flex justify-center">
-                    <div className="max-w-sm">
-                      <PersonCard member={ceo} featured={true} />
-                    </div>
-                  </div>
-                </div>
-              )}
+          {/* Management Team */}
+          {managementTeam.length > 0 && (
+            <section className="mb-16">
+              <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900">
+                {isNepali ? 'व्यवस्थापन टोली' : 'Management Team'}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {managementTeam.filter(member => !member.featured).map((member) => (
+                  <PersonCard key={member.id} member={member} />
+                ))}
+              </div>
+            </section>
+          )}
 
-              {/* Top 3 Staff - Second Row */}
-              {topThreeStaff.length > 0 && (
-                <div className="mb-12">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                    {topThreeStaff.map((member) => (
-                      <PersonCard key={member.id} member={member} featured={true} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Other Staff Members */}
-              {otherStaffMembers.length > 0 && (
-                <div className="mb-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {otherStaffMembers.map((member) => (
-                      <PersonCard key={member.id} member={member} />
-                    ))}
-                  </div>
-                </div>
-              )}
+          {/* Staff Members */}
+          {staffMembers.length > 0 && (
+            <section className="mb-16">
+              <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900">
+                {isNepali ? 'कर्मचारीहरू' : 'Staff Members'}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {staffMembers.map((member) => (
+                  <PersonCard key={member.id} member={member} />
+                ))}
+              </div>
             </section>
           )}
 
@@ -317,7 +219,7 @@ const DynamicBoard = () => {
           </div>
 
           {/* No Members Message */}
-          {sortedBoardMembers.length === 0 && sortedStaffMembers.length === 0 && (
+          {boardMembers.length === 0 && managementTeam.length === 0 && staffMembers.length === 0 && (
             <div className="text-center py-16">
               <p className="text-gray-600 mb-4">No board members found.</p>
               <Link to="/admin/board">
