@@ -5,6 +5,8 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import LanguageSwitcher from './LanguageSwitcher';
+import { useHomepageSettings } from '@/hooks/useHomepageSettings';
+import { Logo } from '@/components/Logo';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -91,12 +93,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center py-2 md:py-1.5 md:space-x-10">
           <div className="flex items-center justify-start -ml-2">
             <Link to="/" className="flex items-center">
-              <img 
-                src="/images/logo.svg" 
-                alt="Maitree Cooperative Logo" 
-                className="h-[105px] w-[506.88px] object-contain"
-                style={{ width: '506.88px', height: '105px' }}
-              />
+              <Logo />
             </Link>
           </div>
           

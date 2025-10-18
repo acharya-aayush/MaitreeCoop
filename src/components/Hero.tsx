@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
+import { useHomepageSettings } from '@/hooks/useHomepageSettings';
 
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { settings, loading: settingsLoading } = useHomepageSettings();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -86,8 +88,18 @@ const Hero = () => {
             {/* Floating Elements */}
             <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-white rounded-2xl shadow-lg p-4 glass-card animate-fade-up" style={{ animationDelay: '0.6s' }}>
               <div className="h-full flex flex-col justify-center">
-                <p className="text-xs text-gray-500 mb-1">{t('hero.members')}</p>
-                <p className="text-xl font-bold text-green-600">14,800+</p>
+                <p className="text-xs text-gray-500 mb-1">
+                  {i18n.language === 'ne' && settings?.memberCountNepali 
+                    ? settings.memberCountNepali 
+                    : t('hero.members')
+                  }
+                </p>
+                <p className="text-xl font-bold text-green-600">
+                  {settings?.memberCount 
+                    ? `${settings.memberCount.toLocaleString()}${settings.memberCountSuffix || '+'}`
+                    : '14,800+'
+                  }
+                </p>
               </div>
             </div>
             

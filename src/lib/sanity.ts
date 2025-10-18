@@ -441,5 +441,173 @@ export const queries = {
     pageCount,
     language,
     publishedDate
+  }`,
+
+  // Homepage Settings (singleton)
+  homepageSettings: `*[_type == "homepageSettings"][0] {
+    _id,
+    logo {
+      asset-> {
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      }
+    },
+    memberCount,
+    memberCountSuffix,
+    memberCountNepali,
+    lastUpdated
+  }`,
+
+  // Hero Section (singleton)
+  heroSection: `*[_type == "heroSection"][0] {
+    _id,
+    heroImages[] {
+      image {
+        asset-> {
+          _id,
+          url,
+          metadata {
+            dimensions {
+              width,
+              height
+            }
+          }
+        }
+      },
+      caption,
+      isActive,
+      displayOrder
+    },
+    lastUpdated
+  }`,
+
+  // Introduction Section (singleton)
+  introductionSection: `*[_type == "introductionSection"][0] {
+    _id,
+    heading,
+    headingNepali,
+    content,
+    contentNepali,
+    highlights[] {
+      title,
+      titleNepali,
+      value,
+      description,
+      descriptionNepali,
+      displayOrder
+    },
+    foundingVision {
+      quote,
+      quoteNepali,
+      author,
+      authorNepali
+    },
+    lastUpdated
+  }`,
+
+  // Gallery Items
+  galleryItems: `*[_type == "galleryItem" && isPublished == true] | order(isFeatured desc, displayOrder asc, _createdAt desc) {
+    _id,
+    title,
+    titleNepali,
+    description,
+    descriptionNepali,
+    mediaItems[] {
+      mediaType,
+      image {
+        asset-> {
+          _id,
+          url,
+          metadata {
+            dimensions {
+              width,
+              height
+            }
+          }
+        }
+      },
+      video {
+        asset-> {
+          _id,
+          url,
+          originalFilename,
+          size
+        }
+      },
+      videoThumbnail {
+        asset-> {
+          _id,
+          url,
+          metadata {
+            dimensions {
+              width,
+              height
+            }
+          }
+        }
+      },
+      videoUrl,
+      caption,
+      order
+    },
+    category,
+    tags,
+    dateTaken,
+    location,
+    locationNepali,
+    isFeatured,
+    relatedNews-> {
+      _id,
+      title,
+      slug
+    }
+  }`,
+
+  // Featured Gallery Items
+  featuredGalleryItems: `*[_type == "galleryItem" && isPublished == true && isFeatured == true] | order(displayOrder asc, _createdAt desc) {
+    _id,
+    title,
+    titleNepali,
+    description,
+    descriptionNepali,
+    mediaItems[] {
+      mediaType,
+      image {
+        asset-> {
+          _id,
+          url,
+          metadata {
+            dimensions {
+              width,
+              height
+            }
+          }
+        }
+      },
+      videoThumbnail {
+        asset-> {
+          _id,
+          url,
+          metadata {
+            dimensions {
+              width,
+              height
+            }
+          }
+        }
+      },
+      caption,
+      order
+    },
+    category,
+    dateTaken,
+    location,
+    locationNepali
   }`
 }
