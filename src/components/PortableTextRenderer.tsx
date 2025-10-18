@@ -1,14 +1,5 @@
 import React from 'react';
-import imageUrlBuilder from '@sanity/image-url';
-import { client } from '@/lib/sanity';
-
-// Get a pre-configured url-builder from your sanity client
-const builder = imageUrlBuilder(client);
-
-// Helper function to generate image URLs
-function urlFor(source: any) {
-  return builder.image(source);
-}
+import { client, getImageUrl } from '@/lib/sanity';
 
 interface PortableTextRendererProps {
   content: any;
@@ -110,10 +101,15 @@ const PortableTextRenderer: React.FC<PortableTextRendererProps> = ({
       return null;
     }
 
+    const imageUrl = getImageUrl(block);
+    if (!imageUrl) {
+      return null;
+    }
+
     return (
       <div key={index} className="my-8">
         <img
-          src={urlFor(block).width(800).height(600).fit('max').auto('format').url()}
+          src={imageUrl}
           alt={block.alt || 'News image'}
           className="w-full h-auto rounded-lg shadow-md"
         />

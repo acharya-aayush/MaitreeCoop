@@ -4,7 +4,7 @@ export default defineType({
   name: 'announcement',
   title: 'Announcements & Notices',
   type: 'document',
-  icon: () => '📢',
+  icon: () => '',
   fields: [
     defineField({
       name: 'title',
@@ -304,21 +304,21 @@ export default defineType({
       const { title, type, priority, isActive, startDate, endDate, noticeImage } = selection
       
       const typeIcons: Record<string, string> = {
-        'notice': '📢',
-        'event': '🎉',
-        'alert': '🚨',
-        'meeting': '📋',
-        'financial': '💰',
-        'celebration': '🎊',
-        'news': '📰',
-        'achievement': '🏆'
+        'notice': '',
+        'event': '',
+        'alert': '',
+        'meeting': '',
+        'financial': '',
+        'celebration': '',
+        'news': '',
+        'achievement': ''
       }
       
       const priorityColors: Record<string, string> = {
-        'high': '🔴',
-        'medium': '🟡',
-        'normal': '🟢',
-        'low': '🔵'
+        'high': '',
+        'medium': '',
+        'normal': '',
+        'low': ''
       }
       
       const status = !isActive ? ' (Inactive)' : ''
@@ -332,7 +332,7 @@ export default defineType({
       else if (start && start <= now && (!end || end >= now)) timeStatus = ' (Active)'
       
       return {
-        title: `${typeIcons[type] || '📢'} ${priorityColors[priority] || '🟢'} ${title}${status}${timeStatus}`,
+        title: `${title}${status}${timeStatus}`,
         subtitle: `${type} - ${priority} priority`,
         media: noticeImage
       }

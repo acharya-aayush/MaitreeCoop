@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContactBar from '@/components/ContactBar';
-import { client, queries, urlFor } from '@/lib/sanity';
+import { client, queries, getImageUrl } from '@/lib/sanity';
 
 interface NewsArticle {
   _id: string;
@@ -169,7 +169,11 @@ const News = () => {
           
           {filteredNews.length === 0 ? (
             <div className="text-center py-12">
-              <div className="text-gray-400 text-6xl mb-4">📰</div>
+              <div className="text-gray-400 text-6xl mb-4">
+                <svg className="w-16 h-16 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+                </svg>
+              </div>
               <h3 className="text-xl font-medium text-gray-600 mb-2">No articles found</h3>
               <p className="text-gray-500">
                 {activeFilter === 'all' 
@@ -184,10 +188,10 @@ const News = () => {
                 <article key={article._id} className="glass-card p-6 rounded-xl overflow-hidden hover-card group">
                   <div className="flex flex-col lg:flex-row gap-6">
                     {/* Featured Image */}
-                    {article.featuredImage && (
+                    {article.featuredImage && getImageUrl(article.featuredImage) && (
                       <div className="lg:w-1/3">
                         <img
-                          src={urlFor(article.featuredImage).width(400).height(250).url()}
+                          src={getImageUrl(article.featuredImage)}
                           alt={article.title}
                           className="w-full h-48 lg:h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
                         />

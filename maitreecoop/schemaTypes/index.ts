@@ -11,6 +11,7 @@ import galleryItem from './galleryItem'
 import announcement from './announcement'
 import event from './event'
 import successStory from './successStory'
+import contactMessage from './contactMessage'
 
 export const schemaTypes = [
   boardMember, 
@@ -25,5 +26,6 @@ export const schemaTypes = [
   galleryItem,
   announcement,
   event,
-  successStory
+  successStory,
+  contactMessage
 ]

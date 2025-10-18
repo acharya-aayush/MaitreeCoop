@@ -28,7 +28,6 @@ import Community from "./pages/Community";
 import MapTest from "./pages/MapTest";
 import BoardAdmin from "./pages/BoardAdmin";
 import DynamicBoard from "./pages/DynamicBoard";
-import SanityTest from "./components/SanityTest";
 
 const queryClient = new QueryClient();
 
@@ -67,7 +66,6 @@ const App = () => {
             <Route path="/map-test" element={<MapTest />} />
             <Route path="/admin/board" element={<BoardAdmin />} />
             <Route path="/board-dynamic" element={<DynamicBoard />} />
-            <Route path="/sanity-test" element={<SanityTest />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           

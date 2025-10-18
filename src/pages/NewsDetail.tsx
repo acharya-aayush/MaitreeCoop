@@ -6,14 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContactBar from '@/components/ContactBar';
 import PortableTextRenderer from '@/components/PortableTextRenderer';
-import { client as sanityClient, queries } from '@/lib/sanity';
-import imageUrlBuilder from '@sanity/image-url';
-
-const builder = imageUrlBuilder(sanityClient);
-
-function urlFor(source: any) {
-  return builder.image(source);
-}
+import { client as sanityClient, queries, getImageUrl } from '@/lib/sanity';
 
 interface NewsArticle {
   _id: string;
@@ -250,10 +243,10 @@ const NewsDetail = () => {
             </div>
 
             {/* Featured Image */}
-            {article.featuredImage && (
+            {article.featuredImage && getImageUrl(article.featuredImage) && (
               <div className="mb-8">
                 <img
-                  src={urlFor(article.featuredImage).width(1200).height(600).fit('crop').auto('format').url()}
+                  src={getImageUrl(article.featuredImage)}
                   alt={article.featuredImage.alt || (isNepali && article.titleNepali ? article.titleNepali : article.title)}
                   className="w-full h-64 md:h-96 object-cover rounded-xl shadow-lg"
                 />
@@ -345,10 +338,10 @@ const NewsDetail = () => {
                     className="group"
                   >
                     <article className="glass-card rounded-xl overflow-hidden hover-card">
-                      {relatedArticle.featuredImage && (
+                      {relatedArticle.featuredImage && getImageUrl(relatedArticle.featuredImage) && (
                         <div className="aspect-w-16 aspect-h-9">
                           <img
-                            src={urlFor(relatedArticle.featuredImage).width(400).height(200).fit('crop').auto('format').url()}
+                            src={getImageUrl(relatedArticle.featuredImage)}
                             alt={isNepali && relatedArticle.titleNepali ? relatedArticle.titleNepali : relatedArticle.title}
                             className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
                           />

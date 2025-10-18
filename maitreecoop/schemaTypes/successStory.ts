@@ -33,8 +33,8 @@ export default defineType({
           { title: '🌱 Community Development', value: 'community' },
           { title: '💼 Business Growth', value: 'business' },
           { title: '🎓 Education/Training', value: 'education' },
-          { title: '💰 Financial Inclusion', value: 'financial' },
-          { title: '🏆 Award/Recognition', value: 'award' },
+          { title: 'Financial Inclusion', value: 'financial' },
+          { title: 'Award/Recognition', value: 'award' },
           { title: '🤝 Partnership', value: 'partnership' },
           { title: '💡 Innovation', value: 'innovation' },
           { title: '🌍 Social Impact', value: 'social' }
@@ -439,24 +439,24 @@ export default defineType({
       const { title, storyType, featuredImage, isPublished, isFeatured, storyDate, protagonistName } = selection
       
       const typeIcons: Record<string, string> = {
-        'member': '👤',
-        'cooperative': '🏢',
-        'community': '🌱',
-        'business': '💼',
-        'education': '🎓',
-        'financial': '💰',
-        'award': '🏆',
-        'partnership': '🤝',
-        'innovation': '💡',
-        'social': '🌍'
+        'member': '',
+        'cooperative': '',
+        'community': '',
+        'business': '',
+        'education': '',
+        'financial': '',
+        'award': '',
+        'partnership': '',
+        'innovation': '',
+        'social': ''
       }
       
-      const featured = isFeatured ? ' ⭐' : ''
+      const featured = isFeatured ? ' (Featured)' : ''
       const status = !isPublished ? ' (Draft)' : ''
       const formattedDate = storyDate ? new Date(storyDate).toLocaleDateString() : ''
       
       return {
-        title: `${typeIcons[storyType] || '🌟'} ${title}${featured}${status}`,
+        title: `${title}${featured}${status}`,
         subtitle: `${protagonistName || 'Unknown'} • ${formattedDate}`,
         media: featuredImage
       }

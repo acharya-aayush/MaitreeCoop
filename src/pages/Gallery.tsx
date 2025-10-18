@@ -4,7 +4,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ContactBar from "../components/ContactBar";
-import { client as sanityClient, queries } from "../lib/sanity";
+import { client as sanityClient, queries, getFileUrl } from "../lib/sanity";
 
 interface MediaItem {
   mediaType: 'image' | 'video';
@@ -75,19 +75,29 @@ const Gallery = () => {
       try {
         setLoading(true);
         const data = await sanityClient.fetch(queries.galleryItems);
+        console.log('Raw gallery data from Sanity:', data);
         
-        // Process the data to set cover images (first image from mediaItems)
+        // Process the data to set cover images (first media item - image or video)
         const processedData = (data || []).map((item: GalleryItem) => {
-          const firstImage = item.mediaItems?.find((media: MediaItem) => 
+          // First try to get an image as cover
+          let coverMedia = item.mediaItems?.find((media: MediaItem) => 
             media.mediaType === 'image' && media.image?.asset?.url
           );
           
+          // If no image, use video thumbnail or first video as cover
+          if (!coverMedia) {
+            coverMedia = item.mediaItems?.find((media: MediaItem) => 
+              media.mediaType === 'video' && (media.videoThumbnail?.asset?.url || media.video?.asset?.url)
+            );
+          }
+          
           return {
             ...item,
-            coverImage: firstImage
+            coverImage: coverMedia
           };
         });
         
+        console.log('Processed gallery data:', processedData);
         setGalleryItems(processedData);
       } catch (error) {
         console.error("Error fetching gallery items:", error);
@@ -107,7 +117,7 @@ const Gallery = () => {
 
   const getCategoryDisplayName = (category: string) => {
     const displayNames: { [key: string]: string } = {
-      all: 'All Photos',
+      all: 'All Media',
       events: 'Events',
       facilities: 'Facilities',
       training: 'Training',
@@ -131,15 +141,15 @@ const Gallery = () => {
 
   const goToPrevious = () => {
     if (selectedItem?.mediaItems) {
-      const imageCount = selectedItem.mediaItems.filter(media => media.mediaType === 'image').length;
-      setCurrentIndex((prev) => (prev === 0 ? imageCount - 1 : prev - 1));
+      const mediaCount = selectedItem.mediaItems.length;
+      setCurrentIndex((prev) => (prev === 0 ? mediaCount - 1 : prev - 1));
     }
   };
 
   const goToNext = () => {
     if (selectedItem?.mediaItems) {
-      const imageCount = selectedItem.mediaItems.filter(media => media.mediaType === 'image').length;
-      setCurrentIndex((prev) => (prev === imageCount - 1 ? 0 : prev + 1));
+      const mediaCount = selectedItem.mediaItems.length;
+      setCurrentIndex((prev) => (prev === mediaCount - 1 ? 0 : prev + 1));
     }
   };
 
@@ -208,18 +218,46 @@ const Gallery = () => {
                           onClick={() => openLightbox(item)}
                         >
                           <div className="aspect-w-16 aspect-h-12 relative">
-                            {item.coverImage?.image?.asset?.url ? (
+                            {item.coverImage ? (
                               <>
-                                <img
-                                  src={item.coverImage.image.asset.url}
-                                  alt={item.title}
-                                  className="w-full h-64 object-cover"
-                                  loading="lazy"
-                                />
-                                {/* Show image count if there are multiple images */}
-                                {item.mediaItems?.filter(media => media.mediaType === 'image').length > 1 && (
+                                {item.coverImage.mediaType === 'image' && item.coverImage.image?.asset?.url ? (
+                                  <img
+                                    src={item.coverImage.image.asset.url}
+                                    alt={item.title}
+                                    className="w-full h-64 object-cover"
+                                    loading="lazy"
+                                  />
+                                ) : item.coverImage.mediaType === 'video' ? (
+                                  <div className="relative">
+                                    {item.coverImage.videoThumbnail?.asset?.url ? (
+                                      <img
+                                        src={item.coverImage.videoThumbnail.asset.url}
+                                        alt={item.title}
+                                        className="w-full h-64 object-cover"
+                                        loading="lazy"
+                                      />
+                                    ) : (
+                                      <div className="w-full h-64 bg-gray-800 flex items-center justify-center">
+                                        <svg className="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                          <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.68L9.54 5.98C8.87 5.55 8 6.03 8 6.82z"/>
+                                        </svg>
+                                      </div>
+                                    )}
+                                    {/* Video play indicator */}
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                      <div className="bg-black bg-opacity-50 rounded-full p-3">
+                                        <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                          <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.68L9.54 5.98C8.87 5.55 8 6.03 8 6.82z"/>
+                                        </svg>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ) : null}
+                                
+                                {/* Show media count if there are multiple items */}
+                                {item.mediaItems && item.mediaItems.length > 1 && (
                                   <div className="absolute top-2 right-2 bg-black bg-opacity-70 text-white px-2 py-1 text-xs rounded-full">
-                                    +{item.mediaItems.filter(media => media.mediaType === 'image').length - 1}
+                                    +{item.mediaItems.length - 1}
                                   </div>
                                 )}
                               </>
@@ -315,12 +353,13 @@ const Gallery = () => {
             </button>
 
             {(() => {
-              const images = selectedItem.mediaItems?.filter(media => media.mediaType === 'image' && media.image?.asset?.url) || [];
+              const mediaItems = selectedItem.mediaItems || [];
+              const currentMedia = mediaItems[currentIndex];
               
               return (
                 <>
                   {/* Navigation Arrows */}
-                  {images.length > 1 && (
+                  {mediaItems.length > 1 && (
                     <>
                       <button
                         onClick={goToPrevious}
@@ -337,22 +376,73 @@ const Gallery = () => {
                     </>
                   )}
 
-                  {/* Image */}
+                  {/* Media Content */}
                   <div className="max-w-7xl max-h-full flex items-center justify-center">
-                    {images[currentIndex]?.image?.asset?.url ? (
-                      <img
-                        src={images[currentIndex].image.asset.url}
-                        alt={selectedItem.title}
-                        className="max-w-full max-h-full object-contain"
-                      />
+                    {currentMedia ? (
+                      currentMedia.mediaType === 'image' && currentMedia.image?.asset?.url ? (
+                        <img
+                          src={currentMedia.image.asset.url}
+                          alt={selectedItem.title}
+                          className="max-w-full max-h-full object-contain"
+                        />
+                      ) : currentMedia.mediaType === 'video' && currentMedia.video?.asset ? (
+                        (() => {
+                          // Try direct URL first, then fallback to constructed URL
+                          const directUrl = currentMedia.video.asset.url;
+                          const fallbackUrl = getFileUrl(currentMedia.video.asset);
+                          const videoUrl = directUrl || fallbackUrl;
+                          
+                          console.log('Video asset:', currentMedia.video.asset);
+                          console.log('Direct URL:', directUrl);
+                          console.log('Fallback URL:', fallbackUrl);
+                          console.log('Using video URL:', videoUrl);
+                          
+                          return videoUrl ? (
+                            <video
+                              controls
+                              className="max-w-full max-h-full object-contain"
+                              preload="metadata"
+                              playsInline // Important for mobile playback
+                              onError={(e) => {
+                                console.error('Video playback error:', e);
+                                console.error('Error target:', e.target);
+                                console.error('Video URL:', videoUrl);
+                                console.error('Video asset:', currentMedia.video.asset);
+                              }}
+                              onLoadStart={() => {
+                                console.log('Video loading started:', videoUrl);
+                              }}
+                              onCanPlay={() => {
+                                console.log('Video can play:', videoUrl);
+                              }}
+                              onLoadedMetadata={() => {
+                                console.log('Video metadata loaded:', videoUrl);
+                              }}
+                            >
+                              <source src={videoUrl} type="video/mp4" />
+                              <source src={videoUrl} type="video/webm" />
+                              <source src={videoUrl} type="video/quicktime" />
+                              Your browser does not support the video tag.
+                            </video>
+                          ) : (
+                            <div className="bg-gray-200 rounded-lg p-8 flex items-center justify-center">
+                              <span className="text-gray-500">Video URL not available</span>
+                            </div>
+                          );
+                        })()
+                      ) : (
+                        <div className="bg-gray-200 rounded-lg p-8 flex items-center justify-center">
+                          <span className="text-gray-500">Media not available</span>
+                        </div>
+                      )
                     ) : (
                       <div className="bg-gray-200 rounded-lg p-8 flex items-center justify-center">
-                        <span className="text-gray-500">Image not available</span>
+                        <span className="text-gray-500">No media available</span>
                       </div>
                     )}
                   </div>
 
-                  {/* Image Info */}
+                  {/* Media Info */}
                   <div className="absolute bottom-4 left-4 right-4 text-white text-center">
                     <h3 className="text-lg font-semibold mb-1">
                       {selectedItem.title}
@@ -363,7 +453,12 @@ const Gallery = () => {
                       </p>
                     )}
                     <p className="text-xs opacity-60 mt-2">
-                      {currentIndex + 1} of {images.length}
+                      {currentIndex + 1} of {mediaItems.length}
+                      {currentMedia && (
+                        <span className="ml-2">
+                          ({currentMedia.mediaType === 'video' ? 'Video' : 'Image'})
+                        </span>
+                      )}
                     </p>
                   </div>
                 </>

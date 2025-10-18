@@ -1,13 +1,13 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 
-// Create the Sanity client
+// Create the Sanity client for read operations
 export const client = createClient({
-  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'w4d9v3bc', // Your project ID from sanity.config.ts
-  dataset: import.meta.env.VITE_SANITY_DATASET || 'production',   // Dataset name
+  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'w4d9v3bc',
+  dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
   useCdn: import.meta.env.PROD, // Use CDN in production, false in development
-  apiVersion: '2024-01-01', // Use current date or latest API version
-  token: undefined,       // No token needed for public read access
+  apiVersion: '2024-01-01',
+  token: undefined, // No token for read operations
 })
 
 // Set up image URL builder
@@ -33,25 +33,39 @@ export const getFileUrl = (asset: any) => {
 export const getImageUrl = (photoObject: any) => {
   if (!photoObject) return null
   
-  // Handle image object with asset reference (most common case)
-  if (photoObject.asset && photoObject.asset._ref) {
-    return urlFor(photoObject).url();
+  try {
+    // Handle expanded asset object (from asset-> query)  
+    if (photoObject.asset && photoObject.asset.url) {
+      return photoObject.asset.url;
+    }
+    
+    // Handle image object with asset reference (most common case)
+    // Only call urlFor if we have a valid asset reference
+    if (photoObject.asset && photoObject.asset._ref) {
+      return urlFor(photoObject).url();
+    }
+    
+    // Handle direct asset reference
+    // Only call urlFor if we have a valid reference
+    if (photoObject._ref) {
+      return urlFor(photoObject).url();
+    }
+    
+    // Handle direct URL
+    if (photoObject.url) {
+      return photoObject.url;
+    }
+    
+    // If it's just a malformed image object without asset, return null
+    if (photoObject._type === 'image' && !photoObject.asset && !photoObject._ref) {
+      console.warn('Malformed image object without asset reference:', photoObject);
+      return null;
+    }
+  } catch (error) {
+    console.warn('Error generating image URL for object:', photoObject, 'Error:', error);
+    return null;
   }
   
-  // Handle expanded asset object (from asset-> query)  
-  if (photoObject.asset && photoObject.asset.url) {
-    return photoObject.asset.url;
-  }
-  
-  // Handle direct asset reference
-  if (photoObject._ref) {
-    return urlFor(photoObject).url();
-  }
-  
-  // Handle direct URL
-  if (photoObject.url) {
-    return photoObject.url;
-  }
   return null;
 }
 
@@ -116,7 +130,19 @@ export const queries = {
     slug,
     excerpt,
     excerptNepali,
-    featuredImage,
+    featuredImage {
+      asset-> {
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      },
+      alt
+    },
     category,
     publishedAt,
     author,
@@ -131,7 +157,19 @@ export const queries = {
     slug,
     excerpt,
     excerptNepali,
-    featuredImage,
+    featuredImage {
+      asset-> {
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      },
+      alt
+    },
     content,
     contentNepali,
     category,
@@ -148,7 +186,19 @@ export const queries = {
     slug,
     excerpt,
     excerptNepali,
-    featuredImage,
+    featuredImage {
+      asset-> {
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      },
+      alt
+    },
     category,
     publishedAt
   }`,
@@ -825,5 +875,20 @@ export const queries = {
     },
     storyDate,
     isFeatured
+  }`,
+
+  // Contact Messages
+  contactMessages: `*[_type == "contactMessage"] | order(submittedAt desc) {
+    _id,
+    name,
+    email,
+    phone,
+    subject,
+    message,
+    submittedAt,
+    status,
+    isRead,
+    priority,
+    adminNotes
   }`
 }

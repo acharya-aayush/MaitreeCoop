@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ExternalLink, Pin } from 'lucide-react';
+import { X, Calendar, User, ExternalLink, Pin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { getImageUrl } from '@/lib/sanity';
 import { useTranslation } from 'react-i18next';
@@ -56,16 +56,16 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ announcements }) 
   // Type icons
   const getTypeIcon = (type: string) => {
     const icons: Record<string, string> = {
-      'notice': '📢',
-      'event': '🎉',
-      'alert': '🚨',
-      'meeting': '📋',
-      'financial': '💰',
-      'celebration': '🎊',
-      'news': '📰',
-      'achievement': '🏆'
+      'notice': '',
+      'event': '',
+      'alert': '',
+      'meeting': '',
+      'financial': '',
+      'celebration': '',
+      'news': '',
+      'achievement': ''
     };
-    return icons[type] || '📢';
+    return icons[type] || '';
   };
 
   // Check localStorage for dismissed announcements

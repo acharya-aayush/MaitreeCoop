@@ -4,7 +4,7 @@ export default defineType({
   name: 'introductionSection',
   title: 'Introduction Section',
   type: 'document',
-  icon: () => '📋',
+  icon: () => '',
   fields: [
     defineField({
       name: 'title',

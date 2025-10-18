@@ -26,25 +26,55 @@ const Contact = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // Submit to our secure API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+
+      const result = await response.json();
+      
+      if (response.ok && result.success) {
+        toast({
+          title: t('contact.contactForm.successTitle'),
+          description: t('contact.contactForm.successMessage'),
+        });
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        throw new Error(result.error || 'Failed to submit message');
+      }
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
       toast({
-        title: t('contact.contactForm.successTitle'),
-        description: t('contact.contactForm.successMessage'),
+        title: "Error",
+        description: error.message || "There was an error submitting your message. Please try again or contact us directly.",
+        variant: "destructive"
       });
+    } finally {
       setIsSubmitting(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      });
-    }, 1500);
+    }
   };
 
   return (

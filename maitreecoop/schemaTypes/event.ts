@@ -272,7 +272,7 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: '📅 Scheduled', value: 'scheduled' },
+          { title: 'Scheduled', value: 'scheduled' },
           { title: '🔴 Live/Ongoing', value: 'ongoing' },
           { title: '✅ Completed', value: 'completed' },
           { title: '❌ Cancelled', value: 'cancelled' },

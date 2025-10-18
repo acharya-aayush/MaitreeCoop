@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContactBar from '@/components/ContactBar';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
@@ -292,8 +293,8 @@ const Board = () => {
           {/* Loading state */}
           {loading && (
             <div className="text-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto"></div>
-              <p className="mt-2 text-gray-600">Loading board members...</p>
+              <LoadingSpinner size="md" className="mx-auto mb-4" />
+              <p className="text-gray-600 font-medium">Loading board members...</p>
             </div>
           )}
           
@@ -369,8 +370,8 @@ const Board = () => {
           {/* Loading state */}
           {loading && (
             <div className="text-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto"></div>
-              <p className="mt-2 text-gray-600">Loading staff members...</p>
+              <LoadingSpinner size="md" className="mx-auto mb-4" />
+              <p className="text-gray-600 font-medium">Loading staff members...</p>
             </div>
           )}
           
