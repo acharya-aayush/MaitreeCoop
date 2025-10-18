@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "app/[[...routes]]/route.js": {
-      "maxDuration": 10
-    }
-  },
   "rewrites": [
     {
       "source": "/(.*)",
