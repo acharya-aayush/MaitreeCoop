@@ -3,9 +3,9 @@ import imageUrlBuilder from '@sanity/image-url'
 
 // Create the Sanity client
 export const client = createClient({
-  projectId: 'w4d9v3bc', // Your project ID from sanity.config.ts
-  dataset: 'production',   // Dataset name
-  useCdn: false,          // Disable CDN for development to avoid CORS issues
+  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'w4d9v3bc', // Your project ID from sanity.config.ts
+  dataset: import.meta.env.VITE_SANITY_DATASET || 'production',   // Dataset name
+  useCdn: import.meta.env.PROD, // Use CDN in production, false in development
   apiVersion: '2024-01-01', // Use current date or latest API version
   token: undefined,       // No token needed for public read access
 })

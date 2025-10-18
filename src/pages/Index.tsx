@@ -55,11 +55,20 @@ const Index = () => {
     const fetchNews = async () => {
       try {
         setNewsLoading(true);
+        console.log('Fetching news from Sanity...', {
+          projectId: sanityClient.config().projectId,
+          dataset: sanityClient.config().dataset,
+          useCdn: sanityClient.config().useCdn
+        });
         const data = await sanityClient.fetch(queries.news);
+        console.log('News data received:', data);
         // Get only the latest 3 articles
         setNewsArticles((data || []).slice(0, 3));
       } catch (error) {
         console.error("Error fetching news:", error);
+        console.error("Sanity client config:", sanityClient.config());
+        // Fallback to empty array to prevent crashes
+        setNewsArticles([]);
       } finally {
         setNewsLoading(false);
       }
@@ -387,16 +396,16 @@ const Index = () => {
               (newsArticles.length > 0 ? newsArticles : notices.slice(0, 3)).map((item, index) => {
                 const isNewsArticle = 'slug' in item;
                 const title = isNewsArticle 
-                  ? (i18n.language === 'np' && item.titleNepali ? item.titleNepali : item.title)
+                  ? (i18n.language === 'np' && item.titleNepali ? item.titleNepali : (item.title || 'Untitled'))
                   : t(item.titleKey);
                 const date = isNewsArticle 
-                  ? formatDate(item.publishedAt) 
+                  ? (item.publishedAt ? formatDate(item.publishedAt) : 'No date') 
                   : item.date;
                 const link = isNewsArticle 
-                  ? `/news/${item.slug.current}` 
+                  ? (item.slug?.current ? `/news/${item.slug.current}` : '/news')
                   : item.link;
                 const categoryText = isNewsArticle 
-                  ? item.category.charAt(0).toUpperCase() + item.category.slice(1)
+                  ? (item.category ? item.category.charAt(0).toUpperCase() + item.category.slice(1) : 'News')
                   : t(item.typeKey);
 
                 return (
