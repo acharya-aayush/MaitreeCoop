@@ -11,11 +11,22 @@ import Footer from '@/components/Footer';
 import GoogleMap from '@/components/GoogleMap';
 import ContactBar from '@/components/ContactBar';
 import { useIntroductionSection } from '@/hooks/useContentSections';
-import { getImageUrl } from '@/lib/sanity';
+import { getImageUrl, client as sanityClient, queries } from '@/lib/sanity';
+
+interface NewsArticle {
+  _id: string;
+  title: string;
+  titleNepali?: string;
+  slug: { current: string };
+  publishedAt: string;
+  category: string;
+}
 
 const Index = () => {
   const aboutSectionRef = useRef<HTMLDivElement>(null);
   const [aboutVisible, setAboutVisible] = useState(false);
+  const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
+  const [newsLoading, setNewsLoading] = useState(true);
   const { t, i18n } = useTranslation();
   const { introSection, loading: introLoading } = useIntroductionSection();
 
@@ -39,7 +50,33 @@ const Index = () => {
     };
   }, []);
 
-  // Mock data
+  // Fetch latest news articles
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        setNewsLoading(true);
+        const data = await sanityClient.fetch(queries.news);
+        // Get only the latest 3 articles
+        setNewsArticles((data || []).slice(0, 3));
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      } finally {
+        setNewsLoading(false);
+      }
+    };
+
+    fetchNews();
+  }, []);
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  // Fallback data if no news is loaded
   const notices = [
     {
       id: 1,
@@ -334,29 +371,59 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {notices.map((notice, index) => (
-              <div 
-                key={notice.id}
-                className="glass-card rounded-xl p-6 hover-card"
-              >
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="inline-block py-1 px-2 rounded bg-green-100 text-green-800 text-xs font-medium">
-                    {t(notice.typeKey)}
-                  </span>
-                  <span className="text-sm text-gray-500">{notice.date}</span>
+            {newsLoading ? (
+              // Loading skeleton
+              Array.from({ length: 3 }).map((_, index) => (
+                <div key={index} className="glass-card rounded-xl p-6">
+                  <div className="animate-pulse">
+                    <div className="h-4 bg-gray-200 rounded mb-4"></div>
+                    <div className="h-6 bg-gray-200 rounded mb-3"></div>
+                    <div className="h-4 bg-gray-200 rounded w-20"></div>
+                  </div>
                 </div>
-                
-                <h3 className="text-lg font-semibold mb-3">{t(notice.titleKey)}</h3>
-                
-                <Link 
-                  to={notice.link} 
-                  className="text-green-600 font-medium hover:text-green-800 transition-colors flex items-center text-sm"
-                >
-                  {t('news.readMore')}
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </div>
-            ))}
+              ))
+            ) : (
+              // Dynamic news articles or fallback
+              (newsArticles.length > 0 ? newsArticles : notices.slice(0, 3)).map((item, index) => {
+                const isNewsArticle = 'slug' in item;
+                const title = isNewsArticle 
+                  ? (i18n.language === 'np' && item.titleNepali ? item.titleNepali : item.title)
+                  : t(item.titleKey);
+                const date = isNewsArticle 
+                  ? formatDate(item.publishedAt) 
+                  : item.date;
+                const link = isNewsArticle 
+                  ? `/news/${item.slug.current}` 
+                  : item.link;
+                const categoryText = isNewsArticle 
+                  ? item.category.charAt(0).toUpperCase() + item.category.slice(1)
+                  : t(item.typeKey);
+
+                return (
+                  <div 
+                    key={isNewsArticle ? item._id : item.id}
+                    className="glass-card rounded-xl p-6 hover-card"
+                  >
+                    <div className="mb-4 flex items-center justify-between">
+                      <span className="inline-block py-1 px-2 rounded bg-green-100 text-green-800 text-xs font-medium">
+                        {categoryText}
+                      </span>
+                      <span className="text-sm text-gray-500">{date}</span>
+                    </div>
+                    
+                    <h3 className="text-lg font-semibold mb-3 line-clamp-2">{title}</h3>
+                    
+                    <Link 
+                      to={link} 
+                      className="text-green-600 font-medium hover:text-green-800 transition-colors flex items-center text-sm"
+                    >
+                      {t('news.readMore')}
+                      <ArrowRight className="ml-1 h-4 w-4" />
+                    </Link>
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
       </section>

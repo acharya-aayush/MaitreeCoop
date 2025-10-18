@@ -6,13 +6,9 @@ import Footer from "../components/Footer";
 import ContactBar from "../components/ContactBar";
 import { client as sanityClient, queries } from "../lib/sanity";
 
-interface GalleryItem {
-  _id: string;
-  title: string;
-  titleNepali?: string;
-  description?: string;
-  descriptionNepali?: string;
-  image: {
+interface MediaItem {
+  mediaType: 'image' | 'video';
+  image?: {
     asset: {
       _id: string;
       url: string;
@@ -24,6 +20,35 @@ interface GalleryItem {
       };
     };
   };
+  video?: {
+    asset: {
+      _id: string;
+      url: string;
+      originalFilename: string;
+      size: number;
+    };
+  };
+  videoThumbnail?: {
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        dimensions: {
+          width: number;
+          height: number;
+        };
+      };
+    };
+  };
+}
+
+interface GalleryItem {
+  _id: string;
+  title: string;
+  titleNepali?: string;
+  description?: string;
+  descriptionNepali?: string;
+  mediaItems: MediaItem[];
   category: string;
   eventDate?: string;
   location?: string;
@@ -34,13 +59,15 @@ interface GalleryItem {
   isFeatured?: boolean;
   sortOrder?: number;
   relatedLink?: string;
+  coverImage?: MediaItem; // Will be set to first image in mediaItems
 }
 
 const Gallery = () => {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -48,7 +75,20 @@ const Gallery = () => {
       try {
         setLoading(true);
         const data = await sanityClient.fetch(queries.galleryItems);
-        setGalleryItems(data || []);
+        
+        // Process the data to set cover images (first image from mediaItems)
+        const processedData = (data || []).map((item: GalleryItem) => {
+          const firstImage = item.mediaItems?.find((media: MediaItem) => 
+            media.mediaType === 'image' && media.image?.asset?.url
+          );
+          
+          return {
+            ...item,
+            coverImage: firstImage
+          };
+        });
+        
+        setGalleryItems(processedData);
       } catch (error) {
         console.error("Error fetching gallery items:", error);
       } finally {
@@ -59,64 +99,67 @@ const Gallery = () => {
     fetchGalleryItems();
   }, []);
 
-  // Filter items by category
+  const categories = ['all', ...new Set(galleryItems.map(item => item.category))];
+  
   const filteredItems = selectedCategory === 'all' 
     ? galleryItems 
     : galleryItems.filter(item => item.category === selectedCategory);
 
-  // Get unique categories for tabs
-  const categories = ['all', ...Array.from(new Set(galleryItems.map(item => item.category)))];
+  const getCategoryDisplayName = (category: string) => {
+    const displayNames: { [key: string]: string } = {
+      all: 'All Photos',
+      events: 'Events',
+      facilities: 'Facilities',
+      training: 'Training',
+      achievements: 'Achievements',
+      meetings: 'Meetings',
+      community: 'Community'
+    };
+    return displayNames[category] || category.charAt(0).toUpperCase() + category.slice(1);
+  };
 
   const openLightbox = (item: GalleryItem) => {
-    setSelectedImage(item);
-    setCurrentIndex(filteredItems.findIndex(i => i._id === item._id));
+    setSelectedItem(item);
+    setCurrentIndex(0);
+    setLightboxOpen(true);
   };
 
   const closeLightbox = () => {
-    setSelectedImage(null);
-    setCurrentIndex(0);
+    setLightboxOpen(false);
+    setSelectedItem(null);
   };
 
-  const navigateImage = (direction: 'prev' | 'next') => {
-    if (!selectedImage) return;
-    
-    let newIndex = currentIndex;
-    if (direction === 'prev') {
-      newIndex = currentIndex > 0 ? currentIndex - 1 : filteredItems.length - 1;
-    } else {
-      newIndex = currentIndex < filteredItems.length - 1 ? currentIndex + 1 : 0;
+  const goToPrevious = () => {
+    if (selectedItem?.mediaItems) {
+      const imageCount = selectedItem.mediaItems.filter(media => media.mediaType === 'image').length;
+      setCurrentIndex((prev) => (prev === 0 ? imageCount - 1 : prev - 1));
     }
-    
-    setCurrentIndex(newIndex);
-    setSelectedImage(filteredItems[newIndex]);
   };
 
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
+  const goToNext = () => {
+    if (selectedItem?.mediaItems) {
+      const imageCount = selectedItem.mediaItems.filter(media => media.mediaType === 'image').length;
+      setCurrentIndex((prev) => (prev === imageCount - 1 ? 0 : prev + 1));
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
-      month: 'long',
+      month: 'short',
       day: 'numeric'
     });
   };
 
-  const getCategoryDisplayName = (category: string) => {
-    switch (category) {
-      case 'all': return 'All Photos';
-      case 'events': return 'Events';
-      case 'facilities': return 'Facilities';
-      case 'training': return 'Training';
-      case 'community': return 'Community';
-      case 'achievements': return 'Achievements';
-      default: return category.charAt(0).toUpperCase() + category.slice(1);
-    }
-  };
-
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <ContactBar />
+        <Navbar />
+        <div className="text-center pt-32">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading gallery...</p>
+        </div>
       </div>
     );
   }
@@ -127,9 +170,9 @@ const Gallery = () => {
         <ContactBar />
         <Navbar />
         
-        <div className="pt-20">
+        <div className="pt-28"> {/* Increased padding to account for fixed navbar and contact bar */}
           {/* Hero Section */}
-          <div className="bg-gradient-to-r from-green-700 to-green-800 text-white py-16">
+          <div className="bg-gradient-to-r from-green-700 to-green-800 text-white py-12">
             <div className="container mx-auto px-4">
               <h1 className="text-4xl md:text-5xl font-bold mb-4">Photo Gallery</h1>
               <p className="text-lg md:text-xl max-w-2xl">
@@ -165,13 +208,21 @@ const Gallery = () => {
                           onClick={() => openLightbox(item)}
                         >
                           <div className="aspect-w-16 aspect-h-12 relative">
-                            {item.image?.asset?.url ? (
-                              <img
-                                src={item.image.asset.url}
-                                alt={item.title}
-                                className="w-full h-64 object-cover"
-                                loading="lazy"
-                              />
+                            {item.coverImage?.image?.asset?.url ? (
+                              <>
+                                <img
+                                  src={item.coverImage.image.asset.url}
+                                  alt={item.title}
+                                  className="w-full h-64 object-cover"
+                                  loading="lazy"
+                                />
+                                {/* Show image count if there are multiple images */}
+                                {item.mediaItems?.filter(media => media.mediaType === 'image').length > 1 && (
+                                  <div className="absolute top-2 right-2 bg-black bg-opacity-70 text-white px-2 py-1 text-xs rounded-full">
+                                    +{item.mediaItems.filter(media => media.mediaType === 'image').length - 1}
+                                  </div>
+                                )}
+                              </>
                             ) : (
                               <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
                                 <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -183,7 +234,7 @@ const Gallery = () => {
                               <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8" />
                             </div>
                             {item.isFeatured && (
-                              <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 text-xs rounded-full">
+                              <div className="absolute top-2 left-2 bg-yellow-500 text-white px-2 py-1 text-xs rounded-full">
                                 Featured
                               </div>
                             )}
@@ -239,12 +290,10 @@ const Gallery = () => {
                         </svg>
                       </div>
                       <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                        No photos available
+                        No images found
                       </h3>
                       <p className="text-gray-500">
-                        {selectedCategory === 'all' 
-                          ? 'No photos have been uploaded yet.' 
-                          : `No photos available in the ${getCategoryDisplayName(selectedCategory)} category.`}
+                        There are no images in this category yet.
                       </p>
                     </div>
                   )}
@@ -254,96 +303,77 @@ const Gallery = () => {
           </div>
         </div>
 
-        <Footer />
-      </div>
-
-      {/* Lightbox */}
-      {selectedImage && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4">
-          <div className="relative w-full h-full flex items-center justify-center">
-            {/* Close button */}
+        {/* Lightbox */}
+        {lightboxOpen && selectedItem && (
+          <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+            {/* Close Button */}
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 transition-colors"
+              className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors duration-200 z-10"
             >
               <X className="w-8 h-8" />
             </button>
 
-            {/* Navigation buttons */}
-            {filteredItems.length > 1 && (
-              <>
-                <button
-                  onClick={() => navigateImage('prev')}
-                  className="absolute left-4 z-10 text-white hover:text-gray-300 transition-colors"
-                >
-                  <ArrowLeft className="w-8 h-8" />
-                </button>
-                <button
-                  onClick={() => navigateImage('next')}
-                  className="absolute right-4 z-10 text-white hover:text-gray-300 transition-colors"
-                >
-                  <ArrowRight className="w-8 h-8" />
-                </button>
-              </>
-            )}
-
-            {/* Image */}
-            <div className="max-w-7xl max-h-full flex items-center justify-center">
-              {selectedImage.image?.asset?.url ? (
-                <img
-                  src={selectedImage.image.asset.url}
-                  alt={selectedImage.title}
-                  className="max-w-full max-h-full object-contain"
-                />
-              ) : (
-                <div className="bg-gray-200 rounded-lg p-8 flex items-center justify-center">
-                  <span className="text-gray-500">Image not available</span>
-                </div>
-              )}
-            </div>
-
-            {/* Image info */}
-            <div className="absolute bottom-4 left-4 right-4 bg-black bg-opacity-50 text-white p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-1">{selectedImage.title}</h3>
-              {selectedImage.description && (
-                <p className="text-sm text-gray-200 mb-2">{selectedImage.description}</p>
-              )}
-              <div className="flex items-center justify-between text-sm text-gray-300">
-                <div className="flex items-center space-x-4">
-                  <span className="capitalize">{selectedImage.category}</span>
-                  {selectedImage.eventDate && <span>{formatDate(selectedImage.eventDate)}</span>}
-                  {selectedImage.location && (
-                    <span className="flex items-center">
-                      <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      {selectedImage.location}
-                    </span>
+            {(() => {
+              const images = selectedItem.mediaItems?.filter(media => media.mediaType === 'image' && media.image?.asset?.url) || [];
+              
+              return (
+                <>
+                  {/* Navigation Arrows */}
+                  {images.length > 1 && (
+                    <>
+                      <button
+                        onClick={goToPrevious}
+                        className="absolute left-4 text-white hover:text-gray-300 transition-colors duration-200 z-10"
+                      >
+                        <ArrowLeft className="w-8 h-8" />
+                      </button>
+                      <button
+                        onClick={goToNext}
+                        className="absolute right-4 text-white hover:text-gray-300 transition-colors duration-200 z-10"
+                      >
+                        <ArrowRight className="w-8 h-8" />
+                      </button>
+                    </>
                   )}
-                </div>
-                {selectedImage.photographer && (
-                  <span>Photo by: {selectedImage.photographer}</span>
-                )}
-              </div>
-              {selectedImage.tags && selectedImage.tags.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-1">
-                  {selectedImage.tags.map((tag, index) => (
-                    <span key={index} className="text-xs bg-white bg-opacity-20 px-2 py-1 rounded">
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-              {filteredItems.length > 1 && (
-                <div className="mt-2 text-xs text-gray-400">
-                  {currentIndex + 1} of {filteredItems.length}
-                </div>
-              )}
-            </div>
+
+                  {/* Image */}
+                  <div className="max-w-7xl max-h-full flex items-center justify-center">
+                    {images[currentIndex]?.image?.asset?.url ? (
+                      <img
+                        src={images[currentIndex].image.asset.url}
+                        alt={selectedItem.title}
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    ) : (
+                      <div className="bg-gray-200 rounded-lg p-8 flex items-center justify-center">
+                        <span className="text-gray-500">Image not available</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Image Info */}
+                  <div className="absolute bottom-4 left-4 right-4 text-white text-center">
+                    <h3 className="text-lg font-semibold mb-1">
+                      {selectedItem.title}
+                    </h3>
+                    {selectedItem.description && (
+                      <p className="text-sm opacity-80 max-w-2xl mx-auto">
+                        {selectedItem.description}
+                      </p>
+                    )}
+                    <p className="text-xs opacity-60 mt-2">
+                      {currentIndex + 1} of {images.length}
+                    </p>
+                  </div>
+                </>
+              );
+            })()}
           </div>
-        </div>
-      )}
+        )}
+      </div>
+
+      <Footer />
     </>
   );
 };

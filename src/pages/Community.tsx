@@ -173,7 +173,7 @@ export const Community = () => {
     <div className="min-h-screen">
       <ContactBar />
       <Navbar />
-      <div className="pt-20">
+      <div className="pt-28">
         {/* Hero Section */}
         <section className="py-12 bg-gradient-to-r from-green-700 to-green-800 text-white">
           <div className="container mx-auto px-4">
