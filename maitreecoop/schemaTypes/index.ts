@@ -8,6 +8,7 @@ import homepageSettings from './homepageSettings'
 import heroSection from './heroSection'
 import introductionSection from './introductionSection'
 import galleryItem from './galleryItem'
+import announcement from './announcement'
 
 export const schemaTypes = [
   boardMember, 
@@ -19,5 +20,6 @@ export const schemaTypes = [
   homepageSettings,
   heroSection,
   introductionSection,
-  galleryItem
+  galleryItem,
+  announcement
 ]

@@ -10,11 +10,14 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import GoogleMap from '@/components/GoogleMap';
 import ContactBar from '@/components/ContactBar';
+import { useIntroductionSection } from '@/hooks/useContentSections';
+import { getImageUrl } from '@/lib/sanity';
 
 const Index = () => {
   const aboutSectionRef = useRef<HTMLDivElement>(null);
   const [aboutVisible, setAboutVisible] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { introSection, loading: introLoading } = useIntroductionSection();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -69,70 +72,150 @@ const Index = () => {
       {/* Hero Section */}
       <Hero />
       
-      {/* About Section */}
+      {/* Introduction Section */}
       <section 
         ref={aboutSectionRef}
         className="py-20 bg-white"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            {/* Image */}
-            <div 
-              className={cn(
-                "relative rounded-2xl overflow-hidden transition-all duration-1000",
-                aboutVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
-              )}
-            >
-              <div className="aspect-[4/3] bg-gradient-to-tr from-green-100 to-white rounded-2xl flex items-center justify-center p-8">
-                <div className="text-center space-y-4">
-                  <h3 className="text-2xl font-bold text-green-800">{t('about.foundingVision')}</h3>
-                  <p className="text-gray-600 italic">
-                    "{t('about.founderQuote')}"
-                  </p>
-                  <p className="text-sm text-gray-500">{t('about.founderName')}</p>
+          {introLoading ? (
+            <div className="animate-pulse">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div className="aspect-[4/3] bg-gray-200 rounded-2xl"></div>
+                <div className="space-y-4">
+                  <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                  <div className="h-8 bg-gray-200 rounded w-3/4"></div>
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-200 rounded"></div>
+                    <div className="h-4 bg-gray-200 rounded"></div>
+                    <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : introSection ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              {/* Image */}
+              <div 
+                className={cn(
+                  "relative rounded-2xl overflow-hidden transition-all duration-1000",
+                  aboutVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+                )}
+              >
+                {introSection.sectionImage ? (
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden">
+                    <img
+                      src={getImageUrl(introSection.sectionImage) || ''}
+                      alt={i18n.language === 'ne' && introSection.headingNepali ? introSection.headingNepali : introSection.heading}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="aspect-[4/3] bg-gradient-to-tr from-green-100 to-white rounded-2xl flex items-center justify-center p-8">
+                    {introSection.foundingVision ? (
+                      <div className="text-center space-y-4">
+                        <h3 className="text-2xl font-bold text-green-800">
+                          {i18n.language === 'ne' && introSection.foundingVision.quoteNepali ? 'हाम्रो दृष्टिकोण' : 'Our Founding Vision'}
+                        </h3>
+                        <p className="text-gray-600 italic">
+                          "{i18n.language === 'ne' && introSection.foundingVision.quoteNepali ? introSection.foundingVision.quoteNepali : introSection.foundingVision.quote}"
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {i18n.language === 'ne' && introSection.foundingVision.authorNepali ? introSection.foundingVision.authorNepali : introSection.foundingVision.author}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="text-center space-y-4">
+                        <h3 className="text-2xl font-bold text-green-800">{t('about.foundingVision')}</h3>
+                        <p className="text-gray-600 italic">"{t('about.founderQuote')}"</p>
+                        <p className="text-sm text-gray-500">{t('about.founderName')}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                {/* Decorative elements */}
+                <div className="absolute bottom-5 right-5 w-20 h-20 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center">
+                  <span className="text-2xl font-bold text-green-800">मैत्री</span>
                 </div>
               </div>
               
-              {/* Decorative elements */}
-              <div className="absolute bottom-5 right-5 w-20 h-20 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center">
-                <span className="text-2xl font-bold text-green-800">मैत्री</span>
+              {/* Text Content */}
+              <div 
+                className={cn(
+                  "space-y-6 transition-all duration-1000 delay-300",
+                  aboutVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                )}
+              >
+                <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
+                  {i18n.language === 'ne' && introSection.headingNepali ? introSection.headingNepali : introSection.heading}
+                </span>
+                
+                <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+                  {t('about.subtitle')}
+                </h2>
+                
+                <div className="prose prose-gray max-w-none">
+                  <p className="text-gray-600 text-justify whitespace-pre-line">
+                    {i18n.language === 'ne' && introSection.contentNepali ? introSection.contentNepali : introSection.content}
+                  </p>
+                </div>
+                
+                {/* Highlights */}
+                {introSection.highlights && introSection.highlights.length > 0 && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4">
+                    {introSection.highlights
+                      .sort((a, b) => a.displayOrder - b.displayOrder)
+                      .slice(0, 4)
+                      .map((highlight, index) => (
+                        <div key={index} className="text-center p-4 bg-green-50 rounded-lg">
+                          <div className="text-2xl font-bold text-green-600 mb-1">
+                            {highlight.value}
+                          </div>
+                          <div className="text-sm text-gray-600">
+                            {i18n.language === 'ne' && highlight.titleNepali ? highlight.titleNepali : highlight.title}
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                )}
+                
+                <div className="pt-2">
+                  <Link 
+                    to="/about" 
+                    className="button-primary flex items-center"
+                  >
+                    {t('about.learnStory')}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </div>
               </div>
             </div>
-            
-            {/* Text Content */}
-            <div 
-              className={cn(
-                "space-y-6 transition-all duration-1000 delay-300",
-                aboutVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              )}
-            >
-              <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
-                {t('about.title')}
-              </span>
-              
-              <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-                {t('about.subtitle')}
-              </h2>
-              
-              <p className="text-gray-600 text-justify">
-                {t('about.description')}
-              </p>
-              
-              <p className="text-gray-600 text-justify">
-                {t('about.vision')}
-              </p>
-              
-              <div className="pt-2">
-                <Link 
-                  to="/about" 
-                  className="button-primary flex items-center"
-                >
-                  {t('about.learnStory')}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
+          ) : (
+            // Fallback to translation keys if no Sanity data
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <div className="aspect-[4/3] bg-gradient-to-tr from-green-100 to-white rounded-2xl flex items-center justify-center p-8">
+                <div className="text-center space-y-4">
+                  <h3 className="text-2xl font-bold text-green-800">{t('about.foundingVision')}</h3>
+                  <p className="text-gray-600 italic">"{t('about.founderQuote')}"</p>
+                  <p className="text-sm text-gray-500">{t('about.founderName')}</p>
+                </div>
+              </div>
+              <div className="space-y-6">
+                <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
+                  {t('about.title')}
+                </span>
+                <h2 className="text-3xl md:text-4xl font-bold leading-tight">{t('about.subtitle')}</h2>
+                <p className="text-gray-600 text-justify">{t('about.description')}</p>
+                <div className="pt-2">
+                  <Link to="/about" className="button-primary flex items-center">
+                    {t('about.learnStory')}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
       

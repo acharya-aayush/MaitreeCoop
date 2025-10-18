@@ -492,6 +492,18 @@ export const queries = {
     _id,
     heading,
     headingNepali,
+    sectionImage {
+      asset-> {
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      }
+    },
     content,
     contentNepali,
     highlights[] {
@@ -609,5 +621,33 @@ export const queries = {
     dateTaken,
     location,
     locationNepali
+  }`,
+
+  // Active Announcements
+  activeAnnouncements: `*[_type == "announcement" && isActive == true && timing.startDate <= now() && (timing.endDate >= now() || !defined(timing.endDate))] | order(priority asc, displayOrder asc) {
+    _id,
+    title,
+    titleNepali,
+    type,
+    priority,
+    contentType,
+    content,
+    contentNepali,
+    noticeImage {
+      asset-> {
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      }
+    },
+    displaySettings,
+    timing,
+    targetAudience,
+    relatedLink
   }`
 }

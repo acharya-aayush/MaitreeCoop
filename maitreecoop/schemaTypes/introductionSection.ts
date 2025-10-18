@@ -33,6 +33,25 @@ export default defineType({
       initialValue: 'परिचय'
     }),
     
+    // Introduction Image (left side)
+    defineField({
+      name: 'sectionImage',
+      title: 'Section Image',
+      type: 'image',
+      description: 'Image to display on the left side of introduction section',
+      options: {
+        hotspot: true
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative Text',
+          description: 'Describe the image for accessibility'
+        }
+      ]
+    }),
+
     // Introduction Content
     defineField({
       name: 'content',
