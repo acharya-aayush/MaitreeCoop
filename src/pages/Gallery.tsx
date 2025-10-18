@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { X, ZoomIn, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
-import { sanityClient, queries } from "../lib/sanity";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { client as sanityClient, queries } from "../lib/sanity";
 
 interface GalleryItem {
   _id: string;

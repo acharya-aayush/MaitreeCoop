@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
-import { sanityClient, queries } from "../lib/sanity";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { client as sanityClient, queries } from "../lib/sanity";
 
 interface Event {
   _id: string;
