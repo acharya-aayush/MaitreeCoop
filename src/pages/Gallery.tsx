@@ -1,396 +1,334 @@
-
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { X, ZoomIn, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import ContactBar from '@/components/ContactBar';
+import { Navbar } from "../components/Navbar";
+import { Footer } from "../components/Footer";
+import { sanityClient, queries } from "../lib/sanity";
 
-// Sample data - In a real application, this would come from a CMS or database
-const photos = [
-  {
-    id: 1,
-    category: 'events',
-    title: 'Annual General Meeting 2022',
-    description: 'Members gathered for our Annual General Meeting',
-    thumbnail: 'https://placehold.co/600x400?text=Annual+Meeting',
-    fullImage: 'https://placehold.co/1200x800?text=Annual+Meeting',
-    date: 'May 15, 2022'
-  },
-  {
-    id: 2,
-    category: 'events',
-    title: 'Women Empowerment Workshop',
-    description: 'Training session focused on financial literacy for women',
-    thumbnail: 'https://placehold.co/600x400?text=Women+Workshop',
-    fullImage: 'https://placehold.co/1200x800?text=Women+Workshop',
-    date: 'June 20, 2022'
-  },
-  {
-    id: 3,
-    category: 'events',
-    title: 'Agricultural Training Program',
-    description: 'Farmers learning about modern farming techniques',
-    thumbnail: 'https://placehold.co/600x400?text=Farming+Training',
-    fullImage: 'https://placehold.co/1200x800?text=Farming+Training',
-    date: 'July 5, 2022'
-  },
-  {
-    id: 4,
-    category: 'facilities',
-    title: 'Main Office Building',
-    description: 'Our headquarters in Tamghas, Gulmi',
-    thumbnail: 'https://placehold.co/600x400?text=Main+Office',
-    fullImage: 'https://placehold.co/1200x800?text=Main+Office',
-    date: 'January 10, 2022'
-  },
-  {
-    id: 5,
-    category: 'facilities',
-    title: 'Cooperative Store',
-    description: 'Our fair price shop providing quality goods to members',
-    thumbnail: 'https://placehold.co/600x400?text=Cooperative+Store',
-    fullImage: 'https://placehold.co/1200x800?text=Cooperative+Store',
-    date: 'February 15, 2022'
-  },
-  {
-    id: 6,
-    category: 'facilities',
-    title: 'Computer Training Center',
-    description: 'Modern facility for digital literacy training',
-    thumbnail: 'https://placehold.co/600x400?text=Training+Center',
-    fullImage: 'https://placehold.co/1200x800?text=Training+Center',
-    date: 'March 20, 2022'
-  },
-  {
-    id: 7,
-    category: 'community',
-    title: 'Community Tree Planting',
-    description: 'Members participating in environmental conservation efforts',
-    thumbnail: 'https://placehold.co/600x400?text=Tree+Planting',
-    fullImage: 'https://placehold.co/1200x800?text=Tree+Planting',
-    date: 'April 22, 2022'
-  },
-  {
-    id: 8,
-    category: 'community',
-    title: 'Health Camp',
-    description: 'Free health check-up camp organized for the local community',
-    thumbnail: 'https://placehold.co/600x400?text=Health+Camp',
-    fullImage: 'https://placehold.co/1200x800?text=Health+Camp',
-    date: 'August 12, 2022'
-  },
-  {
-    id: 9,
-    category: 'community',
-    title: 'School Support Program',
-    description: 'Distributing educational materials to local schools',
-    thumbnail: 'https://placehold.co/600x400?text=School+Support',
-    fullImage: 'https://placehold.co/1200x800?text=School+Support',
-    date: 'September 5, 2022'
-  },
-];
-
-const videos = [
-  {
-    id: 1,
-    title: 'Interview with the Chairperson',
-    description: 'Learn about our cooperative\'s vision and future plans',
-    thumbnail: 'https://placehold.co/600x400?text=Interview+Video',
-    videoUrl: '#',
-    duration: '10:25',
-    date: 'October 15, 2022'
-  },
-  {
-    id: 2,
-    title: 'Agricultural Training Highlights',
-    description: 'Footage from our recent farmer training program',
-    thumbnail: 'https://placehold.co/600x400?text=Training+Video',
-    videoUrl: '#',
-    duration: '15:40',
-    date: 'November 20, 2022'
-  },
-  {
-    id: 3,
-    title: 'Annual General Meeting 2022',
-    description: 'Key moments from our AGM',
-    thumbnail: 'https://placehold.co/600x400?text=AGM+Video',
-    videoUrl: '#',
-    duration: '25:10',
-    date: 'December 5, 2022'
-  }
-];
+interface GalleryItem {
+  _id: string;
+  title: string;
+  titleNepali?: string;
+  description?: string;
+  descriptionNepali?: string;
+  image: {
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        dimensions: {
+          width: number;
+          height: number;
+        };
+      };
+    };
+  };
+  category: string;
+  eventDate?: string;
+  location?: string;
+  locationNepali?: string;
+  photographer?: string;
+  tags?: string[];
+  isPublished: boolean;
+  isFeatured?: boolean;
+  sortOrder?: number;
+  relatedLink?: string;
+}
 
 const Gallery = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const openLightbox = (photo, index) => {
-    setSelectedImage(photo);
-    setCurrentIndex(index);
-    document.body.style.overflow = 'hidden';
+  useEffect(() => {
+    const fetchGalleryItems = async () => {
+      try {
+        setLoading(true);
+        const data = await sanityClient.fetch(queries.galleryItems);
+        setGalleryItems(data || []);
+      } catch (error) {
+        console.error("Error fetching gallery items:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGalleryItems();
+  }, []);
+
+  // Filter items by category
+  const filteredItems = selectedCategory === 'all' 
+    ? galleryItems 
+    : galleryItems.filter(item => item.category === selectedCategory);
+
+  // Get unique categories for tabs
+  const categories = ['all', ...Array.from(new Set(galleryItems.map(item => item.category)))];
+
+  const openLightbox = (item: GalleryItem) => {
+    setSelectedImage(item);
+    setCurrentIndex(filteredItems.findIndex(i => i._id === item._id));
   };
 
   const closeLightbox = () => {
     setSelectedImage(null);
-    document.body.style.overflow = 'auto';
+    setCurrentIndex(0);
   };
 
-  const goToPrevious = () => {
-    const newIndex = (currentIndex - 1 + photos.length) % photos.length;
-    setSelectedImage(photos[newIndex]);
+  const navigateImage = (direction: 'prev' | 'next') => {
+    if (!selectedImage) return;
+    
+    let newIndex = currentIndex;
+    if (direction === 'prev') {
+      newIndex = currentIndex > 0 ? currentIndex - 1 : filteredItems.length - 1;
+    } else {
+      newIndex = currentIndex < filteredItems.length - 1 ? currentIndex + 1 : 0;
+    }
+    
     setCurrentIndex(newIndex);
+    setSelectedImage(filteredItems[newIndex]);
   };
 
-  const goToNext = () => {
-    const newIndex = (currentIndex + 1) % photos.length;
-    setSelectedImage(photos[newIndex]);
-    setCurrentIndex(newIndex);
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   };
 
-  const handleKeyDown = (e) => {
-    if (selectedImage) {
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') goToPrevious();
-      if (e.key === 'ArrowRight') goToNext();
+  const getCategoryDisplayName = (category: string) => {
+    switch (category) {
+      case 'all': return 'All Photos';
+      case 'events': return 'Events';
+      case 'facilities': return 'Facilities';
+      case 'training': return 'Training';
+      case 'community': return 'Community';
+      case 'achievements': return 'Achievements';
+      default: return category.charAt(0).toUpperCase() + category.slice(1);
     }
   };
 
-  React.useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'auto';
-    };
-  }, [selectedImage, currentIndex]);
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#2c5aa0]"></div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-white">
-      <ContactBar />
-      <Navbar />
-      
-      <div className="page-header text-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h1 className="text-4xl md:text-5xl font-bold">Gallery</h1>
-          <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-            Explore photos and videos from our events, meetings, and community projects.
-          </p>
-        </div>
-      </div>
-      
-      <section className="section-container">
-        <div className="max-w-7xl mx-auto">
-          <Tabs defaultValue="photos" className="w-full">
-            <div className="flex justify-center mb-8">
-              <TabsList className="bg-green-50">
-                <TabsTrigger value="photos">Photos</TabsTrigger>
-                <TabsTrigger value="videos">Videos</TabsTrigger>
-              </TabsList>
+    <>
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        
+        <div className="pt-20">
+          {/* Hero Section */}
+          <div className="bg-gradient-to-r from-[#1a365d] to-[#2c5aa0] text-white py-16">
+            <div className="container mx-auto px-4">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">Photo Gallery</h1>
+              <p className="text-lg md:text-xl max-w-2xl">
+                Explore our journey through images - from community events to facilities, 
+                training programs, and achievements that showcase our cooperative's impact.
+              </p>
             </div>
-            
-            <TabsContent value="photos" className="mt-6">
-              <div className="mb-8">
-                <Tabs defaultValue="all" className="w-full">
-                  <div className="flex justify-center mb-6">
-                    <TabsList>
-                      <TabsTrigger value="all">All Photos</TabsTrigger>
-                      <TabsTrigger value="events">Events</TabsTrigger>
-                      <TabsTrigger value="facilities">Facilities</TabsTrigger>
-                      <TabsTrigger value="community">Community</TabsTrigger>
-                    </TabsList>
-                  </div>
-                  
-                  <TabsContent value="all" className="animate-fade-in">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {photos.map((photo, index) => (
-                        <div 
-                          key={photo.id}
-                          className="glass-card overflow-hidden rounded-xl hover-card cursor-pointer"
-                          onClick={() => openLightbox(photo, index)}
-                        >
-                          <div className="aspect-[4/3] relative overflow-hidden">
-                            <img
-                              src={photo.thumbnail}
-                              alt={photo.title}
-                              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
-                              <ZoomIn className="text-white h-10 w-10" />
-                            </div>
-                          </div>
-                          <div className="p-4">
-                            <h3 className="font-semibold text-lg">{photo.title}</h3>
-                            <p className="text-gray-500 text-sm mb-1">{photo.date}</p>
-                            <p className="text-gray-600 text-sm">{photo.description}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="events" className="animate-fade-in">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {photos.filter(photo => photo.category === 'events').map((photo, index) => (
-                        <div 
-                          key={photo.id}
-                          className="glass-card overflow-hidden rounded-xl hover-card cursor-pointer"
-                          onClick={() => openLightbox(photo, photos.findIndex(p => p.id === photo.id))}
-                        >
-                          <div className="aspect-[4/3] relative overflow-hidden">
-                            <img
-                              src={photo.thumbnail}
-                              alt={photo.title}
-                              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
-                              <ZoomIn className="text-white h-10 w-10" />
-                            </div>
-                          </div>
-                          <div className="p-4">
-                            <h3 className="font-semibold text-lg">{photo.title}</h3>
-                            <p className="text-gray-500 text-sm mb-1">{photo.date}</p>
-                            <p className="text-gray-600 text-sm">{photo.description}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="facilities" className="animate-fade-in">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {photos.filter(photo => photo.category === 'facilities').map((photo, index) => (
-                        <div 
-                          key={photo.id}
-                          className="glass-card overflow-hidden rounded-xl hover-card cursor-pointer"
-                          onClick={() => openLightbox(photo, photos.findIndex(p => p.id === photo.id))}
-                        >
-                          <div className="aspect-[4/3] relative overflow-hidden">
-                            <img
-                              src={photo.thumbnail}
-                              alt={photo.title}
-                              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
-                              <ZoomIn className="text-white h-10 w-10" />
-                            </div>
-                          </div>
-                          <div className="p-4">
-                            <h3 className="font-semibold text-lg">{photo.title}</h3>
-                            <p className="text-gray-500 text-sm mb-1">{photo.date}</p>
-                            <p className="text-gray-600 text-sm">{photo.description}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="community" className="animate-fade-in">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {photos.filter(photo => photo.category === 'community').map((photo, index) => (
-                        <div 
-                          key={photo.id}
-                          className="glass-card overflow-hidden rounded-xl hover-card cursor-pointer"
-                          onClick={() => openLightbox(photo, photos.findIndex(p => p.id === photo.id))}
-                        >
-                          <div className="aspect-[4/3] relative overflow-hidden">
-                            <img
-                              src={photo.thumbnail}
-                              alt={photo.title}
-                              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
-                              <ZoomIn className="text-white h-10 w-10" />
-                            </div>
-                          </div>
-                          <div className="p-4">
-                            <h3 className="font-semibold text-lg">{photo.title}</h3>
-                            <p className="text-gray-500 text-sm mb-1">{photo.date}</p>
-                            <p className="text-gray-600 text-sm">{photo.description}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="videos" className="mt-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {videos.map(video => (
-                  <div key={video.id} className="glass-card overflow-hidden rounded-xl hover-card">
-                    <div className="aspect-video relative">
-                      <img
-                        src={video.thumbnail}
-                        alt={video.title}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="bg-white bg-opacity-75 rounded-full p-4 hover:bg-opacity-90 transition-all transform hover:scale-110">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                        </div>
-                      </div>
-                      <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white px-2 py-1 text-xs rounded">
-                        {video.duration}
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-lg">{video.title}</h3>
-                      <p className="text-gray-500 text-sm mb-1">{video.date}</p>
-                      <p className="text-gray-600 text-sm">{video.description}</p>
-                    </div>
-                  </div>
+          </div>
+
+          {/* Gallery Content */}
+          <div className="container mx-auto px-4 py-12">
+            <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
+              <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 mb-8">
+                {categories.map((category) => (
+                  <TabsTrigger 
+                    key={category} 
+                    value={category}
+                    className="text-sm"
+                  >
+                    {getCategoryDisplayName(category)}
+                  </TabsTrigger>
                 ))}
-              </div>
-            </TabsContent>
-          </Tabs>
+              </TabsList>
+
+              {categories.map((category) => (
+                <TabsContent key={category} value={category}>
+                  {filteredItems.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                      {filteredItems.map((item) => (
+                        <div
+                          key={item._id}
+                          className="group relative bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                          onClick={() => openLightbox(item)}
+                        >
+                          <div className="aspect-w-16 aspect-h-12 relative">
+                            <img
+                              src={item.image.asset.url}
+                              alt={item.title}
+                              className="w-full h-64 object-cover"
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                              <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-8 h-8" />
+                            </div>
+                            {item.isFeatured && (
+                              <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 text-xs rounded-full">
+                                Featured
+                              </div>
+                            )}
+                          </div>
+                          
+                          <div className="p-4">
+                            <h3 className="font-semibold text-gray-800 mb-1 line-clamp-2">
+                              {item.title}
+                            </h3>
+                            {item.description && (
+                              <p className="text-gray-600 text-sm mb-2 line-clamp-2">
+                                {item.description}
+                              </p>
+                            )}
+                            <div className="flex items-center justify-between text-xs text-gray-500">
+                              <span className="capitalize bg-gray-100 px-2 py-1 rounded">
+                                {item.category}
+                              </span>
+                              {item.eventDate && (
+                                <span>{formatDate(item.eventDate)}</span>
+                              )}
+                            </div>
+                            {item.location && (
+                              <div className="mt-2 text-xs text-gray-500 flex items-center">
+                                <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                {item.location}
+                              </div>
+                            )}
+                            {item.tags && item.tags.length > 0 && (
+                              <div className="mt-2 flex flex-wrap gap-1">
+                                {item.tags.slice(0, 3).map((tag, index) => (
+                                  <span key={index} className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                                    #{tag}
+                                  </span>
+                                ))}
+                                {item.tags.length > 3 && (
+                                  <span className="text-xs text-gray-500">+{item.tags.length - 3} more</span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12">
+                      <div className="text-gray-500 mb-4">
+                        <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                        No photos available
+                      </h3>
+                      <p className="text-gray-500">
+                        {selectedCategory === 'all' 
+                          ? 'No photos have been uploaded yet.' 
+                          : `No photos available in the ${getCategoryDisplayName(selectedCategory)} category.`}
+                      </p>
+                    </div>
+                  )}
+                </TabsContent>
+              ))}
+            </Tabs>
+          </div>
         </div>
-      </section>
-      
+
+        <Footer />
+      </div>
+
       {/* Lightbox */}
       {selectedImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
-          <button 
-            className="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
-            onClick={closeLightbox}
-          >
-            <X className="h-8 w-8" />
-          </button>
-          
-          <button 
-            className="absolute left-4 text-white hover:text-gray-300 z-10"
-            onClick={goToPrevious}
-          >
-            <ArrowLeft className="h-8 w-8" />
-          </button>
-          
-          <button 
-            className="absolute right-4 text-white hover:text-gray-300 z-10"
-            onClick={goToNext}
-          >
-            <ArrowRight className="h-8 w-8" />
-          </button>
-          
-          <div className="max-w-6xl max-h-full overflow-auto">
-            <img 
-              src={selectedImage.fullImage} 
-              alt={selectedImage.title} 
-              className="max-w-full max-h-[80vh] mx-auto"
-            />
-            <div className="text-white p-4 text-center">
-              <h3 className="text-xl font-semibold">{selectedImage.title}</h3>
-              <p className="text-gray-300 mt-1">{selectedImage.description}</p>
-              <p className="text-gray-400 text-sm mt-2">{selectedImage.date}</p>
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4">
+          <div className="relative w-full h-full flex items-center justify-center">
+            {/* Close button */}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 transition-colors"
+            >
+              <X className="w-8 h-8" />
+            </button>
+
+            {/* Navigation buttons */}
+            {filteredItems.length > 1 && (
+              <>
+                <button
+                  onClick={() => navigateImage('prev')}
+                  className="absolute left-4 z-10 text-white hover:text-gray-300 transition-colors"
+                >
+                  <ArrowLeft className="w-8 h-8" />
+                </button>
+                <button
+                  onClick={() => navigateImage('next')}
+                  className="absolute right-4 z-10 text-white hover:text-gray-300 transition-colors"
+                >
+                  <ArrowRight className="w-8 h-8" />
+                </button>
+              </>
+            )}
+
+            {/* Image */}
+            <div className="max-w-7xl max-h-full flex items-center justify-center">
+              <img
+                src={selectedImage.image.asset.url}
+                alt={selectedImage.title}
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+
+            {/* Image info */}
+            <div className="absolute bottom-4 left-4 right-4 bg-black bg-opacity-50 text-white p-4 rounded-lg">
+              <h3 className="text-lg font-semibold mb-1">{selectedImage.title}</h3>
+              {selectedImage.description && (
+                <p className="text-sm text-gray-200 mb-2">{selectedImage.description}</p>
+              )}
+              <div className="flex items-center justify-between text-sm text-gray-300">
+                <div className="flex items-center space-x-4">
+                  <span className="capitalize">{selectedImage.category}</span>
+                  {selectedImage.eventDate && <span>{formatDate(selectedImage.eventDate)}</span>}
+                  {selectedImage.location && (
+                    <span className="flex items-center">
+                      <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      {selectedImage.location}
+                    </span>
+                  )}
+                </div>
+                {selectedImage.photographer && (
+                  <span>Photo by: {selectedImage.photographer}</span>
+                )}
+              </div>
+              {selectedImage.tags && selectedImage.tags.length > 0 && (
+                <div className="mt-2 flex flex-wrap gap-1">
+                  {selectedImage.tags.map((tag, index) => (
+                    <span key={index} className="text-xs bg-white bg-opacity-20 px-2 py-1 rounded">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {filteredItems.length > 1 && (
+                <div className="mt-2 text-xs text-gray-400">
+                  {currentIndex + 1} of {filteredItems.length}
+                </div>
+              )}
             </div>
           </div>
         </div>
       )}
-      
-      <Footer />
-    </div>
+    </>
   );
 };
 

@@ -9,6 +9,8 @@ import heroSection from './heroSection'
 import introductionSection from './introductionSection'
 import galleryItem from './galleryItem'
 import announcement from './announcement'
+import event from './event'
+import successStory from './successStory'
 
 export const schemaTypes = [
   boardMember, 
@@ -21,5 +23,7 @@ export const schemaTypes = [
   heroSection,
   introductionSection,
   galleryItem,
-  announcement
+  announcement,
+  event,
+  successStory
 ]

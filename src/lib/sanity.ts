@@ -649,5 +649,181 @@ export const queries = {
     timing,
     targetAudience,
     relatedLink
+  }`,
+
+  // Events
+  events: `*[_type == "event" && isPublished == true] | order(eventDate asc) {
+    _id,
+    title,
+    titleNepali,
+    description,
+    descriptionNepali,
+    eventType,
+    eventDate,
+    startTime,
+    endTime,
+    location,
+    locationNepali,
+    venue,
+    expectedAttendees,
+    actualAttendees,
+    requiresRegistration,
+    registrationSettings,
+    attachments[] {
+      title,
+      titleNepali,
+      description,
+      file {
+        asset-> {
+          _id,
+          url,
+          originalFilename,
+          size,
+          mimeType
+        }
+      },
+      fileType
+    },
+    eventStatus,
+    priority,
+    isFeatured,
+    contactPerson,
+    contactPhone,
+    contactEmail,
+    organizer
+  }`,
+
+  // Upcoming Events
+  upcomingEvents: `*[_type == "event" && isPublished == true && eventDate >= now() && eventStatus in ["scheduled", "ongoing"]] | order(eventDate asc) [0...5] {
+    _id,
+    title,
+    titleNepali,
+    description,
+    descriptionNepali,
+    eventType,
+    eventDate,
+    startTime,
+    endTime,
+    location,
+    locationNepali,
+    expectedAttendees,
+    requiresRegistration,
+    registrationSettings,
+    eventStatus,
+    priority,
+    isFeatured
+  }`,
+
+  // Featured Events
+  featuredEvents: `*[_type == "event" && isPublished == true && isFeatured == true] | order(eventDate asc) {
+    _id,
+    title,
+    titleNepali,
+    description,
+    descriptionNepali,
+    eventType,
+    eventDate,
+    startTime,
+    endTime,
+    location,
+    locationNepali,
+    expectedAttendees,
+    requiresRegistration,
+    registrationSettings,
+    eventStatus,
+    priority
+  }`,
+
+  // Success Stories
+  successStories: `*[_type == "successStory" && isPublished == true] | order(storyDate desc) {
+    _id,
+    title,
+    titleNepali,
+    storyType,
+    featuredImage {
+      asset-> {
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      }
+    },
+    excerpt,
+    excerptNepali,
+    protagonist {
+      name,
+      nameNepali,
+      role,
+      roleNepali,
+      location,
+      photo {
+        asset-> {
+          _id,
+          url,
+          metadata {
+            dimensions {
+              width,
+              height
+            }
+          }
+        }
+      },
+      memberSince
+    },
+    impact {
+      beneficiaries,
+      financialImpact,
+      timeframe,
+      keyMetrics[] {
+        metric,
+        metricNepali,
+        value,
+        description
+      }
+    },
+    testimonial {
+      quote,
+      quoteNepali,
+      author
+    },
+    storyDate,
+    publishedDate,
+    categories,
+    isFeatured
+  }`,
+
+  // Featured Success Stories
+  featuredSuccessStories: `*[_type == "successStory" && isPublished == true && isFeatured == true] | order(storyDate desc) [0...3] {
+    _id,
+    title,
+    titleNepali,
+    storyType,
+    featuredImage {
+      asset-> {
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      }
+    },
+    excerpt,
+    excerptNepali,
+    protagonist {
+      name,
+      nameNepali,
+      role,
+      roleNepali,
+      location
+    },
+    storyDate,
+    isFeatured
   }`
 }
