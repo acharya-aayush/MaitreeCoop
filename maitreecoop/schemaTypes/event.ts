@@ -4,7 +4,7 @@ export default defineType({
   name: 'event',
   title: 'Community Events',
   type: 'document',
-  icon: () => '📅',
+
   fields: [
     defineField({
       name: 'title',
@@ -45,17 +45,17 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: '🤝 Member Meeting', value: 'meeting' },
-          { title: '🎓 Training/Workshop', value: 'training' },
-          { title: '🎉 Celebration', value: 'celebration' },
-          { title: '📋 General Assembly', value: 'assembly' },
-          { title: '🏆 Award Ceremony', value: 'award' },
-          { title: '💰 Financial Review', value: 'financial' },
-          { title: '🌱 Community Development', value: 'development' },
-          { title: '📚 Educational Program', value: 'educational' },
-          { title: '🎊 Festival', value: 'festival' },
-          { title: '📢 Announcement', value: 'announcement' },
-          { title: '🔧 Other', value: 'other' }
+          { title: 'Member Meeting', value: 'meeting' },
+          { title: 'Training/Workshop', value: 'training' },
+          { title: 'Celebration', value: 'celebration' },
+          { title: 'General Assembly', value: 'assembly' },
+          { title: 'Award Ceremony', value: 'award' },
+          { title: 'Financial Review', value: 'financial' },
+          { title: 'Community Development', value: 'development' },
+          { title: 'Educational Program', value: 'educational' },
+          { title: 'Festival', value: 'festival' },
+          { title: 'Announcement', value: 'announcement' },
+          { title: 'Other', value: 'other' }
         ]
       },
       validation: Rule => Rule.required(),
@@ -234,14 +234,14 @@ export default defineType({
               type: 'string',
               options: {
                 list: [
-                  { title: '📄 Agenda', value: 'agenda' },
-                  { title: '📊 Presentation', value: 'presentation' },
-                  { title: '📝 Minutes', value: 'minutes' },
-                  { title: '📋 Form', value: 'form' },
-                  { title: '📷 Photo', value: 'photo' },
-                  { title: '📰 Notice', value: 'notice' },
-                  { title: '📊 Report', value: 'report' },
-                  { title: '📚 Other', value: 'other' }
+                  { title: 'Agenda', value: 'agenda' },
+                  { title: 'Presentation', value: 'presentation' },
+                  { title: 'Minutes', value: 'minutes' },
+                  { title: 'Form', value: 'form' },
+                  { title: 'Photo', value: 'photo' },
+                  { title: 'Notice', value: 'notice' },
+                  { title: 'Report', value: 'report' },
+                  { title: 'Other', value: 'other' }
                 ]
               },
               initialValue: 'other'
@@ -255,18 +255,8 @@ export default defineType({
             },
             prepare(selection) {
               const { title, fileType, file } = selection
-              const typeIcons: Record<string, string> = {
-                'agenda': '📄',
-                'presentation': '📊',
-                'minutes': '📝',
-                'form': '📋',
-                'photo': '📷',
-                'notice': '📰',
-                'report': '📊',
-                'other': '📚'
-              }
               return {
-                title: `${typeIcons[fileType] || '📚'} ${title}`,
+                title: `${title}`,
                 subtitle: file?.asset?.originalFilename || 'No file attached'
               }
             }
@@ -384,42 +374,13 @@ export default defineType({
     prepare(selection) {
       const { title, eventDate, eventType, eventStatus, priority, isFeatured, requiresRegistration } = selection
       
-      const typeIcons: Record<string, string> = {
-        'meeting': '🤝',
-        'training': '🎓',
-        'celebration': '🎉',
-        'assembly': '📋',
-        'award': '🏆',
-        'financial': '💰',
-        'development': '🌱',
-        'educational': '📚',
-        'festival': '🎊',
-        'announcement': '📢',
-        'other': '🔧'
-      }
-      
-      const statusIcons: Record<string, string> = {
-        'scheduled': '📅',
-        'ongoing': '🔴',
-        'completed': '✅',
-        'cancelled': '❌',
-        'postponed': '⏱️'
-      }
-      
-      const priorityIcons: Record<string, string> = {
-        'high': '🔴',
-        'medium': '🟡',
-        'normal': '🟢',
-        'low': '🔵'
-      }
-      
-      const featured = isFeatured ? ' ⭐' : ''
-      const registration = requiresRegistration ? ' 📝' : ''
+      const featured = isFeatured ? ' [Featured]' : ''
+      const registration = requiresRegistration ? ' [Registration Required]' : ''
       const formattedDate = eventDate ? new Date(eventDate).toLocaleDateString() : 'No date'
       
       return {
-        title: `${typeIcons[eventType] || '🔧'} ${statusIcons[eventStatus] || '📅'} ${title}${featured}${registration}`,
-        subtitle: `${formattedDate} • ${priorityIcons[priority] || '🟢'} Priority`
+        title: `${title}${featured}${registration}`,
+        subtitle: `${formattedDate} • ${priority} Priority • ${eventStatus}`
       }
     }
   },

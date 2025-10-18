@@ -27,14 +27,14 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: '📢 General Notice', value: 'notice' },
-          { title: '🎉 Event Announcement', value: 'event' },
-          { title: '🚨 Important Alert', value: 'alert' },
-          { title: '📋 Meeting Notice', value: 'meeting' },
-          { title: '💰 Financial Notice', value: 'financial' },
-          { title: '🎊 Celebration', value: 'celebration' },
-          { title: '📰 News Update', value: 'news' },
-          { title: '🏆 Achievement', value: 'achievement' }
+          { title: 'General Notice', value: 'notice' },
+          { title: 'Event Announcement', value: 'event' },
+          { title: 'Important Alert', value: 'alert' },
+          { title: 'Meeting Notice', value: 'meeting' },
+          { title: 'Financial Notice', value: 'financial' },
+          { title: 'Celebration', value: 'celebration' },
+          { title: 'News Update', value: 'news' },
+          { title: 'Achievement', value: 'achievement' }
         ]
       },
       validation: Rule => Rule.required(),
@@ -47,10 +47,10 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: '🔴 High Priority (Red)', value: 'high' },
-          { title: '🟡 Medium Priority (Yellow)', value: 'medium' },
-          { title: '🟢 Normal Priority (Green)', value: 'normal' },
-          { title: '🔵 Low Priority (Blue)', value: 'low' }
+          { title: 'High Priority (Red)', value: 'high' },
+          { title: 'Medium Priority (Yellow)', value: 'medium' },
+          { title: 'Normal Priority (Green)', value: 'normal' },
+          { title: 'Low Priority (Blue)', value: 'low' }
         ]
       },
       initialValue: 'normal'
@@ -63,9 +63,9 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: '📝 Text Content', value: 'text' },
-          { title: '🖼️ Image Notice', value: 'image' },
-          { title: '📄 Rich Content (Text + Image)', value: 'rich' }
+          { title: 'Text Content', value: 'text' },
+          { title: 'Image Notice', value: 'image' },
+          { title: 'Rich Content (Text + Image)', value: 'rich' }
         ]
       },
       validation: Rule => Rule.required(),

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ContactBar from "../components/ContactBar";
 import { client as sanityClient, queries } from "../lib/sanity";
 
 interface Event {
@@ -163,17 +164,18 @@ export const Community = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#2c5aa0]"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen">
+      <ContactBar />
       <Navbar />
       <div className="pt-20">
         {/* Hero Section */}
-        <section className="py-12 bg-gradient-to-r from-[#1a365d] to-[#2c5aa0] text-white">
+        <section className="py-12 bg-gradient-to-r from-green-700 to-green-800 text-white">
           <div className="container mx-auto px-4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Our Vibrant Community
@@ -189,25 +191,25 @@ export const Community = () => {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-[#1a365d] mb-2">
+                <div className="text-3xl md:text-4xl font-bold text-green-700 mb-2">
                   2,500+
                 </div>
                 <div className="text-gray-600">Active Members</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-[#1a365d] mb-2">
+                <div className="text-3xl md:text-4xl font-bold text-green-700 mb-2">
                   {upcomingEvents.length}+
                 </div>
                 <div className="text-gray-600">Upcoming Events</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-[#1a365d] mb-2">
+                <div className="text-3xl md:text-4xl font-bold text-green-700 mb-2">
                   {successStories.length}+
                 </div>
                 <div className="text-gray-600">Success Stories</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-[#1a365d] mb-2">
+                <div className="text-3xl md:text-4xl font-bold text-green-700 mb-2">
                   95%
                 </div>
                 <div className="text-gray-600">Satisfaction Rate</div>
@@ -219,7 +221,7 @@ export const Community = () => {
         {/* Upcoming Events */}
         <section className="py-12 bg-gray-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12 text-[#1a365d]">
+            <h2 className="text-3xl font-bold text-center mb-12 text-green-800">
               Upcoming Events
             </h2>
             {upcomingEvents.length > 0 ? (
@@ -227,7 +229,7 @@ export const Community = () => {
                 {upcomingEvents.map((event) => (
                   <div key={event._id} className="bg-white rounded-lg shadow-md overflow-hidden">
                     <div className="p-6">
-                      <div className="text-sm text-[#2c5aa0] font-semibold mb-2">
+                      <div className="text-sm text-green-600 font-semibold mb-2">
                         {formatDate(event.eventDate)}
                         {event.startTime && ` • ${formatTime(event.startTime)}`}
                       </div>
@@ -275,7 +277,7 @@ export const Community = () => {
                             <button
                               key={index}
                               onClick={() => handleDownloadAttachment(attachment)}
-                              className="text-[#2c5aa0] hover:text-[#1a365d] text-sm flex items-center gap-1 mb-1"
+                              className="text-green-600 hover:text-green-800 text-sm flex items-center gap-1 mb-1"
                             >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -306,7 +308,7 @@ export const Community = () => {
 
                       <button 
                         onClick={() => handleRegistration(event)}
-                        className="bg-[#2c5aa0] text-white px-4 py-2 rounded-lg hover:bg-[#1a365d] transition-colors"
+                        className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
                       >
                         {event.requiresRegistration ? 'Register Now' : 'More Info'}
                       </button>
@@ -326,7 +328,7 @@ export const Community = () => {
         {/* Success Stories */}
         <section className="py-12">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12 text-[#1a365d]">
+            <h2 className="text-3xl font-bold text-center mb-12 text-green-800">
               Success Stories
             </h2>
             {successStories.length > 0 ? (
@@ -418,7 +420,7 @@ export const Community = () => {
             )}
             
             <div className="text-center mt-8">
-              <button className="bg-[#2c5aa0] text-white px-8 py-3 rounded-lg hover:bg-[#1a365d] transition-colors">
+              <button className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors">
                 View All Stories
               </button>
             </div>
@@ -429,52 +431,52 @@ export const Community = () => {
         <section className="py-12 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold text-center mb-12 text-[#1a365d]">
+              <h2 className="text-3xl font-bold text-center mb-12 text-green-800">
                 Community Guidelines
               </h2>
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
-                  <h3 className="text-xl font-semibold mb-4 text-[#2c5aa0]">
+                  <h3 className="text-xl font-semibold mb-4 text-green-700">
                     Our Values
                   </h3>
                   <ul className="space-y-2 text-gray-600">
                     <li className="flex items-start">
-                      <span className="text-[#2c5aa0] mr-2">•</span>
+                      <span className="text-green-600 mr-2">•</span>
                       Mutual respect and understanding
                     </li>
                     <li className="flex items-start">
-                      <span className="text-[#2c5aa0] mr-2">•</span>
+                      <span className="text-green-600 mr-2">•</span>
                       Collaborative decision making
                     </li>
                     <li className="flex items-start">
-                      <span className="text-[#2c5aa0] mr-2">•</span>
+                      <span className="text-green-600 mr-2">•</span>
                       Transparency in all operations
                     </li>
                     <li className="flex items-start">
-                      <span className="text-[#2c5aa0] mr-2">•</span>
+                      <span className="text-green-600 mr-2">•</span>
                       Commitment to community welfare
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-4 text-[#2c5aa0]">
+                  <h3 className="text-xl font-semibold mb-4 text-green-700">
                     Member Responsibilities
                   </h3>
                   <ul className="space-y-2 text-gray-600">
                     <li className="flex items-start">
-                      <span className="text-[#2c5aa0] mr-2">•</span>
+                      <span className="text-green-600 mr-2">•</span>
                       Active participation in meetings
                     </li>
                     <li className="flex items-start">
-                      <span className="text-[#2c5aa0] mr-2">•</span>
+                      <span className="text-green-600 mr-2">•</span>
                       Timely payment of shares and fees
                     </li>
                     <li className="flex items-start">
-                      <span className="text-[#2c5aa0] mr-2">•</span>
+                      <span className="text-green-600 mr-2">•</span>
                       Support fellow members' initiatives
                     </li>
                     <li className="flex items-start">
-                      <span className="text-[#2c5aa0] mr-2">•</span>
+                      <span className="text-green-600 mr-2">•</span>
                       Promote cooperative principles
                     </li>
                   </ul>
@@ -485,7 +487,7 @@ export const Community = () => {
         </section>
 
         {/* Join CTA */}
-        <section className="py-12 bg-gradient-to-r from-[#1a365d] to-[#2c5aa0] text-white">
+        <section className="py-12 bg-gradient-to-r from-green-700 to-green-800 text-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold mb-4">
               Ready to Join Our Community?
@@ -493,7 +495,7 @@ export const Community = () => {
             <p className="text-lg mb-8 max-w-2xl mx-auto">
               Become a member today and be part of a community that's making a real difference in people's lives.
             </p>
-            <button className="bg-white text-[#1a365d] px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors font-semibold">
+            <button className="bg-white text-green-700 px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors font-semibold">
               Become a Member
             </button>
           </div>
