@@ -124,15 +124,47 @@ Content is managed through Sanity Studio, accessible at your configured Sanity U
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/new-feature`
-3. Commit changes: `git commit -am 'Add new feature'`
-4. Push to branch: `git push origin feature/new-feature`
-5. Submit a pull request
+**IMPORTANT**: This is proprietary software with restricted access.
 
-## License
+### For Authorized Contributors
+- Access is limited to authorized developers and Maitree Cooperative IT team
+- Contact the repository owner for collaboration permissions
+- All contributions must comply with cooperative policies and coding standards
 
-This project is proprietary software developed for Maitree Savings and Credit Cooperative Ltd.
+### Development Guidelines
+1. Create a feature branch: `git checkout -b feature/description`
+2. Follow existing code patterns and documentation standards
+3. Test thoroughly before submitting changes
+4. Submit pull requests with detailed descriptions
+
+## License and Usage Rights
+
+### Proprietary Software Notice
+
+**This software is proprietary and confidential.**
+
+- **Owner**: Maitree Savings and Credit Cooperative Ltd.
+- **Developer**: Aayush Acharya (acharya-aayush)
+- **License**: All Rights Reserved
+
+### Usage Restrictions
+
+- **NO FORKING**: This repository may not be forked for independent use
+- **NO REDISTRIBUTION**: Code may not be copied, modified, or distributed without explicit written permission
+- **NO COMMERCIAL USE**: This software may not be used for commercial purposes outside of Maitree Cooperative
+- **COOPERATIVE EXCLUSIVE**: Designed exclusively for Maitree Savings and Credit Cooperative Ltd.
+
+### Intellectual Property
+
+All code, designs, configurations, and documentation in this repository are the exclusive property of Maitree Savings and Credit Cooperative Ltd. Unauthorized use, reproduction, or distribution is strictly prohibited and may result in legal action.
+
+### Access and Collaboration
+
+- Repository access is controlled by the cooperative's IT governance policies
+- Collaboration is limited to authorized personnel only
+- Third-party access requires formal approval and signed confidentiality agreements
+
+**For licensing inquiries or authorized access requests, contact Maitree Savings and Credit Cooperative Ltd. directly.**
 
 ## Support
 

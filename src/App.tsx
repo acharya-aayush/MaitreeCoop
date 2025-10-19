@@ -28,11 +28,35 @@ import Community from "./pages/Community";
 import MapTest from "./pages/MapTest";
 import BoardAdmin from "./pages/BoardAdmin";
 import DynamicBoard from "./pages/DynamicBoard";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import Sitemap from "./pages/Sitemap";
+import DeveloperModal from "./components/DeveloperModal";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+  // Developer signature in console
+  useEffect(() => {
+    console.log(
+      `%c
+╭─────────────────────────────────────────────────────────────╮
+│                    🏛️ MaitreeCoop Website                    │
+│                                                             │
+│  Developed by: Aayush Acharya                              │
+│  GitHub: https://github.com/acharya-aayush                 │
+│  Technology: React + TypeScript + Sanity CMS               │
+│  Year: 2025                                                │
+│                                                             │
+│  Professional web development for financial cooperatives    │
+│  Press "A" twice to access developer information           │
+╰─────────────────────────────────────────────────────────────╯
+      `,
+      'color: #16a34a; font-family: monospace; line-height: 1.5;'
+    );
+  }, []);
   const { announcements, loading: announcementsLoading } = useAnnouncements();
 
   useEffect(() => {
@@ -66,6 +90,9 @@ const App = () => {
             <Route path="/map-test" element={<MapTest />} />
             <Route path="/admin/board" element={<BoardAdmin />} />
             <Route path="/board-dynamic" element={<DynamicBoard />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/sitemap" element={<Sitemap />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           
@@ -73,6 +100,9 @@ const App = () => {
           {!isInitialLoading && !announcementsLoading && (
             <AnnouncementModal announcements={announcements} />
           )}
+          
+          {/* Developer easter egg modal */}
+          <DeveloperModal />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
