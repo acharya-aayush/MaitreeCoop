@@ -59,6 +59,11 @@ const Footer = () => {
                   {t('footer.community')}
                 </Link>
               </li>
+              <li>
+                <Link to="/verify" className="text-sm text-green-600 hover:text-green-700 font-semibold transition-colors duration-300">
+                  ✓ {t('footer.verify') || 'Official Website Verification'}
+                </Link>
+              </li>
             </ul>
           </div>
           

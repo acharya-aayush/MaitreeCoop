@@ -31,6 +31,7 @@ import DynamicBoard from "./pages/DynamicBoard";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import Sitemap from "./pages/Sitemap";
+import OfficialVerification from "./pages/OfficialVerification";
 import DeveloperModal from "./components/DeveloperModal";
 
 const queryClient = new QueryClient();
@@ -93,6 +94,7 @@ const App = () => {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/sitemap" element={<Sitemap />} />
+            <Route path="/verify" element={<OfficialVerification />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           

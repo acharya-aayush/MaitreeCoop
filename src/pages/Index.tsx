@@ -115,6 +115,23 @@ const Index = () => {
       <ContactBar />
       <Navbar />
       
+      {/* Official Website Verification Banner */}
+      <div className="bg-green-600 text-white py-2 px-4">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+          <p className="text-sm">
+            {i18n.language === 'np' 
+              ? '⚠️ नक्कली वेबसाइटहरूबाट सावधान रहनुहोस्। यो आधिकारिक मैत्री सहकारी वेबसाइट हो।'
+              : '⚠️ Beware of fake websites. This is the official Maitree Cooperative website.'}
+          </p>
+          <Link 
+            to="/verify" 
+            className="text-white underline hover:text-green-100 transition-colors text-sm whitespace-nowrap font-semibold"
+          >
+            {i18n.language === 'np' ? 'प्रमाणीकरण हेर्नुहोस् →' : 'Verify Now →'}
+          </Link>
+        </div>
+      </div>
+      
       {/* Hero Section */}
       <Hero />
       
