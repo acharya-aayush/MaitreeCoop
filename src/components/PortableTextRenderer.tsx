@@ -1,5 +1,6 @@
 import React from 'react';
 import { client, getImageUrl } from '@/lib/sanity';
+import { sanitizeText, validateImageUrl } from '@/lib/security';
 
 interface PortableTextRendererProps {
   content: any;
@@ -71,11 +72,14 @@ const PortableTextRenderer: React.FC<PortableTextRendererProps> = ({
 
   const renderInlineContent = (children: any[]) => {
     return children.map((child: any, index: number) => {
+      // Sanitize text content to prevent XSS
+      const safeText = sanitizeText(child.text || '');
+      
       if (!child.marks || child.marks.length === 0) {
-        return <span key={index}>{child.text}</span>;
+        return <span key={index} dangerouslySetInnerHTML={{ __html: safeText }} />;
       }
 
-      let element = <span key={index}>{child.text}</span>;
+      let element = <span key={`${index}-inner`} dangerouslySetInnerHTML={{ __html: safeText }} />;
 
       // Apply marks (formatting)
       child.marks.forEach((mark: string) => {
@@ -102,20 +106,32 @@ const PortableTextRenderer: React.FC<PortableTextRendererProps> = ({
     }
 
     const imageUrl = getImageUrl(block);
-    if (!imageUrl) {
+    // Validate image URL to prevent malicious URLs
+    const safeImageUrl = validateImageUrl(imageUrl);
+    
+    if (!safeImageUrl) {
+      console.warn('Blocked unsafe image URL in content');
       return null;
     }
+
+    // Sanitize alt text
+    const safeAlt = sanitizeText(block.alt || 'News image');
 
     return (
       <div key={index} className="my-8">
         <img
-          src={imageUrl}
-          alt={block.alt || 'News image'}
+          src={safeImageUrl}
+          alt={safeAlt}
           className="w-full h-auto rounded-lg shadow-md"
+          loading="lazy"
+          onError={(e) => {
+            console.error('Failed to load image:', safeImageUrl);
+            e.currentTarget.style.display = 'none';
+          }}
         />
         {block.alt && (
           <p className="mt-2 text-sm text-gray-600 text-center italic">
-            {block.alt}
+            <span dangerouslySetInnerHTML={{ __html: safeAlt }} />
           </p>
         )}
       </div>

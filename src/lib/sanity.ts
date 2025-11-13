@@ -1,5 +1,6 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
+import { validateImageUrl, validateFileUrl } from './security'
 
 // Create the Sanity client for read operations
 export const client = createClient({
@@ -7,7 +8,7 @@ export const client = createClient({
   dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
   useCdn: import.meta.env.PROD, // Use CDN in production, false in development
   apiVersion: '2024-01-01',
-  token: undefined, // No token for read operations
+  token: undefined, // No token for read operations - NEVER expose write tokens in frontend
 })
 
 // Set up image URL builder
@@ -26,7 +27,10 @@ export const getFileUrl = (asset: any) => {
   // https://cdn.sanity.io/files/{projectId}/{dataset}/{assetId}-{originalFilename}
   const assetId = asset._ref
   const [fileId, extension] = assetId.replace('file-', '').split('-')
-  return `https://cdn.sanity.io/files/w4d9v3bc/production/${assetId.replace('file-', '')}`
+  const url = `https://cdn.sanity.io/files/w4d9v3bc/production/${assetId.replace('file-', '')}`
+  
+  // Validate URL before returning
+  return validateFileUrl(url)
 }
 
 // Helper function to get image URL from Sanity asset reference
@@ -34,39 +38,38 @@ export const getImageUrl = (photoObject: any) => {
   if (!photoObject) return null
   
   try {
+    let url: string | null = null;
+    
     // Handle expanded asset object (from asset-> query)  
     if (photoObject.asset && photoObject.asset.url) {
-      return photoObject.asset.url;
+      url = photoObject.asset.url;
     }
-    
     // Handle image object with asset reference (most common case)
     // Only call urlFor if we have a valid asset reference
-    if (photoObject.asset && photoObject.asset._ref) {
-      return urlFor(photoObject).url();
+    else if (photoObject.asset && photoObject.asset._ref) {
+      url = urlFor(photoObject).url();
     }
-    
     // Handle direct asset reference
     // Only call urlFor if we have a valid reference
-    if (photoObject._ref) {
-      return urlFor(photoObject).url();
+    else if (photoObject._ref) {
+      url = urlFor(photoObject).url();
     }
-    
     // Handle direct URL
-    if (photoObject.url) {
-      return photoObject.url;
+    else if (photoObject.url) {
+      url = photoObject.url;
     }
-    
     // If it's just a malformed image object without asset, return null
-    if (photoObject._type === 'image' && !photoObject.asset && !photoObject._ref) {
+    else if (photoObject._type === 'image' && !photoObject.asset && !photoObject._ref) {
       console.warn('Malformed image object without asset reference:', photoObject);
       return null;
     }
+    
+    // Validate URL before returning to prevent malicious URLs
+    return validateImageUrl(url);
   } catch (error) {
     console.warn('Error generating image URL for object:', photoObject, 'Error:', error);
     return null;
   }
-  
-  return null;
 }
 
 // Query functions for fetching data

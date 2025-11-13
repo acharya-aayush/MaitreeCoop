@@ -132,7 +132,7 @@ const Footer = () => {
                     {t('footer.termsOfService')}
                   </Link>
                 </li>
-                <li>
+                <li className="hidden">
                   <Link to="/sitemap" className="text-sm text-gray-500 hover:text-primary transition-colors duration-300">
                     {t('footer.sitemap')}
                   </Link>

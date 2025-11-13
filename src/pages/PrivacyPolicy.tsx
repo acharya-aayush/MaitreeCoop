@@ -206,11 +206,11 @@ const PrivacyPolicy: React.FC = () => {
                 }
               </p>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <p><strong>Maitree Savings and Credit Cooperative Ltd.</strong></p>
-                <p>{isNepali ? 'मैत्री बचत तथा ऋण सहकारी संस्था लिमिटेड' : 'मैत्री बचत तथा ऋण सहकारी संस्था लिमिटेड'}</p>
-                <p>{isNepali ? 'इमेल:' : 'Email:'} info@maitreecoop.com</p>
-                <p>{isNepali ? 'फोन:' : 'Phone:'} [Contact Number]</p>
-                <p>{isNepali ? 'ठेगाना:' : 'Address:'} [Cooperative Address]</p>
+                <p><strong>Maitree Multipurpose Cooperative Ltd.</strong></p>
+                <p>{isNepali ? 'मैत्री बहुउद्देश्यीय सहकारी संस्था लिमिटेड' : 'Maitree Multipurpose Cooperative Ltd.'}</p>
+                <p>{isNepali ? 'इमेल:' : 'Email:'} maitreecooperative@gmail.com</p>
+                <p>{isNepali ? 'फोन:' : 'Phone:'} 079-520678</p>
+                <p>{isNepali ? 'ठेगाना:' : 'Address:'} Resunga Municipality-8, Tamghas, Gulmi</p>
               </div>
             </div>
           </section>

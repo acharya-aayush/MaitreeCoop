@@ -70,7 +70,7 @@ const Navbar = () => {
     { name: t('navigation.home'), path: '/' },
     { name: t('navigation.aboutUs'), path: '/about' },
     { name: t('navigation.services'), path: '/services' },
-    { name: t('navigation.members'), path: '/members' },
+    {name: t('navigation.members'), path: '/members' },
     { name: t('navigation.news'), path: '/news' },
     { name: t('navigation.gallery'), path: '/gallery' },
     { name: t('navigation.board'), path: '/board' },
@@ -115,12 +115,6 @@ const Navbar = () => {
           
           <div className="hidden md:flex items-center space-x-4">
             <LanguageSwitcher />
-            <Link 
-              to="/members"
-              className="px-5 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium bg-primary text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50 transition-all duration-300"
-            >
-              {t('navigation.members')}
-            </Link>
           </div>
           
           {/* Mobile Menu Button */}

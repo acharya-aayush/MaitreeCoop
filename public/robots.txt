@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # XML Sitemap
-Sitemap: https://maitreecoop.com/sitemap.xml
+Sitemap: https://www.maitreecooperative.com/sitemap.xml
 
 # Allow search engines to crawl all important pages
 Allow: /about
