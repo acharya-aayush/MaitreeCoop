@@ -8,7 +8,11 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { useHomepageSettings } from '@/hooks/useHomepageSettings';
 import { Logo } from '@/components/Logo';
 
-const Navbar = () => {
+interface NavbarProps {
+  logoUrl?: string | null;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ logoUrl }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -33,7 +37,7 @@ const Navbar = () => {
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       if (window.scrollY > 10) {
         setScrolled(true);
       } else {
@@ -50,7 +54,7 @@ const Navbar = () => {
       } else {
         setContactBarVisible(true);
       }
-      
+
       setLastScrollY(currentScrollY);
     };
 
@@ -70,7 +74,7 @@ const Navbar = () => {
     { name: t('navigation.home'), path: '/' },
     { name: t('navigation.aboutUs'), path: '/about' },
     { name: t('navigation.services'), path: '/services' },
-    {name: t('navigation.members'), path: '/members' },
+    { name: t('navigation.members'), path: '/members' },
     { name: t('navigation.news'), path: '/news' },
     { name: t('navigation.gallery'), path: '/gallery' },
     { name: t('navigation.board'), path: '/board' },
@@ -80,7 +84,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav 
+    <nav
       className={cn(
         'fixed w-full transition-all duration-300 border-0 m-0',
         scrolled ? 'navbar-fixed navbar-scrolled' : 'navbar-fixed',
@@ -93,10 +97,10 @@ const Navbar = () => {
         <div className="flex justify-between items-center py-2 md:py-1.5 md:space-x-10">
           <div className="flex items-center justify-start -ml-2">
             <Link to="/" className="flex items-center">
-              <Logo />
+              <Logo logoUrl={logoUrl} />
             </Link>
           </div>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6 lg:space-x-8">
             {navLinks.map((link) => (
@@ -112,11 +116,11 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-          
+
           <div className="hidden md:flex items-center space-x-4">
             <LanguageSwitcher />
           </div>
-          
+
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-2">
             <LanguageSwitcher />
@@ -134,7 +138,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Mobile Menu */}
       <div
         className={cn(

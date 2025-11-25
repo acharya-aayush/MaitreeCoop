@@ -1,42 +1,32 @@
 import React from 'react';
-import { useHomepageSettings } from '@/hooks/useHomepageSettings';
 
 interface LogoProps {
   className?: string;
   width?: string;
   height?: string;
   alt?: string;
+  logoUrl?: string | null;
 }
 
-export const Logo: React.FC<LogoProps> = ({ 
+export const Logo: React.FC<LogoProps> = ({
   className = "h-[105px] w-[506.88px] object-contain",
   width = "506.88px",
   height = "105px",
   alt = "Maitree Cooperative Logo"
 }) => {
-  const { logoUrl, loading: logoLoading } = useHomepageSettings();
-
-  if (logoLoading) {
-    return (
-      <div 
-        className={`bg-gray-200 animate-pulse rounded flex items-center justify-center ${className}`}
-        style={{ width, height }}
-      >
-        <span className="text-gray-400 text-sm">Loading...</span>
-      </div>
-    );
-  }
+  // Always use the local hardcoded logo
+  const logoUrl = "/images/logo.png";
 
   return (
-    <img 
-      src={logoUrl || "/images/logo.svg"} 
+    <img
+      src={logoUrl}
       alt={alt}
       className={`${className} transition-opacity duration-300`}
       style={{ width, height }}
       onError={(e) => {
-        // Only fallback if Sanity logo actually fails, not during loading
+        // Fallback to SVG if PNG fails
         const target = e.target as HTMLImageElement;
-        if (logoUrl && target.src !== "/images/logo.svg") {
+        if (target.src !== "/images/logo.svg") {
           target.src = "/images/logo.svg";
         }
       }}

@@ -33,6 +33,7 @@ import TermsOfService from "./pages/TermsOfService";
 import Sitemap from "./pages/Sitemap";
 import OfficialVerification from "./pages/OfficialVerification";
 import DeveloperModal from "./components/DeveloperModal";
+import Layout from "./components/Layout";
 
 const queryClient = new QueryClient();
 
@@ -77,32 +78,34 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/members" element={<Members />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/news/:slug" element={<NewsDetail />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/board" element={<Board />} />
-            <Route path="/financial" element={<Financial />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/community" element={<Community />} />
-            <Route path="/map-test" element={<MapTest />} />
-            <Route path="/admin/board" element={<BoardAdmin />} />
-            <Route path="/board-dynamic" element={<DynamicBoard />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="/sitemap" element={<Sitemap />} />
-            <Route path="/verify" element={<OfficialVerification />} />
-            <Route path="*" element={<NotFound />} />
+            <Route element={<Layout />}>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/members" element={<Members />} />
+              <Route path="/news" element={<News />} />
+              <Route path="/news/:slug" element={<NewsDetail />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/board" element={<Board />} />
+              <Route path="/financial" element={<Financial />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/map-test" element={<MapTest />} />
+              <Route path="/admin/board" element={<BoardAdmin />} />
+              <Route path="/board-dynamic" element={<DynamicBoard />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/sitemap" element={<Sitemap />} />
+              <Route path="/verify" element={<OfficialVerification />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Routes>
-          
+
           {/* Show announcements after initial loading and when data is available */}
           {!isInitialLoading && !announcementsLoading && (
             <AnnouncementModal announcements={announcements} />
           )}
-          
+
           {/* Developer easter egg modal */}
           <DeveloperModal />
         </BrowserRouter>

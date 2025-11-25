@@ -22,13 +22,13 @@ export const urlFor = (source: any) => {
 // Helper function to get file URL from Sanity asset reference
 export const getFileUrl = (asset: any) => {
   if (!asset || !asset._ref) return null
-  
+
   // Sanity file URLs follow this pattern:
   // https://cdn.sanity.io/files/{projectId}/{dataset}/{assetId}-{originalFilename}
   const assetId = asset._ref
   const [fileId, extension] = assetId.replace('file-', '').split('-')
   const url = `https://cdn.sanity.io/files/w4d9v3bc/production/${assetId.replace('file-', '')}`
-  
+
   // Validate URL before returning
   return validateFileUrl(url)
 }
@@ -36,10 +36,10 @@ export const getFileUrl = (asset: any) => {
 // Helper function to get image URL from Sanity asset reference
 export const getImageUrl = (photoObject: any) => {
   if (!photoObject) return null
-  
+
   try {
     let url: string | null = null;
-    
+
     // Handle expanded asset object (from asset-> query)  
     if (photoObject.asset && photoObject.asset.url) {
       url = photoObject.asset.url;
@@ -63,7 +63,7 @@ export const getImageUrl = (photoObject: any) => {
       console.warn('Malformed image object without asset reference:', photoObject);
       return null;
     }
-    
+
     // Validate URL before returning to prevent malicious URLs
     return validateImageUrl(url);
   } catch (error) {
@@ -506,20 +506,6 @@ export const queries = {
         metadata {
           dimensions {
             width,
-            height
-          }
-        }
-      }
-    },
-    memberCount,
-    memberCountSuffix,
-    memberCountNepali,
-    lastUpdated
-  }`,
-
-  // Hero Section (singleton)
-  heroSection: `*[_type == "heroSection"][0] {
-    _id,
     heroImages[] {
       image {
         asset-> {

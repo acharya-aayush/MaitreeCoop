@@ -1,10 +1,11 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from 'sanity'
+import { BulkImageInput } from '../components/BulkImageInput'
 
 export const gallery = defineType({
   name: 'gallery',
   title: 'Photo Gallery',
   type: 'document',
-  
+
   fields: [
     defineField({
       name: 'title',
@@ -12,14 +13,14 @@ export const gallery = defineType({
       type: 'string',
       validation: Rule => Rule.required().max(80).error('Title is required and should be under 80 characters')
     }),
-    
+
     defineField({
       name: 'titleNepali',
       title: 'Title in Nepali',
       type: 'string',
       description: 'ग्यालरीको शीर्षक नेपालीमा'
     }),
-    
+
     defineField({
       name: 'slug',
       title: 'URL Slug',
@@ -31,7 +32,7 @@ export const gallery = defineType({
       },
       validation: Rule => Rule.required().error('Slug is required for the URL')
     }),
-    
+
     defineField({
       name: 'description',
       title: 'Description',
@@ -39,33 +40,33 @@ export const gallery = defineType({
       description: 'Brief description of this gallery',
       validation: Rule => Rule.max(300).error('Keep description under 300 characters')
     }),
-    
+
     defineField({
       name: 'descriptionNepali',
       title: 'Description in Nepali',
       type: 'text',
       description: 'ग्यालरीको विवरण नेपालीमा'
     }),
-    
+
     defineField({
       name: 'category',
       title: 'Category',
       type: 'string',
       options: {
         list: [
-          {title: 'Events & Ceremonies', value: 'events'},
-          {title: 'Community Activities', value: 'community'},
-          {title: 'Office & Infrastructure', value: 'office'},
-          {title: 'Member Activities', value: 'members'},
-          {title: 'Training & Workshops', value: 'training'},
-          {title: 'Achievements & Awards', value: 'achievements'},
-          {title: 'Cultural Programs', value: 'cultural'},
-          {title: 'General', value: 'general'}
+          { title: 'Events & Ceremonies', value: 'events' },
+          { title: 'Community Activities', value: 'community' },
+          { title: 'Office & Infrastructure', value: 'office' },
+          { title: 'Member Activities', value: 'members' },
+          { title: 'Training & Workshops', value: 'training' },
+          { title: 'Achievements & Awards', value: 'achievements' },
+          { title: 'Cultural Programs', value: 'cultural' },
+          { title: 'General', value: 'general' }
         ]
       },
       validation: Rule => Rule.required()
     }),
-    
+
     defineField({
       name: 'coverImage',
       title: 'Cover Image',
@@ -83,11 +84,14 @@ export const gallery = defineType({
       ],
       validation: Rule => Rule.required().error('Cover image is required')
     }),
-    
+
     defineField({
       name: 'images',
       title: 'Gallery Images',
       type: 'array',
+      components: {
+        input: BulkImageInput
+      },
       of: [
         {
           type: 'image',
@@ -118,7 +122,7 @@ export const gallery = defineType({
       ],
       validation: Rule => Rule.min(1).error('At least one image is required')
     }),
-    
+
     defineField({
       name: 'date',
       title: 'Gallery Date',
@@ -126,39 +130,39 @@ export const gallery = defineType({
       description: 'When were these photos taken?',
       initialValue: () => new Date().toISOString().split('T')[0]
     }),
-    
+
     defineField({
       name: 'location',
       title: 'Location',
       type: 'string',
       description: 'Where were these photos taken?'
     }),
-    
+
     defineField({
       name: 'locationNepali',
       title: 'Location in Nepali',
       type: 'string',
       description: 'स्थान नेपालीमा'
     }),
-    
+
     defineField({
       name: 'photographer',
       title: 'Photographer',
       type: 'string',
       description: 'Credit for the photographer'
     }),
-    
+
     defineField({
       name: 'tags',
       title: 'Tags',
       type: 'array',
-      of: [{type: 'string'}],
+      of: [{ type: 'string' }],
       options: {
         layout: 'tags'
       },
       description: 'Tags to help organize and search galleries'
     }),
-    
+
     defineField({
       name: 'isFeatured',
       title: 'Featured Gallery',
@@ -166,7 +170,7 @@ export const gallery = defineType({
       description: 'Featured galleries appear prominently on the gallery page',
       initialValue: false
     }),
-    
+
     defineField({
       name: 'isPublished',
       title: 'Published',
@@ -174,14 +178,14 @@ export const gallery = defineType({
       description: 'Only published galleries appear on the website',
       initialValue: true
     }),
-    
+
     defineField({
       name: 'publishedAt',
       title: 'Published At',
       type: 'datetime',
       initialValue: () => new Date().toISOString()
     }),
-    
+
     defineField({
       name: 'viewOrder',
       title: 'Display Order',
@@ -190,7 +194,7 @@ export const gallery = defineType({
       initialValue: 100
     })
   ],
-  
+
   preview: {
     select: {
       title: 'title',
@@ -198,7 +202,7 @@ export const gallery = defineType({
       media: 'coverImage'
     },
     prepare(selection) {
-      const {title, subtitle, media} = selection
+      const { title, subtitle, media } = selection
       return {
         title: title,
         subtitle: `${subtitle} Gallery`,
@@ -206,30 +210,30 @@ export const gallery = defineType({
       }
     }
   },
-  
+
   orderings: [
     {
       title: 'Newest First',
       name: 'publishedDesc',
       by: [
-        {field: 'publishedAt', direction: 'desc'}
+        { field: 'publishedAt', direction: 'desc' }
       ]
     },
     {
       title: 'Featured First',
       name: 'featuredFirst',
       by: [
-        {field: 'isFeatured', direction: 'desc'},
-        {field: 'viewOrder', direction: 'asc'},
-        {field: 'publishedAt', direction: 'desc'}
+        { field: 'isFeatured', direction: 'desc' },
+        { field: 'viewOrder', direction: 'asc' },
+        { field: 'publishedAt', direction: 'desc' }
       ]
     },
     {
       title: 'By Category',
       name: 'categoryAsc',
       by: [
-        {field: 'category', direction: 'asc'},
-        {field: 'publishedAt', direction: 'desc'}
+        { field: 'category', direction: 'asc' },
+        { field: 'publishedAt', direction: 'desc' }
       ]
     }
   ]

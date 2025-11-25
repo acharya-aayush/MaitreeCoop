@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { BulkMediaInput } from '../components/BulkMediaInput'
 
 export default defineType({
   name: 'galleryItem',
@@ -14,14 +15,14 @@ export default defineType({
       description: 'Title for this gallery item',
       validation: Rule => Rule.required().min(3).max(100).error('Title must be between 3-100 characters')
     }),
-    
+
     defineField({
       name: 'titleNepali',
       title: 'Title (Nepali)',
       type: 'string',
       description: 'Title in Nepali language'
     }),
-    
+
     defineField({
       name: 'description',
       title: 'Description',
@@ -30,7 +31,7 @@ export default defineType({
       rows: 3,
       validation: Rule => Rule.max(500).error('Description should not exceed 500 characters')
     }),
-    
+
     defineField({
       name: 'descriptionNepali',
       title: 'Description (Nepali)',
@@ -38,12 +39,15 @@ export default defineType({
       description: 'Description in Nepali language',
       rows: 3
     }),
-    
+
     // Media Items (Multiple Images/Videos for Events)
     defineField({
       name: 'mediaItems',
       title: 'Event Photos & Videos',
       type: 'array',
+      components: {
+        input: BulkMediaInput
+      },
       description: 'Upload multiple photos and videos for this event/gallery item',
       of: [
         {
@@ -64,7 +68,7 @@ export default defineType({
               validation: Rule => Rule.required(),
               initialValue: 'image'
             }),
-            
+
             // Image Field
             defineField({
               name: 'image',
@@ -90,7 +94,7 @@ export default defineType({
                 return true
               })
             }),
-            
+
             // Video Field
             defineField({
               name: 'video',
@@ -108,7 +112,7 @@ export default defineType({
                 return true
               })
             }),
-            
+
             // Video Thumbnail
             defineField({
               name: 'videoThumbnail',
@@ -119,7 +123,7 @@ export default defineType({
               },
               hidden: ({ parent }) => parent?.mediaType !== 'video'
             }),
-            
+
             // Video URL
             defineField({
               name: 'videoUrl',
@@ -128,7 +132,7 @@ export default defineType({
               description: 'YouTube or external video URL instead of file upload',
               hidden: ({ parent }) => parent?.mediaType !== 'video'
             }),
-            
+
             // Individual Media Caption
             defineField({
               name: 'caption',
@@ -136,7 +140,7 @@ export default defineType({
               type: 'string',
               description: 'Caption for this specific photo/video'
             }),
-            
+
             // Display Order within the event
             defineField({
               name: 'order',
@@ -159,7 +163,7 @@ export default defineType({
               const { mediaType, image, videoThumbnail, caption, order } = selection
               const media = mediaType === 'video' ? (videoThumbnail || image) : image
               const typeIcon = mediaType === 'video' ? '🎥' : '📷'
-              
+
               return {
                 title: `${typeIcon} ${caption || 'Media Item'} (${order})`,
                 subtitle: mediaType,
@@ -171,7 +175,7 @@ export default defineType({
       ],
       validation: Rule => Rule.min(1).error('At least one photo or video is required for the event')
     }),
-    
+
     // Category/Tags
     defineField({
       name: 'category',
@@ -191,7 +195,7 @@ export default defineType({
       },
       initialValue: 'events'
     }),
-    
+
     defineField({
       name: 'tags',
       title: 'Tags',
@@ -202,7 +206,7 @@ export default defineType({
         layout: 'tags'
       }
     }),
-    
+
     // Date and Location
     defineField({
       name: 'dateTaken',
@@ -210,21 +214,21 @@ export default defineType({
       type: 'date',
       description: 'When was this photo/video taken?'
     }),
-    
+
     defineField({
       name: 'location',
       title: 'Location',
       type: 'string',
       description: 'Where was this photo/video taken?'
     }),
-    
+
     defineField({
       name: 'locationNepali',
       title: 'Location (Nepali)',
       type: 'string',
       description: 'Location in Nepali language'
     }),
-    
+
     // Publication Settings
     defineField({
       name: 'isPublished',
@@ -233,7 +237,7 @@ export default defineType({
       description: 'Should this item be visible in the gallery?',
       initialValue: true
     }),
-    
+
     defineField({
       name: 'isFeatured',
       title: 'Featured Item',
@@ -241,7 +245,7 @@ export default defineType({
       description: 'Mark as featured to highlight in gallery',
       initialValue: false
     }),
-    
+
     defineField({
       name: 'displayOrder',
       title: 'Display Order',
@@ -250,7 +254,7 @@ export default defineType({
       validation: Rule => Rule.min(1),
       initialValue: 1
     }),
-    
+
     // Link to News (optional)
     defineField({
       name: 'relatedNews',
@@ -259,7 +263,7 @@ export default defineType({
       to: [{ type: 'news' }],
       description: 'Link this gallery item to a news article if applicable'
     }),
-    
+
     // Admin Fields
     defineField({
       name: 'uploadedBy',
@@ -267,7 +271,7 @@ export default defineType({
       type: 'string',
       description: 'Who uploaded this item?'
     }),
-    
+
     defineField({
       name: 'notes',
       title: 'Admin Notes',
@@ -276,7 +280,7 @@ export default defineType({
       rows: 2
     })
   ],
-  
+
   preview: {
     select: {
       title: 'title',
@@ -289,11 +293,11 @@ export default defineType({
     },
     prepare(selection) {
       const { title, mediaType, image, videoThumbnail, category, isPublished, isFeatured } = selection
-      
+
       const media = mediaType === 'video' ? (videoThumbnail || image) : image
       const typeIcon = mediaType === 'video' ? '🎥' : '📷'
       const status = !isPublished ? ' (Draft)' : isFeatured ? ' (Featured)' : ''
-      
+
       return {
         title: `${typeIcon} ${title}${status}`,
         subtitle: `${category} - ${mediaType}`,
@@ -301,7 +305,7 @@ export default defineType({
       }
     }
   },
-  
+
   orderings: [
     {
       title: 'Display Order',

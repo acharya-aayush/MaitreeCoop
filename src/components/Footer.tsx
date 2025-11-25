@@ -18,8 +18,8 @@ const Footer = () => {
               {t('footer.description')}
             </p>
             <div className="flex space-x-4 pt-2">
-              <a 
-                href="https://www.facebook.com/maitri.bahu.uddesyiya.sahakari.sanstha" 
+              <a
+                href="https://www.facebook.com/maitri.bahu.uddesyiya.sahakari.sanstha"
                 aria-label="Facebook"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -29,7 +29,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          
+
           {/* Quick Links */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">{t('footer.quickLinks')}</h3>
@@ -59,14 +59,9 @@ const Footer = () => {
                   {t('footer.community')}
                 </Link>
               </li>
-              <li>
-                <Link to="/verify" className="text-sm text-green-600 hover:text-green-700 font-semibold transition-colors duration-300">
-                  ✓ {t('footer.verify') || 'Official Website Verification'}
-                </Link>
-              </li>
             </ul>
           </div>
-          
+
           {/* Services */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">{t('footer.ourServices')}</h3>
@@ -93,7 +88,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
+
           {/* Contact Info */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">{t('footer.contactUs')}</h3>
@@ -116,10 +111,19 @@ const Footer = () => {
                   079-520678
                 </a>
               </li>
+              <li className="flex items-start pt-2">
+                <MapPin size={18} className="text-green-600 mt-0.5 mr-2 flex-shrink-0" />
+                <div className="text-sm">
+                  <p className="font-medium text-green-700 mb-1">Service Area</p>
+                  <p className="text-gray-600 text-xs leading-relaxed">
+                    Gulmi, Palpa, Arghakhanchi, Rupandehi, Kapilvastu, West Nawalparasi
+                  </p>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
-        
+
         <div className="border-t border-gray-200 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-gray-500">

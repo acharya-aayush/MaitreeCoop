@@ -27,19 +27,19 @@ export const useHomepageSettings = () => {
         if (isInitialLoad) {
           setLoading(true);
         }
-        
+
         const data = await client.fetch(queries.homepageSettings);
-        
+
         if (data) {
           setSettings(data);
           cachedSettings = data;
-          
+
           // Preload the logo image to prevent flashing
           if (data.logo) {
             const logoUrl = getImageUrl(data.logo);
             if (logoUrl && logoUrl !== cachedLogoUrl) {
               cachedLogoUrl = logoUrl;
-              
+
               // Preload the image
               const img = new Image();
               img.onload = () => {
@@ -65,7 +65,7 @@ export const useHomepageSettings = () => {
           setLoading(false);
           isInitialLoad = false;
         }
-        
+
         setError(null);
       } catch (err) {
         console.error('Error fetching homepage settings:', err);
@@ -86,4 +86,38 @@ export const useHomepageSettings = () => {
     loading,
     error
   };
+};
+
+export const useLogo = () => {
+  const [logoUrl, setLogoUrl] = useState<string | null>(cachedLogoUrl);
+  const [loading, setLoading] = useState(!cachedLogoUrl);
+
+  useEffect(() => {
+    if (cachedLogoUrl) {
+      setLogoUrl(cachedLogoUrl);
+      setLoading(false);
+      return;
+    }
+
+    const fetchLogo = async () => {
+      try {
+        const data = await client.fetch(queries.homepageLogo);
+        if (data?.logo) {
+          const url = getImageUrl(data.logo);
+          if (url) {
+            cachedLogoUrl = url;
+            setLogoUrl(url);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching logo:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLogo();
+  }, []);
+
+  return { logoUrl, loading };
 };
