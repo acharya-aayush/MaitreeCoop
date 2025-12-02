@@ -5,6 +5,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+.pnp
+.pnp.js
 
 # Build outputs
 dist/
@@ -12,14 +14,26 @@ dist-ssr/
 build/
 .next/
 out/
+*.tsbuildinfo
 
-# Environment files
+# Environment files - NEVER commit these!
 .env
 .env.local
+.env.development
 .env.development.local
+.env.test
 .env.test.local
+.env.production
 .env.production.local
 *.local
+
+# API Keys and Secrets
+*.pem
+*.key
+*.cert
+*.p12
+secrets/
+credentials/
 
 # Logs
 logs/
@@ -34,45 +48,93 @@ pids/
 # Coverage directory used by tools like istanbul
 coverage/
 *.lcov
+.nyc_output/
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+!.vscode/launch.json
 .idea/
-.DS_Store
+*.sublime-project
+*.sublime-workspace
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*.swp
+*.swo
+*~
 
 # Deployment
 .vercel/
 .netlify/
+.serverless/
 
 # Development files
 *.test.*
 *.spec.*
 test-results/
-coverage/
+playwright-report/
+playwright/.cache/
 
 # Temporary files
 *.tmp
 *.temp
 .cache/
+.parcel-cache/
+.turbo/
 
 # OS generated files
-Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
 ehthumbs.db
+Thumbs.db
+desktop.ini
 
 # Sanity
 maitreecoop/dist/
 maitreecoop/.sanity/
+maitreecoop/node_modules/
 
-# Lock files (keep only one)
-# Uncomment the one you're NOT using
-# package-lock.json
+# Debug files
+debug.log
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Vite
+*.local
+
+# Lock files (keep only one - using package-lock.json)
 # yarn.lock
 # pnpm-lock.yaml
-.vercel
+bun.lockb
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Sensitive data
+*.sql
+*.sqlite
+*.db
+data/
+backups/
