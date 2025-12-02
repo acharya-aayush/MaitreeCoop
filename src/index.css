@@ -114,15 +114,27 @@
   .image-fade-in.loaded {
     @apply opacity-100;
   }
+
+  /* Hide scrollbar but maintain scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
 }
 
-/* Header animation */
+/* Header animation - softer, friendlier navbar */
 .navbar-fixed {
-  @apply fixed w-full backdrop-blur-lg bg-white/80 shadow-sm transition-all duration-300 border-0;
+  @apply fixed w-full backdrop-blur-xl bg-white/85 shadow-sm transition-all duration-300 border-0;
+  border-bottom: 1px solid rgba(22, 163, 74, 0.08);
 }
 
 .navbar-scrolled {
-  @apply shadow-md bg-white/90;
+  @apply shadow-lg bg-white/95;
+  border-bottom: 1px solid rgba(22, 163, 74, 0.12);
 }
 
 /* Desktop navbar - always account for ContactBar */

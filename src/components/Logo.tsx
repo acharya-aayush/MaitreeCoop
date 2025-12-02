@@ -9,9 +9,7 @@ interface LogoProps {
 }
 
 export const Logo: React.FC<LogoProps> = ({
-  className = "h-[105px] w-[506.88px] object-contain",
-  width = "506.88px",
-  height = "105px",
+  className = "h-[84px] md:h-[96px] w-auto object-contain",
   alt = "Maitree Cooperative Logo"
 }) => {
   // Always use the local hardcoded logo
@@ -22,7 +20,6 @@ export const Logo: React.FC<LogoProps> = ({
       src={logoUrl}
       alt={alt}
       className={`${className} transition-opacity duration-300`}
-      style={{ width, height }}
       onError={(e) => {
         // Fallback to SVG if PNG fails
         const target = e.target as HTMLImageElement;

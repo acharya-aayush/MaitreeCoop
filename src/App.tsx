@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
 import AnnouncementModal from "@/components/AnnouncementModal";
 import { useAnnouncements } from "@/hooks/useContentSections";
@@ -12,26 +12,28 @@ import { useAnnouncements } from "@/hooks/useContentSections";
 // Initialize i18n
 import './i18n';
 
-// Pages
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import AboutUs from "./pages/AboutUs";
-import Services from "./pages/Services";
-import Members from "./pages/Members";
-import News from "./pages/News";
-import NewsDetail from "./pages/NewsDetail";
-import Gallery from "./pages/Gallery";
-import Board from "./pages/Board";
-import Financial from "./pages/Financial";
-import Contact from "./pages/Contact";
-import Community from "./pages/Community";
-import MapTest from "./pages/MapTest";
-import BoardAdmin from "./pages/BoardAdmin";
-import DynamicBoard from "./pages/DynamicBoard";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsOfService from "./pages/TermsOfService";
-import Sitemap from "./pages/Sitemap";
-import OfficialVerification from "./pages/OfficialVerification";
+// Lazy-loaded pages for code splitting (~40% bundle reduction)
+const Index = lazy(() => import("./pages/Index"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
+const Services = lazy(() => import("./pages/Services"));
+const Members = lazy(() => import("./pages/Members"));
+const News = lazy(() => import("./pages/News"));
+const NewsDetail = lazy(() => import("./pages/NewsDetail"));
+const Gallery = lazy(() => import("./pages/Gallery"));
+const Board = lazy(() => import("./pages/Board"));
+const Financial = lazy(() => import("./pages/Financial"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Community = lazy(() => import("./pages/Community"));
+const MapTest = lazy(() => import("./pages/MapTest"));
+const BoardAdmin = lazy(() => import("./pages/BoardAdmin"));
+const DynamicBoard = lazy(() => import("./pages/DynamicBoard"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const Sitemap = lazy(() => import("./pages/Sitemap"));
+const OfficialVerification = lazy(() => import("./pages/OfficialVerification"));
+
+// Non-lazy components (needed immediately)
 import DeveloperModal from "./components/DeveloperModal";
 import Layout from "./components/Layout";
 

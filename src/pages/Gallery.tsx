@@ -1,9 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { X, ZoomIn, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import ContactBar from "../components/ContactBar";
 import { client as sanityClient, queries, getFileUrl } from "../lib/sanity";
 
 interface MediaItem {
@@ -69,6 +66,11 @@ const Gallery = () => {
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // Touch/swipe gesture state
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+  const minSwipeDistance = 50;
 
   useEffect(() => {
     const fetchGalleryItems = async () => {
@@ -153,6 +155,34 @@ const Gallery = () => {
     }
   };
 
+  // Touch handlers for swipe gestures
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = null;
+    touchStartX.current = e.targetTouches[0].clientX;
+  }, []);
+
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  }, []);
+
+  const onTouchEnd = useCallback(() => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    
+    const distance = touchStartX.current - touchEndX.current;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      goToNext();
+    } else if (isRightSwipe) {
+      goToPrevious();
+    }
+    
+    // Reset
+    touchStartX.current = null;
+    touchEndX.current = null;
+  }, [selectedItem?.mediaItems?.length]);
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -164,8 +194,6 @@ const Gallery = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <ContactBar />
-        <Navbar />
         <div className="text-center pt-32">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading gallery...</p>
@@ -175,12 +203,8 @@ const Gallery = () => {
   }
 
   return (
-    <>
-      <div className="min-h-screen bg-gray-50">
-        <ContactBar />
-        <Navbar />
-        
-        <div className="pt-28"> {/* Increased padding to account for fixed navbar and contact bar */}
+    <div className="min-h-screen bg-gray-50">
+      <div className="pt-28"> {/* Increased padding to account for fixed navbar and contact bar */}
           {/* Hero Section */}
           <div className="bg-gradient-to-r from-green-700 to-green-800 text-white py-12">
             <div className="container mx-auto px-4">
@@ -195,17 +219,20 @@ const Gallery = () => {
           {/* Gallery Content */}
           <div className="container mx-auto px-4 py-12">
             <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
-              <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 mb-8">
-                {categories.map((category) => (
-                  <TabsTrigger 
-                    key={category} 
-                    value={category}
-                    className="text-sm"
-                  >
-                    {getCategoryDisplayName(category)}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
+              {/* Mobile: horizontal scroll, Desktop: grid */}
+              <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 mb-8">
+                <TabsList className="inline-flex w-max md:grid md:w-full md:grid-cols-6 gap-1 p-1">
+                  {categories.map((category) => (
+                    <TabsTrigger 
+                      key={category} 
+                      value={category}
+                      className="min-h-[44px] min-w-[44px] px-4 text-sm whitespace-nowrap"
+                    >
+                      {getCategoryDisplayName(category)}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </div>
 
               {categories.map((category) => (
                 <TabsContent key={category} value={category}>
@@ -343,11 +370,17 @@ const Gallery = () => {
 
         {/* Lightbox */}
         {lightboxOpen && selectedItem && (
-          <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
             {/* Close Button */}
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors duration-200 z-10"
+              className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors duration-200 z-10 min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label="Close lightbox"
             >
               <X className="w-8 h-8" />
             </button>
@@ -363,16 +396,22 @@ const Gallery = () => {
                     <>
                       <button
                         onClick={goToPrevious}
-                        className="absolute left-4 text-white hover:text-gray-300 transition-colors duration-200 z-10"
+                        className="absolute left-4 text-white hover:text-gray-300 transition-colors duration-200 z-10 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                        aria-label="Previous image"
                       >
                         <ArrowLeft className="w-8 h-8" />
                       </button>
                       <button
                         onClick={goToNext}
-                        className="absolute right-4 text-white hover:text-gray-300 transition-colors duration-200 z-10"
+                        className="absolute right-4 text-white hover:text-gray-300 transition-colors duration-200 z-10 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                        aria-label="Next image"
                       >
                         <ArrowRight className="w-8 h-8" />
                       </button>
+                      {/* Swipe hint for mobile */}
+                      <div className="absolute bottom-20 left-0 right-0 text-center text-white/50 text-xs md:hidden">
+                        Swipe to navigate
+                      </div>
                     </>
                   )}
 
@@ -466,10 +505,7 @@ const Gallery = () => {
             })()}
           </div>
         )}
-      </div>
-
-      <Footer />
-    </>
+    </div>
   );
 };
 

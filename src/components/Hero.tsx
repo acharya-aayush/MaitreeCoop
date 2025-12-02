@@ -67,11 +67,18 @@ const Hero = () => {
             isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
           )}>
             <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl bg-white p-2">
-              <div className="w-full h-full rounded-xl relative overflow-hidden">
+              <div className="w-full h-full rounded-xl relative overflow-hidden bg-gradient-to-br from-green-100 to-green-50">
                 <img 
                   src="/images/home/main.jpg" 
                   alt="Maitree Cooperative" 
                   className="w-full h-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                  onError={(e) => {
+                    // Hide broken image and show gradient background
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
@@ -85,8 +92,8 @@ const Hero = () => {
               </div>
             </div>
             
-            {/* Floating Elements */}
-            <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-white rounded-2xl shadow-lg p-4 glass-card animate-fade-up" style={{ animationDelay: '0.6s' }}>
+            {/* Floating Elements - positioned to avoid text overlap */}
+            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 md:left-auto md:right-4 md:translate-x-0 w-32 h-32 bg-white rounded-2xl shadow-lg p-4 glass-card animate-fade-up z-10" style={{ animationDelay: '0.6s' }}>
               <div className="h-full flex flex-col justify-center">
                 <p className="text-xs text-gray-500 mb-1">
                   {i18n.language === 'ne' && settings?.memberCountNepali 

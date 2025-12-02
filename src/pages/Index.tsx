@@ -1,17 +1,15 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Mail, Phone, MapPin, Calendar, FileText, Users, Info } from 'lucide-react';
+import { ArrowRight, Mail, Phone, MapPin, Calendar, FileText, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import Hero from '@/components/Hero';
 import ServiceCard from '@/components/ServiceCard';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import GoogleMap from '@/components/GoogleMap';
-import ContactBar from '@/components/ContactBar';
+import OptimizedImage from '@/components/OptimizedImage';
 import { useIntroductionSection } from '@/hooks/useContentSections';
-import { getImageUrl, client as sanityClient, queries } from '@/lib/sanity';
+import { getOptimizedImageUrl, client as sanityClient, queries } from '@/lib/sanity';
 
 interface NewsArticle {
   _id: string;
@@ -111,10 +109,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      <ContactBar />
-      <Navbar />
-      
+    <>
       {/* Official Website Verification Banner */}
       <div className="bg-green-600 text-white py-2 px-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
@@ -166,13 +161,14 @@ const Index = () => {
                 )}
               >
                 {introSection.sectionImage ? (
-                  <div className="aspect-[4/3] rounded-2xl overflow-hidden">
-                    <img
-                      src={getImageUrl(introSection.sectionImage) || ''}
-                      alt={i18n.language === 'ne' && introSection.headingNepali ? introSection.headingNepali : introSection.heading}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                  <OptimizedImage
+                    image={introSection.sectionImage}
+                    alt={i18n.language === 'ne' && introSection.headingNepali ? introSection.headingNepali : introSection.heading}
+                    preset="large"
+                    className="aspect-[4/3] rounded-2xl"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    placeholder="blur"
+                  />
                 ) : (
                   <div className="aspect-[4/3] bg-gradient-to-tr from-green-100 to-white rounded-2xl flex items-center justify-center p-8">
                     {introSection.foundingVision ? (
@@ -357,6 +353,20 @@ const Index = () => {
                 </svg>
               }
               linkTo="/services#agricultural-support"
+              delay={500}
+            />
+            
+            <ServiceCard
+              title="Maitree Yatayat"
+              description="Eco-friendly electric vehicle transportation service with comfortable seating, free WiFi, and special discounts for members."
+              icon={
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                </svg>
+              }
+              linkTo="/services#transport"
+              delay={600}
+            />
               delay={500}
             />
           </div>
@@ -625,9 +635,7 @@ const Index = () => {
           </div>
         </div>
       </section>
-      
-      <Footer />
-    </div>
+    </>
   );
 };
 

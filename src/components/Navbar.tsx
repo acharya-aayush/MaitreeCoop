@@ -102,14 +102,16 @@ const Navbar: React.FC<NavbarProps> = ({ logoUrl }) => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-6 lg:space-x-8">
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
                 className={cn(
-                  "text-sm font-medium transition-colors duration-300 hover:text-primary whitespace-nowrap",
-                  location.pathname === link.path ? "text-primary" : "text-foreground/80"
+                  "text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:text-primary whitespace-nowrap",
+                  location.pathname === link.path 
+                    ? "text-primary font-semibold" 
+                    : "text-foreground/70"
                 )}
               >
                 {link.name}

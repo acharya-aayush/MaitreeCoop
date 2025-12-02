@@ -15,9 +15,6 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import ContactBar from '@/components/ContactBar';
 
 const ServiceCard = ({ icon, title, description }) => (
   <div className="glass-card p-6 rounded-xl hover-card">
@@ -34,9 +31,6 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <ContactBar />
-      <Navbar />
-      
       <div className="page-header text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h1 className="text-4xl md:text-5xl font-bold">{t('services.title')}</h1>
@@ -101,13 +95,16 @@ const Services = () => {
           <div className="mt-16">
             <Tabs defaultValue="savings" className="w-full">
               <div className="flex justify-center mb-8">
-                <TabsList className="bg-green-50">
-                  <TabsTrigger value="savings">{t('services.tabs.savings')}</TabsTrigger>
-                  <TabsTrigger value="loans">{t('services.tabs.loans')}</TabsTrigger>
-                  <TabsTrigger value="store">{t('services.tabs.store')}</TabsTrigger>
-                  <TabsTrigger value="mobile">{t('services.tabs.mobile')}</TabsTrigger>
-                  <TabsTrigger value="transport">{t('services.tabs.transport')}</TabsTrigger>
-                </TabsList>
+                {/* Mobile: horizontal scroll, Desktop: inline */}
+                <div className="w-full overflow-x-auto scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 md:w-auto">
+                  <TabsList className="bg-green-50 inline-flex w-max md:w-auto gap-1 p-1">
+                    <TabsTrigger value="savings" className="min-h-[44px] min-w-[44px] px-4 text-sm whitespace-nowrap">{t('services.tabs.savings')}</TabsTrigger>
+                    <TabsTrigger value="loans" className="min-h-[44px] min-w-[44px] px-4 text-sm whitespace-nowrap">{t('services.tabs.loans')}</TabsTrigger>
+                    <TabsTrigger value="store" className="min-h-[44px] min-w-[44px] px-4 text-sm whitespace-nowrap">{t('services.tabs.store')}</TabsTrigger>
+                    <TabsTrigger value="mobile" className="min-h-[44px] min-w-[44px] px-4 text-sm whitespace-nowrap">{t('services.tabs.mobile')}</TabsTrigger>
+                    <TabsTrigger value="transport" className="min-h-[44px] min-w-[44px] px-4 text-sm whitespace-nowrap">{t('services.tabs.transport')}</TabsTrigger>
+                  </TabsList>
+                </div>
               </div>
               
               <TabsContent value="savings" className="mt-6">
@@ -461,8 +458,6 @@ const Services = () => {
           </div>
         </div>
       </section>
-      
-      <Footer />
     </div>
   );
 };
