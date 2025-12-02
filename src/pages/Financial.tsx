@@ -474,19 +474,18 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
       )}
 
       {/* Cover Image */}
-      {document.coverImage?.asset?.url && (
-        <div className="mb-4">
-          <img 
-            src={document.coverImage.asset.url}
-            alt={isNepali ? document.titleNepali : document.title}
-            className="w-full h-32 object-cover rounded-lg border border-gray-200"
-            onError={(e) => {
-              // Hide image if it fails to load
-              (e.target as HTMLImageElement).style.display = 'none';
-            }}
-          />
-        </div>
-      )}
+      <div className="mb-4">
+        <img 
+          src={document.coverImage?.asset?.url || "/images/logo1.png"}
+          alt={isNepali ? document.titleNepali : document.title}
+          className={`w-full h-32 rounded-lg border border-gray-200 ${document.coverImage?.asset?.url ? 'object-cover' : 'object-contain bg-green-50 p-4'}`}
+          onError={(e) => {
+            // Use logo1.png as fallback if image fails to load
+            (e.target as HTMLImageElement).src = '/images/logo1.png';
+            (e.target as HTMLImageElement).className = 'w-full h-32 object-contain bg-green-50 p-4 rounded-lg border border-gray-200';
+          }}
+        />
+      </div>
       
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center">

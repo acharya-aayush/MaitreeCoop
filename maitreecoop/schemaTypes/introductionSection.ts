@@ -60,7 +60,7 @@ export default defineType({
       description: 'Main introduction text content (English)',
       validation: Rule => Rule.required().min(50).error('Introduction content must be at least 50 characters'),
       rows: 8,
-      initialValue: 'The Maitri Multipurpose Cooperative Society was founded on September 12, 2000 (Bhadra 27, 2057 BS) under the leadership of the late Bom Bahadur Khadka by a group of young, business-minded locals. Our founding mission was to promote cooperative values through agricultural production, processing, and marketing, professionalize animal husbandry, create self-employment opportunities, build social capital through member unity, improve livelihoods with savings and subsidized loans, and advance the local cooperative movement.'
+      initialValue: 'The Maitree Multipurpose Cooperative Society was founded on September 12, 2000 (Bhadra 27, 2057 BS) under the leadership of the late Bom Bahadur Khadka by a group of young, business-minded locals. Our founding mission was to promote cooperative values through agricultural production, processing, and marketing, professionalize animal husbandry, create self-employment opportunities, build social capital through member unity, improve livelihoods with savings and subsidized loans, and advance the local cooperative movement.'
     }),
     
     defineField({

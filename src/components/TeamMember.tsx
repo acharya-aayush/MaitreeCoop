@@ -80,12 +80,9 @@ const TeamMember: React.FC<TeamMemberProps> = ({
           "w-24 h-24 border-2 border-white shadow-md mb-4",
           featured && "w-28 h-28 md:w-32 md:h-32 border-green-200"
         )}>
-          <AvatarImage src={imageSrc} alt={name[language]} className="object-cover" />
-          <AvatarFallback className={cn(
-            "bg-green-100 text-green-700 text-xl font-semibold",
-            featured && "text-2xl"
-          )}>
-            {name[language].charAt(0)}
+          <AvatarImage src={imageSrc || "/images/logo1.png"} alt={name[language]} className="object-cover" />
+          <AvatarFallback className="bg-white">
+            <img src="/images/logo1.png" alt="Maitree Cooperative" className="w-full h-full object-contain p-2" />
           </AvatarFallback>
         </Avatar>
         

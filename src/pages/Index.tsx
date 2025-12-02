@@ -367,8 +367,6 @@ const Index = () => {
               linkTo="/services#transport"
               delay={600}
             />
-              delay={500}
-            />
           </div>
           
           <div className="text-center mt-12">

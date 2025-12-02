@@ -148,15 +148,12 @@ const PersonCard: React.FC<PersonCardProps> = ({
           featured && "w-28 h-28 md:w-36 md:h-36 border-green-200"
         )}>
           <AvatarImage 
-            src={photoUrl || "/images/logo.png"} 
+            src={photoUrl || "/images/logo1.png"} 
             alt={getDisplayName()} 
             className="object-cover"
           />
-          <AvatarFallback className={cn(
-            "bg-green-100 text-green-700 text-xl font-semibold",
-            featured && "text-2xl"
-          )}>
-            {getDisplayName().charAt(0)}
+          <AvatarFallback className="bg-white">
+            <img src="/images/logo1.png" alt="Maitree Cooperative" className="w-full h-full object-contain p-2" />
           </AvatarFallback>
         </Avatar>
       </CardHeader>

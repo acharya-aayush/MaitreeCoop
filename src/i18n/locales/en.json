@@ -136,7 +136,7 @@
     "foundingVision": "Our Founding Vision",
     "founderQuote": "To improve members' living standards and foster social capital through cooperation.",
     "founderName": "— Bom Bahadur Khadka, Founder",
-    "description": "The Maitri Multipurpose Cooperative Society was founded on September 12, 2000 (Bhadra 27, 2057 BS) under the leadership of the late Bom Bahadur Khadka by a group of young, business-minded locals. Our founding mission was to promote cooperative values through agricultural production, processing, and marketing, professionalize animal husbandry, create self-employment opportunities, build social capital through member unity, improve livelihoods with savings and subsidized loans, and advance the local cooperative movement.\n\nThe cooperative was officially registered on October 17, 2001 (Kartik 1, 2058 BS), with 33 founding members and NPR 13,200 in share capital. Initially, our service area covered five VDCs: Tamghas, Arkhale Simichaur, Nayagaun, and Jaisithok. Since inception, we have successfully operated comprehensive savings and loan programs, published the 'Laghuvitta Maitri Sandesh' newsletter, managed a dairy business and fair-price shop, and now even support an electric vehicle operation.\n\nOur growth has been remarkable and consistent. In 2007, our working area expanded to 17 VDCs, then to 75 VDCs of Gulmi and 4 of Arghakhanchi in 2015. Finally, in 2020, our scope expanded to cover all six districts of the former Lumbini Zone: Gulmi, Palpa, Arghakhanchi, Kapilbastu, Rupandehi, and Nawalparasi. Today, we operate with our Head Office in Tamghas and service centers in seven other strategic locations, proudly serving 13,836 share members.",
+    "description": "The Maitree Multipurpose Cooperative Society was founded on September 12, 2000 (Bhadra 27, 2057 BS) under the leadership of the late Bom Bahadur Khadka by a group of young, business-minded locals. Our founding mission was to promote cooperative values through agricultural production, processing, and marketing, professionalize animal husbandry, create self-employment opportunities, build social capital through member unity, improve livelihoods with savings and subsidized loans, and advance the local cooperative movement.\n\nThe cooperative was officially registered on October 17, 2001 (Kartik 1, 2058 BS), with 33 founding members and NPR 13,200 in share capital. Initially, our service area covered five VDCs: Tamghas, Arkhale Simichaur, Nayagaun, and Jaisithok. Since inception, we have successfully operated comprehensive savings and loan programs, published the 'Laghuvitta Maitree Sandesh' newsletter, managed a dairy business and fair-price shop, and now even support an electric vehicle operation.\n\nOur growth has been remarkable and consistent. In 2007, our working area expanded to 17 VDCs, then to 75 VDCs of Gulmi and 4 of Arghakhanchi in 2015. Finally, in 2020, our scope expanded to cover all six districts of the former Lumbini Zone: Gulmi, Palpa, Arghakhanchi, Kapilbastu, Rupandehi, and Nawalparasi. Today, we operate with our Head Office in Tamghas and service centers in seven other strategic locations, proudly serving 13,836 share members.",
     "vision": "Our cooperative is guided by the vision of improving our members' living standards and fostering social capital within our community.",
     "learnStory": "Learn Our Story"
   },
@@ -148,7 +148,7 @@
       "loans": "Loans", 
       "store": "Cooperative Store",
       "mobile": "Mobile Banking",
-      "transport": "Maitri Yatayat"
+      "transport": "Maitree Yatayat"
     },
     "savings": {
       "title": "Savings",
@@ -278,7 +278,7 @@
       }
     },
     "transport": {
-      "title": "Maitri Yatayat",
+      "title": "Maitree Yatayat",
       "description": "Eco-friendly electric vehicle transportation service with comfortable seating, free WiFi, and special discounts for members.",
       "vehicles": {
         "title": "Our Fleet",
