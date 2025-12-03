@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import ContactBar from "../components/ContactBar";
 import { client as sanityClient, queries } from "../lib/sanity";
 
 interface Event {
@@ -163,19 +160,18 @@ export const Community = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
-      </div>
+      <>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen">
-      <ContactBar />
-      <Navbar />
-      <div className="pt-28">
-        {/* Hero Section */}
-        <section className="py-12 bg-gradient-to-r from-green-700 to-green-800 text-white">
+    <>
+      {/* Hero Section */}
+      <section className="page-header bg-gradient-to-r from-green-700 to-green-800 text-white">
           <div className="container mx-auto px-4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Our Vibrant Community
@@ -500,9 +496,7 @@ export const Community = () => {
             </button>
           </div>
         </section>
-      </div>
-      <Footer />
-    </div>
+    </>
   );
 };
 

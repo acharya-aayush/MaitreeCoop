@@ -2,9 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import ContactBar from '@/components/ContactBar';
 import { client, queries, getImageUrl } from '@/lib/sanity';
 
 interface NewsArticle {
@@ -79,9 +76,7 @@ const News = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white">
-        <ContactBar />
-        <Navbar />
+      <>
         <div className="page-header text-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="animate-pulse">
@@ -90,15 +85,13 @@ const News = () => {
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white">
-        <ContactBar />
-        <Navbar />
+      <>
         <div className="page-header text-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <h1 className="text-4xl md:text-5xl font-bold">{t('news.title')}</h1>
@@ -110,16 +103,12 @@ const News = () => {
             </div>
           </div>
         </div>
-        <Footer />
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <ContactBar />
-      <Navbar />
-      
+    <>
       <div className="page-header text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h1 className="text-4xl md:text-5xl font-bold">{t('news.title')}</h1>
@@ -129,7 +118,7 @@ const News = () => {
         </div>
       </div>
       
-      <div className="section-container">
+      <div className="py-6 md:py-10 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12">
             <div className="flex justify-between items-center mb-6">
@@ -250,9 +239,7 @@ const News = () => {
           )}
         </div>
       </div>
-      
-      <Footer />
-    </div>
+    </>
   );
 };
 

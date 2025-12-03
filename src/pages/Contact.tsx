@@ -3,11 +3,8 @@ import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useToast } from "@/hooks/use-toast";
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import GoogleMap from '@/components/GoogleMap';
 import MultiLocationMap from '@/components/MultiLocationMap';
-import ContactBar from '@/components/ContactBar';
 
 const Contact = () => {
   const { t } = useTranslation();
@@ -78,10 +75,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <ContactBar />
-      <Navbar />
-      
+    <>
       <div className="page-header text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h1 className="text-4xl md:text-5xl font-bold">{t('contact.title')}</h1>
@@ -92,7 +86,7 @@ const Contact = () => {
       </div>
       
       {/* Contact Information */}
-      <section className="section-container">
+      <section className="py-6 md:py-10 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -322,9 +316,9 @@ const Contact = () => {
       </section>
       
       {/* FAQ Section */}
-      <section className="section-container">
+      <section className="py-6 md:py-10 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h2 className="text-2xl font-bold">{t('contact.faq.title')}</h2>
             <p className="mt-2 text-gray-600">{t('contact.faq.subtitle')}</p>
           </div>
@@ -339,9 +333,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
-      
-      <Footer />
-    </div>
+    </>
   );
 };
 

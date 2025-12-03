@@ -2,9 +2,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Users, FileText, CreditCard, Award, Vote, Store } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import ContactBar from '@/components/ContactBar';
 
 const Members = () => {
   const { t } = useTranslation();
@@ -43,10 +40,7 @@ const Members = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      <ContactBar />
-      <Navbar />
-      
+    <>
       <div className="page-header text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h1 className="text-4xl md:text-5xl font-bold">{t('members.title')}</h1>
@@ -56,20 +50,20 @@ const Members = () => {
         </div>
       </div>
       
-      <section className="section-container">
+      <section className="py-6 md:py-10 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           {/* Member Benefits Section */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
               {t('members.benefits.title')}
             </span>
-            <h2 className="mt-4 text-3xl font-bold">{t('members.benefits.subtitle')}</h2>
-            <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            <h2 className="mt-3 text-3xl font-bold">{t('members.benefits.subtitle')}</h2>
+            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
               {t('members.benefits.description')}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {memberBenefits.map((benefit, index) => (
               <div key={index} className="glass-card p-6 rounded-xl hover-card">
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
@@ -167,9 +161,7 @@ const Members = () => {
           </div>
         </div>
       </section>
-      
-      <Footer />
-    </div>
+    </>
   );
 };
 

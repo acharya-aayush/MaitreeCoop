@@ -80,20 +80,11 @@ const Hero = () => {
                     target.style.display = 'none';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <h2 className="text-xl font-semibold mb-1">
-                    {t('hero.title')}
-                  </h2>
-                  <p className="text-sm opacity-90">
-                    बहुउद्देश्यीय सहकारी संस्था
-                  </p>
-                </div>
               </div>
             </div>
             
-            {/* Floating Elements - positioned to avoid text overlap */}
-            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 md:left-auto md:right-4 md:translate-x-0 w-32 h-32 bg-white rounded-2xl shadow-lg p-4 glass-card animate-fade-up z-10" style={{ animationDelay: '0.6s' }}>
+            {/* Floating Elements */}
+            <div className="absolute -bottom-6 -left-4 w-32 h-32 bg-white rounded-2xl shadow-lg p-4 glass-card animate-fade-up z-10" style={{ animationDelay: '0.6s' }}>
               <div className="h-full flex flex-col justify-center">
                 <p className="text-xs text-gray-500 mb-1">
                   {i18n.language === 'ne' && settings?.memberCountNepali 

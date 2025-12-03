@@ -2,9 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import ContactBar from '@/components/ContactBar';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -257,10 +254,7 @@ const Board = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white">
-      <ContactBar />
-      <Navbar />
-      
+    <>
       <div className="page-header text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h1 className="text-4xl md:text-5xl font-bold">
@@ -273,7 +267,7 @@ const Board = () => {
       </div>
       
       {/* Board Members Section */}
-      <section className="py-8">
+      <section className="py-6 md:py-10 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-8">
             <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
@@ -496,9 +490,7 @@ const Board = () => {
           </div>
         </div>
       </section>
-      
-      <Footer />
-    </div>
+    </>
   );
 };
 

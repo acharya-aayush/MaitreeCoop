@@ -30,7 +30,7 @@ const Services = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
       <div className="page-header text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h1 className="text-4xl md:text-5xl font-bold">{t('services.title')}</h1>
@@ -40,14 +40,14 @@ const Services = () => {
         </div>
       </div>
       
-      <section className="section-container">
+      <section className="py-6 md:py-10 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <span className="inline-block py-1 px-3 rounded-full bg-green-100 text-green-800 text-xs font-medium tracking-wider uppercase">
               {t('services.what.title')}
             </span>
-            <h2 className="mt-4 text-3xl font-bold">{t('services.what.subtitle')}</h2>
-            <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            <h2 className="mt-3 text-3xl font-bold">{t('services.what.subtitle')}</h2>
+            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
               {t('services.what.description')}
             </p>
           </div>
@@ -458,7 +458,7 @@ const Services = () => {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };
 

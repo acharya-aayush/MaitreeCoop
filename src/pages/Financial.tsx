@@ -2,9 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { Download, FileText, Calendar, Shield, Users, FileCheck, Filter, Search, Eye, ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import ContactBar from '@/components/ContactBar';
 import { client as sanityClient, queries, getFileUrl, getImageUrl } from '@/lib/sanity';
 
 interface FinancialDocument {
@@ -207,9 +204,7 @@ const Financial = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white">
-        <ContactBar />
-        <Navbar />
+      <>
         <div className="page-header text-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <h1 className="text-4xl md:text-5xl font-bold">
@@ -217,7 +212,7 @@ const Financial = () => {
             </h1>
           </div>
         </div>
-        <div className="section-container">
+        <div className="py-6 md:py-10 px-4 sm:px-6">
           <div className="max-w-7xl mx-auto text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
             <p className="mt-4 text-gray-600">
@@ -225,16 +220,13 @@ const Financial = () => {
             </p>
           </div>
         </div>
-        <Footer />
-      </div>
+      </>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white">
-        <ContactBar />
-        <Navbar />
+      <>
         <div className="page-header text-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <h1 className="text-4xl md:text-5xl font-bold">
@@ -242,7 +234,7 @@ const Financial = () => {
             </h1>
           </div>
         </div>
-        <div className="section-container">
+        <div className="py-6 md:py-10 px-4 sm:px-6">
           <div className="max-w-7xl mx-auto text-center py-12">
             <div className="text-red-600 mb-4">
               <FileText className="h-12 w-12 mx-auto mb-2" />
@@ -256,8 +248,7 @@ const Financial = () => {
             </button>
           </div>
         </div>
-        <Footer />
-      </div>
+      </>
     );
   }
 
@@ -266,10 +257,7 @@ const Financial = () => {
   const regularDocuments = filteredDocuments.filter(doc => !doc.isPinned);
 
   return (
-    <div className="min-h-screen bg-white">
-      <ContactBar />
-      <Navbar />
-      
+    <>
       <div className="page-header text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h1 className="text-4xl md:text-5xl font-bold">
@@ -284,7 +272,7 @@ const Financial = () => {
         </div>
       </div>
       
-      <div className="section-container">
+      <div className="py-6 md:py-10 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           {/* Search and Filters */}
           <div className="mb-8 space-y-4">
@@ -432,8 +420,7 @@ const Financial = () => {
         </div>
       </div>
       
-      <Footer />
-    </div>
+      </>
   );
 };
 
