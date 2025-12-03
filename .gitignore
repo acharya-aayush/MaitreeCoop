@@ -132,6 +132,11 @@ bun.lockb
 *.backup
 *.old
 
+# Internal documentation (keep README.md and DOCUMENTATION.md)
+SECURITY.md
+SEO_ACTION_CHECKLIST.md
+SEO_OPTIMIZATION_GUIDE.md
+
 # Sensitive data
 *.sql
 *.sqlite
